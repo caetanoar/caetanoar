@@ -2,6 +2,7 @@ begin;
 \ir _helpers.psql
 select plan(6);
 
+delete from metas where mes = date_trunc('month', public.hoje())::date;
 select pg_temp.criar_usuario('dono@t.com', 'dono') as dono \gset
 select pg_temp.criar_usuario('gerente@t.com', 'gerente') as gerente \gset
 select pg_temp.criar_usuario('v1@t.com', 'vendedor') as v1 \gset

@@ -19,17 +19,21 @@ import { formatarData } from "@/lib/format/data";
 import { formatarMoeda } from "@/lib/format/moeda";
 import { linkWhatsApp, mensagemVeiculo } from "@/lib/whatsapp";
 import { excluirCliente, anonimizarCliente } from "../acoes";
+import { ResumoCliente } from "@/components/ia/resumo-cliente";
+import { ultimoResumoCliente } from "@/lib/ia/consultas";
+import { situacaoIA } from "@/lib/ia/claude";
 
 export default async function DetalheCliente({ params }: { params: Promise<{ id: string }> }) {
   const usuario = await exigirPermissao("clientes");
   const { id } = await params;
   const supabase = await criarClienteServidor();
-  const [{ data: c }, { data: p }, { data: contatos }, { data: interesses }, { data: veiculos }] = await Promise.all([
+  const [{ data: c }, { data: p }, { data: contatos }, { data: interesses }, { data: veiculos }, resumoIA] = await Promise.all([
     supabase.from("v_clientes").select("*").eq("id", id).maybeSingle(),
     supabase.from("clientes_dados_pessoais").select("cpf_mascarado, data_nascimento, cep, logradouro, numero, complemento, bairro, cidade, uf").eq("cliente_id", id).maybeSingle(),
     supabase.from("clientes_contatos").select("id, data_hora, canal, resumo, proximo_passo, proximo_contato_em, usuarios(nome)").eq("cliente_id", id).order("data_hora", { ascending: false }),
     supabase.from("clientes_interesses").select("id, veiculo_id, descricao, preco_max, veiculos(marca, modelo, versao, ano_fabricacao, ano_modelo, preco_anunciado, status)").eq("cliente_id", id).eq("ativo", true).order("criado_em", { ascending: false }),
     supabase.from("veiculos").select("id, marca, modelo, versao, ano_modelo, preco_anunciado").in("status", ["disponivel", "reservado", "em_preparacao"]).order("marca"),
+    ultimoResumoCliente(id),
   ]);
   if (!c || !c.id) notFound();
   const contatoCliente = c.whatsapp || c.telefone;
@@ -90,7 +94,7 @@ export default async function DetalheCliente({ params }: { params: Promise<{ id:
 
         <Card>
           <CardHeader><CardTitle className="flex items-center gap-1.5"><Sparkles className="size-4" /> Assistente (IA)</CardTitle></CardHeader>
-          <CardContent><p className="text-sm text-muted-foreground">Resumo do histórico e sugestão da próxima mensagem — disponível no módulo de IA.</p></CardContent>
+          <CardContent><ResumoCliente clienteId={id} inicial={resumoIA} telefone={contatoCliente} iaAtiva={situacaoIA().ativa} /></CardContent>
         </Card>
 
         <Card>

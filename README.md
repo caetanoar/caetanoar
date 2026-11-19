@@ -37,6 +37,24 @@ pnpm test:e2e    # fluxos no celular (Playwright)
 pnpm typecheck && pnpm lint
 ```
 
+## Módulos
+
+Estoque próprio e consignado (FIPE automática, fotos pelo celular, documentos, laudo, custos, margem e dias em estoque) ·
+consulta com "Chamar no WhatsApp" · clientes com funil e CPF protegido · fornecedores, consignantes e parceiros ·
+vendas com troca (vendedor registra, gerente fecha; o fechamento gera comissões, garantia e financeiro) · garantias ·
+financeiro (contas, a pagar/receber, transferências, conciliação OFX/CSV) · comissões · NF-e (importação de XML e
+emissão por provedor) · metas, dashboard e painel do dono · relatórios com CSV e PDF · IA para anúncios e follow-up ·
+API REST e webhooks.
+
+## API e webhooks
+
+- Chaves criadas pelo dono em **Configurações → Integrações**, com escopos (`estoque:ler`, `leads:criar`, `vendas:ler`).
+  O banco guarda só o hash (HMAC com `API_KEY_PEPPER`); a chave aparece uma única vez.
+- Endpoints em `/api/v1` (`GET /veiculos`, `GET /veiculos/{id}`, `POST /leads`, `GET /vendas`); documentação em
+  `/api/v1/openapi.json`. Nenhum campo sigiloso (custo, mínimo, placa, chassi, lucro, CPF) sai pela API.
+- Webhooks assinados: cabeçalho `X-Caetano-Assinatura: t=<unix>,v1=<hex>` com HMAC-SHA256 de `${t}.${corpo}`.
+  Disparo logo após o evento e reenvio com espera crescente pela rota `/api/cron/webhooks` (ver `docs/DEPLOY.md`).
+
 ## Estrutura
 
 - `supabase/migrations/` — esquema versionado, RLS, funções e regras de negócio atômicas
@@ -51,3 +69,11 @@ pnpm typecheck && pnpm lint
 - Dados sigilosos (custo, lucro, preço mínimo, financeiro, fiscal, CPF) ficam em tabelas separadas, só para dono e gerente.
 - Toda criação, alteração e exclusão é registrada na tabela `auditoria`.
 - Nenhum segredo no código: tudo em variáveis de ambiente (ver `.env.example`).
+- A IA nunca recebe CPF, telefone ou e-mail (só o primeiro nome do cliente); textos de anúncio passam por um validador
+  que bloqueia "estado de novo", "sem problemas" e equivalentes quando o carro não tem laudo cautelar aprovado.
+- Um teste pgTAP global (`0099_rls_global`) falha se alguma tabela nova ficar sem RLS, se o anônimo tiver acesso
+  a qualquer tabela, ou se alguma view ignorar a RLS.
+
+## Deploy
+
+Ainda não publicado. Passo a passo e decisões pendentes em [`docs/DEPLOY.md`](docs/DEPLOY.md).

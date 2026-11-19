@@ -10,6 +10,7 @@ import { provedorFiscal, type NotaSaida, type ResultadoFiscal } from "@/lib/inte
 import { textoOpc } from "@/lib/estoque/esquemas";
 import { apenasDigitos } from "@/lib/utils";
 import type { Json } from "@/lib/supabase/database.types";
+import { dispararWebhooks } from "@/lib/webhooks/entregar";
 
 const TAMANHO_MAX = 2_000_000;
 
@@ -208,6 +209,7 @@ export async function importarXml(xml: string, opcoes: z.input<typeof opcoesImpo
   revalidatePath("/fiscal");
   revalidatePath("/estoque", "layout");
   revalidatePath("/financeiro", "layout");
+  dispararWebhooks();
   return { ok: true, mensagem: "Nota importada.", dados: { id: notaDb.id } };
 }
 
@@ -331,6 +333,7 @@ export async function emitirNotaVenda(_: EstadoAcao<{ id: string }>, fd: FormDat
   revalidatePath("/fiscal");
   revalidatePath(`/vendas/${venda.id}`);
   if (r.status === "erro" || r.status === "rejeitada") return { ok: false, erro: `Nota não autorizada: ${r.mensagem ?? "erro no provedor"}`, dados: { id: notaDb.id } };
+  dispararWebhooks();
   return { ok: true, mensagem: r.status === "autorizada" ? (r.simulada ? "Nota SIMULADA gerada (sem valor fiscal)." : "NF-e autorizada.") : "Nota enviada; aguardando autorização.", dados: { id: notaDb.id } };
 }
 
@@ -373,6 +376,7 @@ export async function consultarNota(_: EstadoAcao, fd: FormData): Promise<Estado
     return { ok: false, erro: e instanceof Error ? e.message : "Falha na consulta." };
   }
   revalidatePath(`/fiscal/${id}`);
+  dispararWebhooks();
   return { ok: true, mensagem: "Situação atualizada." };
 }
 

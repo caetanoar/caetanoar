@@ -25,8 +25,11 @@ import { AcoesStatus } from "@/components/estoque/status-veiculo";
 import { EnviarContrato } from "@/components/estoque/contrato-consignacao";
 import { BotaoExcluir } from "@/components/cadastros/botao-excluir";
 import { excluirVeiculo } from "../acoes";
+import { AnunciosVeiculo } from "@/components/ia/anuncios";
+import { ultimoAnuncio } from "@/lib/ia/consultas";
+import { situacaoIA } from "@/lib/ia/claude";
 
-type Aba = "dados" | "fotos" | "itens" | "documentos" | "custos" | "consignacao";
+type Aba = "dados" | "fotos" | "itens" | "documentos" | "anuncios" | "custos" | "consignacao";
 
 export default async function DetalheVeiculo({
   params,
@@ -52,6 +55,7 @@ export default async function DetalheVeiculo({
     { id: "fotos", rotulo: `Fotos (${v.qtd_fotos ?? 0})` },
     { id: "itens", rotulo: "Itens e histórico" },
     { id: "documentos", rotulo: "Documentos" },
+    { id: "anuncios", rotulo: "Anúncios" },
     ...(gestor ? [{ id: "custos" as const, rotulo: "Custos" }] : []),
     ...(gestor && v.tipo === "consignado" ? [{ id: "consignacao" as const, rotulo: "Consignação" }] : []),
   ];
@@ -199,6 +203,8 @@ export default async function DetalheVeiculo({
 
         {aba === "documentos" && <AbaDocumentos id={id} podeEditar={podeEditar} />}
 
+        {aba === "anuncios" && <AbaAnuncios id={id} disponivel={v.status !== "vendido" && v.status !== "devolvido"} />}
+
         {aba === "custos" && gestor && <AbaCustos id={id} consignado={v.tipo === "consignado"} />}
 
         {aba === "consignacao" && gestao && (
@@ -339,4 +345,9 @@ async function ContratoLink({ arquivoId }: { arquivoId: string | null }) {
   return data?.signedUrl ? (
     <a href={data.signedUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">Abrir contrato: {arq.nome}</a>
   ) : null;
+}
+
+async function AbaAnuncios({ id, disponivel }: { id: string; disponivel: boolean }) {
+  const inicial = await ultimoAnuncio(id);
+  return <AnunciosVeiculo veiculoId={id} inicial={inicial} iaAtiva={situacaoIA().ativa} disponivel={disponivel} />;
 }

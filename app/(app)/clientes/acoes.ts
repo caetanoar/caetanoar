@@ -7,6 +7,7 @@ import { criarClienteServidor } from "@/lib/supabase/server";
 import { errosDoZod, mensagemDeErro, type EstadoAcao } from "@/lib/acoes";
 import type { Json } from "@/lib/supabase/database.types";
 import { esquemaCliente, esquemaDadosPessoais, esquemaContato, esquemaInteresse } from "@/lib/clientes/esquemas";
+import { dispararWebhooks } from "@/lib/webhooks/entregar";
 
 function revalidar(id?: string) {
   revalidatePath("/clientes");
@@ -60,6 +61,7 @@ export async function salvarCliente(_: EstadoAcao<{ id: string }>, fd: FormData)
   }
   const salvo = { id: data };
   revalidar(salvo.id);
+  dispararWebhooks();
   return { ok: true, mensagem: id ? "Cliente atualizado." : "Cliente cadastrado.", dados: { id: salvo.id } };
 }
 

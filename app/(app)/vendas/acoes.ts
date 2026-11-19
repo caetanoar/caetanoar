@@ -8,6 +8,7 @@ import { errosDoZod, mensagemDeErro, type EstadoAcao } from "@/lib/acoes";
 import { esquemaVenda, esquemaPagamento, esquemaTroca } from "@/lib/vendas/esquemas";
 import { parseMoeda } from "@/lib/format/moeda";
 import type { Json } from "@/lib/supabase/database.types";
+import { dispararWebhooks } from "@/lib/webhooks/entregar";
 
 function revalidar(id?: string) {
   revalidatePath("/vendas");
@@ -107,6 +108,7 @@ export async function fecharVenda(_: EstadoAcao, fd: FormData): Promise<EstadoAc
   const { error } = await supabase.rpc("fechar_venda", { p_venda: id, p_manuais: manuais as Json });
   if (error) return { ok: false, erro: mensagemDeErro(error) };
   revalidar(id);
+  dispararWebhooks();
   return { ok: true, mensagem: "Venda fechada: comissões, garantia e lançamentos gerados." };
 }
 
@@ -117,6 +119,7 @@ export async function cancelarVenda(_: EstadoAcao, fd: FormData): Promise<Estado
   const { error } = await supabase.rpc("cancelar_venda", { p_venda: id, p_motivo: String(fd.get("motivo") ?? "") });
   if (error) return { ok: false, erro: mensagemDeErro(error) };
   revalidar(id);
+  dispararWebhooks();
   return { ok: true, mensagem: "Venda cancelada." };
 }
 

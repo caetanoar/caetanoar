@@ -7,6 +7,7 @@ import { criarClienteServidor } from "@/lib/supabase/server";
 import { errosDoZod, mensagemDeErro, type EstadoAcao } from "@/lib/acoes";
 import { esquemaVeiculo, esquemaSigilo, esquemaConsignacao, esquemaCusto, esquemaHistorico } from "@/lib/estoque/esquemas";
 import type { Json } from "@/lib/supabase/database.types";
+import { dispararWebhooks } from "@/lib/webhooks/entregar";
 
 function revalidarVeiculo(id?: string) {
   revalidatePath("/estoque");
@@ -70,6 +71,7 @@ export async function salvarVeiculo(_: EstadoAcao<{ id: string }>, fd: FormData)
   });
   if (error || !data) return { ok: false, erro: mensagemDeErro(error) };
   revalidarVeiculo(data);
+  dispararWebhooks();
   return { ok: true, mensagem: id ? "Veículo atualizado." : "Veículo cadastrado.", dados: { id: data } };
 }
 
@@ -91,6 +93,7 @@ export async function alterarStatus(_: EstadoAcao, fd: FormData): Promise<Estado
   });
   if (error) return { ok: false, erro: mensagemDeErro(error) };
   revalidarVeiculo(dados.data.id);
+  dispararWebhooks();
   return { ok: true, mensagem: "Status atualizado." };
 }
 

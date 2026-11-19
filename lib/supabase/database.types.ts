@@ -859,6 +859,26 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"metas": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"criado_em": string,"criado_por": string | null,"id": string,"mes": string,"meta_faturamento": number | null,"meta_lucro": number | null,"meta_qtd_vendas": number | null,"observacoes": string | null,"vendedor_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"id"?: string,"mes": string,"meta_faturamento"?: number | null,"meta_lucro"?: number | null,"meta_qtd_vendas"?: number | null,"observacoes"?: string | null,"vendedor_id"?: string | null
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"id"?: string,"mes"?: string,"meta_faturamento"?: number | null,"meta_lucro"?: number | null,"meta_qtd_vendas"?: number | null,"observacoes"?: string | null,"vendedor_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "metas_vendedor_id_fkey"
+      columns: ["vendedor_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"notas_fiscais": {
                   Row: {
                     "atualizado_em": string,"atualizado_por": string | null,"cfop": string | null,"chave_acesso": string | null,"cliente_id": string | null,"consignante_id": string | null,"criado_em": string,"criado_por": string | null,"dados": Json | null,"data_emissao": string | null,"destinatario_documento": string | null,"destinatario_nome": string | null,"direcao": Database["public"]['Enums']["direcao_nota"],"emitente_documento": string | null,"emitente_nome": string | null,"fornecedor_id": string | null,"id": string,"modelo": string | null,"motivo_status": string | null,"natureza_operacao": string | null,"numero": string | null,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_nota"],"pdf_arquivo_id": string | null,"pdf_url_externa": string | null,"protocolo": string | null,"provedor": string | null,"provedor_ref": string | null,"serie": string | null,"simulada": boolean,"status": Database["public"]['Enums']["status_nota"],"tipo_documento": Database["public"]['Enums']["tipo_documento_fiscal"],"valor_icms": number | null,"valor_produtos": number | null,"valor_total": number,"veiculo_id": string | null,"venda_id": string | null,"xml_arquivo_id": string | null
@@ -2181,6 +2201,9 @@ isOneToOne: false
 { Args: Record<PropertyKey, never>; Returns: {
               "id": string,"nome": string,"papel": Database["public"]['Enums']["papel_usuario"]
             }[]
+                           },
+"meu_dashboard":
+{ Args: { "p_mes": string }; Returns: Json
                            },
 "minhas_comissoes":
 { Args: Record<PropertyKey, never>; Returns: {

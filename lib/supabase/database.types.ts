@@ -65,6 +65,134 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"clientes": {
+                  Row: {
+                    "aceita_marketing": boolean,"anonimizado_em": string | null,"atualizado_em": string,"atualizado_por": string | null,"cidade": string | null,"criado_em": string,"criado_por": string | null,"email": string | null,"etapa": Database["public"]['Enums']["etapa_funil"],"id": string,"motivo_perda": Database["public"]['Enums']["motivo_perda"] | null,"motivo_perda_detalhe": string | null,"nome": string,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_lead"],"parceiro_id": string | null,"proximo_contato_em": string | null,"telefone": string | null,"uf": string | null,"ultimo_contato_em": string | null,"vendedor_id": string | null,"whatsapp": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "aceita_marketing"?: boolean,"anonimizado_em"?: string | null,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"email"?: string | null,"etapa"?: Database["public"]['Enums']["etapa_funil"],"id"?: string,"motivo_perda"?: Database["public"]['Enums']["motivo_perda"] | null,"motivo_perda_detalhe"?: string | null,"nome": string,"observacoes"?: string | null,"origem"?: Database["public"]['Enums']["origem_lead"],"parceiro_id"?: string | null,"proximo_contato_em"?: string | null,"telefone"?: string | null,"uf"?: string | null,"ultimo_contato_em"?: string | null,"vendedor_id"?: string | null,"whatsapp"?: string | null
+                  }
+                  Update: {
+                    "aceita_marketing"?: boolean,"anonimizado_em"?: string | null,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"email"?: string | null,"etapa"?: Database["public"]['Enums']["etapa_funil"],"id"?: string,"motivo_perda"?: Database["public"]['Enums']["motivo_perda"] | null,"motivo_perda_detalhe"?: string | null,"nome"?: string,"observacoes"?: string | null,"origem"?: Database["public"]['Enums']["origem_lead"],"parceiro_id"?: string | null,"proximo_contato_em"?: string | null,"telefone"?: string | null,"uf"?: string | null,"ultimo_contato_em"?: string | null,"vendedor_id"?: string | null,"whatsapp"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "clientes_parceiro_id_fkey"
+      columns: ["parceiro_id"]
+isOneToOne: false
+      referencedRelation: "parceiros"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_vendedor_id_fkey"
+      columns: ["vendedor_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"clientes_contatos": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"canal": Database["public"]['Enums']["canal_contato"],"cliente_id": string,"criado_em": string,"criado_por": string | null,"data_hora": string,"id": string,"proximo_contato_em": string | null,"proximo_passo": string | null,"resumo": string,"usuario_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"canal"?: Database["public"]['Enums']["canal_contato"],"cliente_id": string,"criado_em"?: string,"criado_por"?: string | null,"data_hora"?: string,"id"?: string,"proximo_contato_em"?: string | null,"proximo_passo"?: string | null,"resumo": string,"usuario_id"?: string | null
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"canal"?: Database["public"]['Enums']["canal_contato"],"cliente_id"?: string,"criado_em"?: string,"criado_por"?: string | null,"data_hora"?: string,"id"?: string,"proximo_contato_em"?: string | null,"proximo_passo"?: string | null,"resumo"?: string,"usuario_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "clientes_contatos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_contatos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_contatos_usuario_id_fkey"
+      columns: ["usuario_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"clientes_dados_pessoais": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"bairro": string | null,"cep": string | null,"cidade": string | null,"cliente_id": string,"complemento": string | null,"cpf": string | null,"cpf_mascarado": string | null,"criado_em": string,"criado_por": string | null,"data_nascimento": string | null,"logradouro": string | null,"numero": string | null,"rg": string | null,"uf": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"bairro"?: string | null,"cep"?: string | null,"cidade"?: string | null,"cliente_id": string,"complemento"?: string | null,"cpf"?: string | null,"cpf_mascarado"?: never,"criado_em"?: string,"criado_por"?: string | null,"data_nascimento"?: string | null,"logradouro"?: string | null,"numero"?: string | null,"rg"?: string | null,"uf"?: string | null
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"bairro"?: string | null,"cep"?: string | null,"cidade"?: string | null,"cliente_id"?: string,"complemento"?: string | null,"cpf"?: string | null,"cpf_mascarado"?: never,"criado_em"?: string,"criado_por"?: string | null,"data_nascimento"?: string | null,"logradouro"?: string | null,"numero"?: string | null,"rg"?: string | null,"uf"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "clientes_dados_pessoais_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: true
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_dados_pessoais_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: true
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"clientes_interesses": {
+                  Row: {
+                    "ativo": boolean,"atualizado_em": string,"atualizado_por": string | null,"cliente_id": string,"criado_em": string,"criado_por": string | null,"descricao": string | null,"id": string,"preco_max": number | null,"veiculo_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"cliente_id": string,"criado_em"?: string,"criado_por"?: string | null,"descricao"?: string | null,"id"?: string,"preco_max"?: number | null,"veiculo_id"?: string | null
+                  }
+                  Update: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"cliente_id"?: string,"criado_em"?: string,"criado_por"?: string | null,"descricao"?: string | null,"id"?: string,"preco_max"?: number | null,"veiculo_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "clientes_interesses_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_interesses_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_interesses_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_interesses_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_interesses_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"configuracoes": {
                   Row: {
                     "alerta_contas_dias": number,"alerta_garantia_dias": number,"assinatura": string,"atualizado_em": string,"atualizado_por": string | null,"cidade": string,"criado_em": string,"criado_por": string | null,"estoque_parado_dias": number,"garantia_cobertura_padrao": string | null,"garantia_dias_padrao": number,"id": boolean,"nome_loja": string,"recebimento_consignado_padrao": string,"regiao_anuncio": string,"telefones_assinatura": string,"uf": string,"whatsapp_numero": string
@@ -327,7 +455,19 @@ isOneToOne: false
                     "ano_fabricacao"?: number | null,"ano_modelo"?: number | null,"atualizado_em"?: string,"atualizado_por"?: string | null,"cambio"?: Database["public"]['Enums']["cambio"] | null,"chassi"?: string | null,"codigo_fipe"?: string | null,"combustivel"?: Database["public"]['Enums']["combustivel"] | null,"cor"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data_entrada"?: string,"data_saida"?: string | null,"descricao"?: string | null,"fipe_referencia"?: string | null,"id"?: string,"km"?: number | null,"laudo_cautelar"?: boolean,"laudo_resultado"?: Database["public"]['Enums']["resultado_laudo"] | null,"marca"?: string,"modelo"?: string,"motor"?: string | null,"observacoes"?: string | null,"origem"?: Database["public"]['Enums']["origem_veiculo"],"placa"?: string | null,"portas"?: number | null,"preco_anunciado"?: number | null,"preco_negociavel"?: number | null,"renavam"?: string | null,"reservado_ate"?: string | null,"reservado_para_cliente_id"?: string | null,"status"?: Database["public"]['Enums']["status_veiculo"],"tipo"?: Database["public"]['Enums']["tipo_veiculo"],"valor_fipe"?: number | null,"versao"?: string | null
                   }
                   Relationships: [
-                    
+                    {
+      foreignKeyName: "veiculos_reservado_cliente_fk"
+      columns: ["reservado_para_cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "veiculos_reservado_cliente_fk"
+      columns: ["reservado_para_cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"veiculos_sigilo": {
                   Row: {
@@ -342,6 +482,18 @@ isOneToOne: false
                   }
                   Relationships: [
                     {
+      foreignKeyName: "veiculos_sigilo_cliente_origem_fk"
+      columns: ["cliente_origem_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "veiculos_sigilo_cliente_origem_fk"
+      columns: ["cliente_origem_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "veiculos_sigilo_fornecedor_id_fkey"
       columns: ["fornecedor_id"]
 isOneToOne: false
@@ -370,7 +522,27 @@ isOneToOne: true
                 }
           }
           Views: {
-            "v_veiculos": {
+            "v_clientes": {
+                  Row: {
+                    "aceita_marketing": boolean,"anonimizado_em": string | null,"atualizado_em": string,"atualizado_por": string | null,"cidade": string | null,"criado_em": string,"criado_por": string | null,"email": string | null,"etapa": Database["public"]['Enums']["etapa_funil"],"followup_pendente": boolean | null,"id": string,"interesses": string | null,"motivo_perda": Database["public"]['Enums']["motivo_perda"] | null,"motivo_perda_detalhe": string | null,"nome": string,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_lead"],"parceiro_id": string | null,"parceiro_nome": string | null,"proximo_contato_em": string | null,"telefone": string | null,"uf": string | null,"ultimo_contato_em": string | null,"vendedor_id": string | null,"vendedor_nome": string | null,"whatsapp": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "clientes_parceiro_id_fkey"
+      columns: ["parceiro_id"]
+isOneToOne: false
+      referencedRelation: "parceiros"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "clientes_vendedor_id_fkey"
+      columns: ["vendedor_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"v_veiculos": {
                   Row: {
                     "ano_fabricacao": number | null,"ano_modelo": number | null,"atualizado_em": string,"atualizado_por": string | null,"cambio": Database["public"]['Enums']["cambio"] | null,"chassi": string | null,"codigo_fipe": string | null,"combustivel": Database["public"]['Enums']["combustivel"] | null,"cor": string | null,"criado_em": string,"criado_por": string | null,"data_entrada": string,"data_saida": string | null,"descricao": string | null,"dias_em_estoque": number | null,"fipe_referencia": string | null,"foto_capa": string | null,"id": string,"km": number | null,"laudo_cautelar": boolean,"laudo_resultado": Database["public"]['Enums']["resultado_laudo"] | null,"marca": string,"modelo": string,"motor": string | null,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_veiculo"],"placa": string | null,"portas": number | null,"preco_anunciado": number | null,"preco_negociavel": number | null,"qtd_fotos": number | null,"renavam": string | null,"reservado_ate": string | null,"reservado_para_cliente_id": string | null,"status": Database["public"]['Enums']["status_veiculo"],"tipo": Database["public"]['Enums']["tipo_veiculo"],"valor_fipe": number | null,"versao": string | null
                   }
@@ -382,7 +554,19 @@ isOneToOne: true
                            "ano_fabricacao"?: number | null,"ano_modelo"?: number | null,"atualizado_em"?: string | null,"atualizado_por"?: string | null,"cambio"?: Database["public"]['Enums']["cambio"] | null,"chassi"?: string | null,"codigo_fipe"?: string | null,"combustivel"?: Database["public"]['Enums']["combustivel"] | null,"cor"?: string | null,"criado_em"?: string | null,"criado_por"?: string | null,"data_entrada"?: string | null,"data_saida"?: string | null,"descricao"?: string | null,"dias_em_estoque"?: never,"fipe_referencia"?: string | null,"foto_capa"?: never,"id"?: string | null,"km"?: number | null,"laudo_cautelar"?: boolean | null,"laudo_resultado"?: Database["public"]['Enums']["resultado_laudo"] | null,"marca"?: string | null,"modelo"?: string | null,"motor"?: string | null,"observacoes"?: string | null,"origem"?: Database["public"]['Enums']["origem_veiculo"] | null,"placa"?: string | null,"portas"?: number | null,"preco_anunciado"?: number | null,"preco_negociavel"?: number | null,"qtd_fotos"?: never,"renavam"?: string | null,"reservado_ate"?: string | null,"reservado_para_cliente_id"?: string | null,"status"?: Database["public"]['Enums']["status_veiculo"] | null,"tipo"?: Database["public"]['Enums']["tipo_veiculo"] | null,"valor_fipe"?: number | null,"versao"?: string | null
                          }
                         Relationships: [
-                    
+                    {
+      foreignKeyName: "veiculos_reservado_cliente_fk"
+      columns: ["reservado_para_cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "veiculos_reservado_cliente_fk"
+      columns: ["reservado_para_cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"v_veiculos_gestao": {
                   Row: {
@@ -403,6 +587,18 @@ isOneToOne: false
       referencedRelation: "arquivos"
       referencedColumns: ["id"]
     },{
+      foreignKeyName: "veiculos_reservado_cliente_fk"
+      columns: ["reservado_para_cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "veiculos_reservado_cliente_fk"
+      columns: ["reservado_para_cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "veiculos_sigilo_fornecedor_id_fkey"
       columns: ["fornecedor_id"]
 isOneToOne: false
@@ -416,8 +612,16 @@ isOneToOne: false
             "alterar_status_veiculo":
 { Args: { "p_id": string,"p_motivo"?: string,"p_status": Database["public"]['Enums']["status_veiculo"] }; Returns: undefined
                            },
+"anonimizar_cliente":
+{ Args: { "p_cliente": string }; Returns: undefined
+                           },
 "atualizar_meu_perfil":
 { Args: { "p_nome": string,"p_telefone": string }; Returns: undefined
+                           },
+"cliente_existe":
+{ Args: { "p_telefone": string }; Returns: {
+              "cliente_id": string,"e_meu": boolean,"primeiro_nome": string,"vendedor": string
+            }[]
                            },
 "documento_valido":
 { Args: { "p": string }; Returns: boolean
@@ -437,11 +641,24 @@ isOneToOne: false
 "is_vendedor":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
+"listar_parceiros_ativos":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "id": string,"nome": string
+            }[]
+                           },
+"listar_vendedores":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "id": string,"nome": string,"papel": Database["public"]['Enums']["papel_usuario"]
+            }[]
+                           },
 "normalizar":
 { Args: { "p": string }; Returns: string
                            },
 "papel":
 { Args: Record<PropertyKey, never>; Returns: Database["public"]['Enums']["papel_usuario"]
+                           },
+"pode_ver_cliente":
+{ Args: { "p_cliente": string }; Returns: boolean
                            },
 "pode_ver_entidade":
 { Args: { "p_entidade": Database["public"]['Enums']["entidade_arquivo"],"p_id": string,"p_sigiloso": boolean }; Returns: boolean
@@ -449,12 +666,18 @@ isOneToOne: false
 "preparar_tabela":
 { Args: { "p_ocultar"?: string,"p_pk"?: string,"p_tabela": unknown }; Returns: undefined
                            },
+"revelar_dado_pessoal":
+{ Args: { "p_campo": string,"p_cliente": string,"p_motivo"?: string }; Returns: string
+                           },
+"salvar_cliente":
+{ Args: { "p_cliente": Json,"p_id": string,"p_pessoais"?: Json }; Returns: string
+                           },
 "salvar_veiculo":
 { Args: { "p_consignacao"?: Json,"p_id": string,"p_sigilo"?: Json,"p_veiculo": Json }; Returns: string
                            }
           }
           Enums: {
-            "cambio": "manual"|"automatico"|"cvt"|"automatizado","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_consignacao": "vigente"|"vendido"|"devolvido","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
+            "cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_consignacao": "vigente"|"vendido"|"devolvido","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -574,7 +797,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "cambio": ["manual", "automatico", "cvt", "automatizado"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
+            "cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
           }
         }
 } as const

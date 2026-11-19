@@ -430,6 +430,11 @@ select
     where a.entidade = 'veiculo' and a.entidade_id = v.id and a.categoria = 'foto')::int as qtd_fotos
 from public.veiculos v;
 
+-- Existe regra de comissão da loja aplicável ao consignante? (redefinida na migration de comissões)
+create or replace function public.existe_regra_loja(p_consignante uuid)
+returns boolean language sql stable security definer set search_path = ''
+as $$ select false $$;
+
 create or replace view public.v_veiculos_gestao with (security_invoker = true) as
 with custos as (
   select c.veiculo_id,
@@ -481,7 +486,7 @@ select
     case when v.tipo = 'consignado' and cs.id is not null and cs.contrato_arquivo_id is null then 'contrato de consignação' end,
     case when v.tipo = 'consignado' and cs.id is not null and cs.valor_minimo_dono is null then 'valor mínimo do dono' end,
     case when v.tipo = 'consignado' and cs.id is not null and cs.data_fim is null then 'prazo do contrato' end,
-    case when v.tipo = 'consignado' and cs.id is not null and cs.regra_comissao_id is null then 'regra de comissão' end
+    case when v.tipo = 'consignado' and cs.id is not null and cs.regra_comissao_id is null and not public.existe_regra_loja(cs.consignante_id) then 'regra de comissão' end
   ], null) as pendencias
 from public.v_veiculos v
 left join public.veiculos_sigilo s on s.veiculo_id = v.id

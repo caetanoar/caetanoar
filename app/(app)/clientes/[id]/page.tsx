@@ -16,6 +16,7 @@ import { ORIGEM_LEAD, MOTIVO_PERDA } from "@/lib/clientes/rotulos";
 import { STATUS_VEICULO, nomeVeiculo } from "@/lib/estoque/rotulos";
 import { formatarTelefone } from "@/lib/format/telefone";
 import { formatarData } from "@/lib/format/data";
+import { formatarMoeda } from "@/lib/format/moeda";
 import { linkWhatsApp, mensagemVeiculo } from "@/lib/whatsapp";
 import { excluirCliente, anonimizarCliente } from "../acoes";
 
@@ -153,8 +154,22 @@ export default async function DetalheCliente({ params }: { params: Promise<{ id:
   );
 }
 
-/** Compras do cliente (preenchido no módulo de vendas). */
 async function ComprasDoCliente({ id }: { id: string }) {
-  void id;
-  return <p className="text-sm text-muted-foreground">Nenhuma compra registrada.</p>;
+  const supabase = await criarClienteServidor();
+  const { data } = await supabase.from("v_vendas").select("id, numero, veiculo_nome, data_venda, valor_venda, status").eq("cliente_id", id).neq("status", "cancelada").order("data_venda", { ascending: false });
+  return (
+    <div className="flex flex-col gap-2">
+      {(data ?? []).length === 0 ? (
+        <p className="text-sm text-muted-foreground">Nenhuma compra registrada.</p>
+      ) : (
+        (data ?? []).map((v) => (
+          <Link key={v.id} href={`/vendas/${v.id}`} className="flex items-center justify-between rounded-lg border px-3 py-2 text-sm hover:bg-secondary/60">
+            <span className="min-w-0 truncate">{v.veiculo_nome} · {formatarData(v.data_venda)} · {v.numero}</span>
+            <span className="numero font-semibold">{formatarMoeda(v.valor_venda)}</span>
+          </Link>
+        ))
+      )}
+      <Button asChild variant="outline" size="sm" className="self-start"><Link href={`/vendas/nova?cliente=${id}`}>Registrar venda para este cliente</Link></Button>
+    </div>
+  );
 }

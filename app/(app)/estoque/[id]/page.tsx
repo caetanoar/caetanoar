@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Pencil, MessageCircle, AlertTriangle, Lock, CalendarClock, History } from "lucide-react";
+import { Pencil, MessageCircle, AlertTriangle, Lock, CalendarClock, History, Handshake } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { pode } from "@/lib/auth/permissoes";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -129,10 +129,15 @@ export default async function DetalheVeiculo({
           </CardContent>
         </Card>
 
-        {wa && v.status !== "vendido" && v.status !== "devolvido" && (
-          <Button asChild variant="whatsapp" size="lg">
-            <a href={wa} target="_blank" rel="noopener noreferrer"><MessageCircle /> Chamar no WhatsApp</a>
-          </Button>
+        {v.status !== "vendido" && v.status !== "devolvido" && (
+          <div className="grid gap-2 sm:grid-cols-2">
+            {wa && (
+              <Button asChild variant="whatsapp" size="lg">
+                <a href={wa} target="_blank" rel="noopener noreferrer"><MessageCircle /> Chamar no WhatsApp</a>
+              </Button>
+            )}
+            <VendaDoCarro veiculoId={id} />
+          </div>
         )}
 
         {gestao && (gestao.veiculo.pendencias?.length ?? 0) > 0 && (
@@ -240,6 +245,23 @@ export default async function DetalheVeiculo({
         )}
       </Conteudo>
     </>
+  );
+}
+
+async function VendaDoCarro({ veiculoId }: { veiculoId: string }) {
+  const supabase = await criarClienteServidor();
+  const { data } = await supabase.from("vendas").select("id, numero, status").eq("veiculo_id", veiculoId).in("status", ["rascunho", "aguardando_aprovacao"]).maybeSingle();
+  if (data) {
+    return (
+      <Button asChild variant="outline" size="lg">
+        <Link href={`/vendas/${data.id}`}><Handshake /> Venda {data.numero} em aprovação</Link>
+      </Button>
+    );
+  }
+  return (
+    <Button asChild size="lg">
+      <Link href={`/vendas/nova?veiculo=${veiculoId}`}><Handshake /> Registrar venda</Link>
+    </Button>
   );
 }
 

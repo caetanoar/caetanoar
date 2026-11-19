@@ -79,6 +79,48 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"consignantes": {
+                  Row: {
+                    "ativo": boolean,"atualizado_em": string,"atualizado_por": string | null,"chave_pix": string | null,"cidade": string | null,"criado_em": string,"criado_por": string | null,"dados_bancarios": string | null,"documento": string | null,"email": string | null,"endereco": string | null,"id": string,"nome": string,"observacoes": string | null,"telefone": string | null,"uf": string | null,"whatsapp": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"chave_pix"?: string | null,"cidade"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados_bancarios"?: string | null,"documento"?: string | null,"email"?: string | null,"endereco"?: string | null,"id"?: string,"nome": string,"observacoes"?: string | null,"telefone"?: string | null,"uf"?: string | null,"whatsapp"?: string | null
+                  }
+                  Update: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"chave_pix"?: string | null,"cidade"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados_bancarios"?: string | null,"documento"?: string | null,"email"?: string | null,"endereco"?: string | null,"id"?: string,"nome"?: string,"observacoes"?: string | null,"telefone"?: string | null,"uf"?: string | null,"whatsapp"?: string | null
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"fornecedores": {
+                  Row: {
+                    "ativo": boolean,"atualizado_em": string,"atualizado_por": string | null,"chave_pix": string | null,"cidade": string | null,"contato_nome": string | null,"criado_em": string,"criado_por": string | null,"dados_bancarios": string | null,"documento": string | null,"email": string | null,"id": string,"nome": string,"observacoes": string | null,"razao_social": string | null,"telefone": string | null,"tipo": Database["public"]['Enums']["tipo_fornecedor"],"tipo_pessoa": string | null,"uf": string | null,"whatsapp": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"chave_pix"?: string | null,"cidade"?: string | null,"contato_nome"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados_bancarios"?: string | null,"documento"?: string | null,"email"?: string | null,"id"?: string,"nome": string,"observacoes"?: string | null,"razao_social"?: string | null,"telefone"?: string | null,"tipo": Database["public"]['Enums']["tipo_fornecedor"],"tipo_pessoa"?: never,"uf"?: string | null,"whatsapp"?: string | null
+                  }
+                  Update: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"chave_pix"?: string | null,"cidade"?: string | null,"contato_nome"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados_bancarios"?: string | null,"documento"?: string | null,"email"?: string | null,"id"?: string,"nome"?: string,"observacoes"?: string | null,"razao_social"?: string | null,"telefone"?: string | null,"tipo"?: Database["public"]['Enums']["tipo_fornecedor"],"tipo_pessoa"?: never,"uf"?: string | null,"whatsapp"?: string | null
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"parceiros": {
+                  Row: {
+                    "ativo": boolean,"atualizado_em": string,"atualizado_por": string | null,"chave_pix": string | null,"cidade": string | null,"criado_em": string,"criado_por": string | null,"documento": string | null,"email": string | null,"id": string,"nome": string,"observacoes": string | null,"telefone": string | null,"tipo": Database["public"]['Enums']["tipo_parceiro"],"whatsapp": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"chave_pix"?: string | null,"cidade"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"documento"?: string | null,"email"?: string | null,"id"?: string,"nome": string,"observacoes"?: string | null,"telefone"?: string | null,"tipo"?: Database["public"]['Enums']["tipo_parceiro"],"whatsapp"?: string | null
+                  }
+                  Update: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"chave_pix"?: string | null,"cidade"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"documento"?: string | null,"email"?: string | null,"id"?: string,"nome"?: string,"observacoes"?: string | null,"telefone"?: string | null,"tipo"?: Database["public"]['Enums']["tipo_parceiro"],"whatsapp"?: string | null
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"usuarios": {
                   Row: {
                     "ativo": boolean,"atualizado_em": string,"atualizado_por": string | null,"criado_em": string,"criado_por": string | null,"email": string,"id": string,"nome": string,"papel": Database["public"]['Enums']["papel_usuario"],"telefone": string | null
@@ -101,6 +143,9 @@ export type Database = {
           Functions: {
             "atualizar_meu_perfil":
 { Args: { "p_nome": string,"p_telefone": string }; Returns: undefined
+                           },
+"documento_valido":
+{ Args: { "p": string }; Returns: boolean
                            },
 "is_ativo":
 { Args: Record<PropertyKey, never>; Returns: boolean
@@ -128,7 +173,7 @@ export type Database = {
                            }
           }
           Enums: {
-            "categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","papel_usuario": "dono"|"gerente"|"vendedor"
+            "categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","papel_usuario": "dono"|"gerente"|"vendedor","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_parceiro": "indicacao"|"corretor"|"outro"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -248,7 +293,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"papel_usuario": ["dono", "gerente", "vendedor"]
+            "categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"papel_usuario": ["dono", "gerente", "vendedor"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_parceiro": ["indicacao", "corretor", "outro"]
           }
         }
 } as const

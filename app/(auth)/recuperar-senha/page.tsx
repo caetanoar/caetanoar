@@ -1,10 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { recuperarSenha } from "../acoes";
-import { ESTADO_INICIAL } from "@/lib/acoes";
+import { useAcao } from "@/components/form/use-acao";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,11 +11,11 @@ import { Alerta } from "@/components/ui/misc";
 import { Campo } from "@/components/form/campo";
 
 export default function PaginaRecuperarSenha() {
-  const [estado, acao, pendente] = useActionState(recuperarSenha, ESTADO_INICIAL);
+  const [estado, acao, pendente] = useAcao(recuperarSenha, { toastErro: false, toastSucesso: false });
   return (
     <Card>
       <CardContent className="p-5">
-        <form action={acao} className="flex flex-col gap-4">
+        <form onSubmit={acao} className="flex flex-col gap-4">
           <div>
             <h2 className="font-semibold">Recuperar senha</h2>
             <p className="text-sm text-muted-foreground">Enviaremos um link para você criar uma nova senha.</p>

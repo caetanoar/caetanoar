@@ -35,7 +35,7 @@ export function ConvidarUsuario() {
           <DialogTitle>Convidar usuário</DialogTitle>
           <DialogDescription>A pessoa recebe um e-mail para criar a própria senha.</DialogDescription>
         </DialogHeader>
-        <form action={acao} className="flex flex-col gap-4">
+        <form onSubmit={acao} className="flex flex-col gap-4">
           {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
           <Campo id="conv-nome" rotulo="Nome" erro={estado.erros?.nome} obrigatorio>
             <Input name="nome" autoComplete="off" />
@@ -72,7 +72,7 @@ function EditarUsuario({ usuario, eu }: { usuario: Usuario; eu: boolean }) {
           <DialogTitle>{usuario.nome}</DialogTitle>
           <DialogDescription>{usuario.email}</DialogDescription>
         </DialogHeader>
-        <form action={acao} className="flex flex-col gap-4">
+        <form onSubmit={acao} className="flex flex-col gap-4">
           <input type="hidden" name="id" value={usuario.id} />
           {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
           {eu && <Alerta variante="aviso">Você não pode rebaixar nem desativar o próprio acesso.</Alerta>}

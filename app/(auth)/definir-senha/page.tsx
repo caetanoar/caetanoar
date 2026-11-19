@@ -1,9 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
 import { Loader2 } from "lucide-react";
 import { definirSenha } from "../acoes";
-import { ESTADO_INICIAL } from "@/lib/acoes";
+import { useAcao } from "@/components/form/use-acao";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,11 +10,11 @@ import { Alerta } from "@/components/ui/misc";
 import { Campo } from "@/components/form/campo";
 
 export default function PaginaDefinirSenha() {
-  const [estado, acao, pendente] = useActionState(definirSenha, ESTADO_INICIAL);
+  const [estado, acao, pendente] = useAcao(definirSenha, { toastErro: false, toastSucesso: false });
   return (
     <Card>
       <CardContent className="p-5">
-        <form action={acao} className="flex flex-col gap-4">
+        <form onSubmit={acao} className="flex flex-col gap-4">
           <div>
             <h2 className="font-semibold">Criar senha</h2>
             <p className="text-sm text-muted-foreground">Escolha uma senha com pelo menos 8 caracteres.</p>

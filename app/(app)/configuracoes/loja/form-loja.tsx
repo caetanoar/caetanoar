@@ -1,10 +1,8 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
-import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { salvarLoja } from "../acoes";
-import { ESTADO_INICIAL } from "@/lib/acoes";
+import { useAcao } from "@/components/form/use-acao";
 import type { Database } from "@/lib/supabase/database.types";
 import { Campo } from "@/components/form/campo";
 import { Input } from "@/components/ui/input";
@@ -17,13 +15,10 @@ import { Alerta } from "@/components/ui/misc";
 type Config = Database["public"]["Tables"]["configuracoes"]["Row"];
 
 export function FormLoja({ config }: { config: Config }) {
-  const [estado, acao, pendente] = useActionState(salvarLoja, ESTADO_INICIAL);
-  useEffect(() => {
-    if (estado.ok && estado.mensagem) toast.success(estado.mensagem);
-  }, [estado]);
+  const [estado, acao, pendente] = useAcao(salvarLoja);
   const e = estado.erros ?? {};
   return (
-    <form action={acao} className="flex flex-col gap-4">
+    <form onSubmit={acao} className="flex flex-col gap-4">
       {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
       <Card>
         <CardHeader><CardTitle>Loja</CardTitle></CardHeader>

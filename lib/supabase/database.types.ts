@@ -65,6 +65,20 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"categorias_financeiras": {
+                  Row: {
+                    "ativa": boolean,"atualizado_em": string,"atualizado_por": string | null,"criado_em": string,"criado_por": string | null,"grupo": string,"id": string,"natureza": Database["public"]['Enums']["natureza_categoria"],"nome": string,"sistema": string | null,"tipo": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ativa"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"grupo"?: string,"id"?: string,"natureza"?: Database["public"]['Enums']["natureza_categoria"],"nome": string,"sistema"?: string | null,"tipo": string
+                  }
+                  Update: {
+                    "ativa"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"grupo"?: string,"id"?: string,"natureza"?: Database["public"]['Enums']["natureza_categoria"],"nome"?: string,"sistema"?: string | null,"tipo"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"clientes": {
                   Row: {
                     "aceita_marketing": boolean,"anonimizado_em": string | null,"atualizado_em": string,"atualizado_por": string | null,"cidade": string | null,"criado_em": string,"criado_por": string | null,"email": string | null,"etapa": Database["public"]['Enums']["etapa_funil"],"id": string,"motivo_perda": Database["public"]['Enums']["motivo_perda"] | null,"motivo_perda_detalhe": string | null,"nome": string,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_lead"],"parceiro_id": string | null,"proximo_contato_em": string | null,"telefone": string | null,"uf": string | null,"ultimo_contato_em": string | null,"vendedor_id": string | null,"whatsapp": string | null
@@ -265,16 +279,30 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
-                },"custos_veiculo": {
+                },"contas_financeiras": {
                   Row: {
-                    "atualizado_em": string,"atualizado_por": string | null,"cobrar_do_consignante": boolean,"criado_em": string,"criado_por": string | null,"data": string,"descricao": string | null,"fornecedor_id": string | null,"id": string,"observacoes": string | null,"tipo": Database["public"]['Enums']["tipo_custo"],"valor": number,"veiculo_id": string
+                    "agencia": string | null,"ativa": boolean,"atualizado_em": string,"atualizado_por": string | null,"banco": string | null,"conta": string | null,"criado_em": string,"criado_por": string | null,"data_saldo_inicial": string,"id": string,"nome": string,"observacoes": string | null,"saldo_inicial": number,"tipo": Database["public"]['Enums']["tipo_conta"]
                   }
                   ComputedFields: never
                   Insert: {
-                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cobrar_do_consignante"?: boolean,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor_id"?: string | null,"id"?: string,"observacoes"?: string | null,"tipo": Database["public"]['Enums']["tipo_custo"],"valor": number,"veiculo_id": string
+                    "agencia"?: string | null,"ativa"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"banco"?: string | null,"conta"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data_saldo_inicial"?: string,"id"?: string,"nome": string,"observacoes"?: string | null,"saldo_inicial"?: number,"tipo"?: Database["public"]['Enums']["tipo_conta"]
                   }
                   Update: {
-                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cobrar_do_consignante"?: boolean,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor_id"?: string | null,"id"?: string,"observacoes"?: string | null,"tipo"?: Database["public"]['Enums']["tipo_custo"],"valor"?: number,"veiculo_id"?: string
+                    "agencia"?: string | null,"ativa"?: boolean,"atualizado_em"?: string,"atualizado_por"?: string | null,"banco"?: string | null,"conta"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data_saldo_inicial"?: string,"id"?: string,"nome"?: string,"observacoes"?: string | null,"saldo_inicial"?: number,"tipo"?: Database["public"]['Enums']["tipo_conta"]
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"custos_veiculo": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"cobrar_do_consignante": boolean,"criado_em": string,"criado_por": string | null,"data": string,"descricao": string | null,"fornecedor_id": string | null,"id": string,"lancar_financeiro": boolean,"observacoes": string | null,"tipo": Database["public"]['Enums']["tipo_custo"],"valor": number,"veiculo_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cobrar_do_consignante"?: boolean,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor_id"?: string | null,"id"?: string,"lancar_financeiro"?: boolean,"observacoes"?: string | null,"tipo": Database["public"]['Enums']["tipo_custo"],"valor": number,"veiculo_id": string
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cobrar_do_consignante"?: boolean,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor_id"?: string | null,"id"?: string,"lancar_financeiro"?: boolean,"observacoes"?: string | null,"tipo"?: Database["public"]['Enums']["tipo_custo"],"valor"?: number,"veiculo_id"?: string
                   }
                   Relationships: [
                     {
@@ -345,6 +373,104 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"lancamentos": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"categoria_id": string,"cliente_id": string | null,"comissao_id": string | null,"conciliado": boolean,"consignante_id": string | null,"conta_id": string | null,"criado_em": string,"criado_por": string | null,"custo_veiculo_id": string | null,"data_competencia": string,"data_pagamento": string | null,"data_vencimento": string,"descricao": string,"extrato_transacao_id": string | null,"forma_pagamento": Database["public"]['Enums']["forma_pagamento"] | null,"fornecedor_id": string | null,"garantia_acionamento_id": string | null,"grupo_parcelas": string | null,"id": string,"nota_fiscal_id": string | null,"observacoes": string | null,"parceiro_id": string | null,"parcela_numero": number | null,"parcela_total": number | null,"status": Database["public"]['Enums']["status_lancamento"],"tipo": Database["public"]['Enums']["tipo_lancamento"],"transferencia_id": string | null,"usuario_id": string | null,"valor": number,"veiculo_id": string | null,"venda_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"categoria_id": string,"cliente_id"?: string | null,"comissao_id"?: string | null,"conciliado"?: boolean,"consignante_id"?: string | null,"conta_id"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"custo_veiculo_id"?: string | null,"data_competencia"?: string,"data_pagamento"?: string | null,"data_vencimento"?: string,"descricao": string,"extrato_transacao_id"?: string | null,"forma_pagamento"?: Database["public"]['Enums']["forma_pagamento"] | null,"fornecedor_id"?: string | null,"garantia_acionamento_id"?: string | null,"grupo_parcelas"?: string | null,"id"?: string,"nota_fiscal_id"?: string | null,"observacoes"?: string | null,"parceiro_id"?: string | null,"parcela_numero"?: number | null,"parcela_total"?: number | null,"status"?: Database["public"]['Enums']["status_lancamento"],"tipo": Database["public"]['Enums']["tipo_lancamento"],"transferencia_id"?: string | null,"usuario_id"?: string | null,"valor": number,"veiculo_id"?: string | null,"venda_id"?: string | null
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"categoria_id"?: string,"cliente_id"?: string | null,"comissao_id"?: string | null,"conciliado"?: boolean,"consignante_id"?: string | null,"conta_id"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"custo_veiculo_id"?: string | null,"data_competencia"?: string,"data_pagamento"?: string | null,"data_vencimento"?: string,"descricao"?: string,"extrato_transacao_id"?: string | null,"forma_pagamento"?: Database["public"]['Enums']["forma_pagamento"] | null,"fornecedor_id"?: string | null,"garantia_acionamento_id"?: string | null,"grupo_parcelas"?: string | null,"id"?: string,"nota_fiscal_id"?: string | null,"observacoes"?: string | null,"parceiro_id"?: string | null,"parcela_numero"?: number | null,"parcela_total"?: number | null,"status"?: Database["public"]['Enums']["status_lancamento"],"tipo"?: Database["public"]['Enums']["tipo_lancamento"],"transferencia_id"?: string | null,"usuario_id"?: string | null,"valor"?: number,"veiculo_id"?: string | null,"venda_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lancamentos_categoria_id_fkey"
+      columns: ["categoria_id"]
+isOneToOne: false
+      referencedRelation: "categorias_financeiras"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_consignante_id_fkey"
+      columns: ["consignante_id"]
+isOneToOne: false
+      referencedRelation: "consignantes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_conta_id_fkey"
+      columns: ["conta_id"]
+isOneToOne: false
+      referencedRelation: "contas_financeiras"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_conta_id_fkey"
+      columns: ["conta_id"]
+isOneToOne: false
+      referencedRelation: "v_saldos_contas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_custo_veiculo_id_fkey"
+      columns: ["custo_veiculo_id"]
+isOneToOne: false
+      referencedRelation: "custos_veiculo"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_fornecedor_id_fkey"
+      columns: ["fornecedor_id"]
+isOneToOne: false
+      referencedRelation: "fornecedores"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_parceiro_id_fkey"
+      columns: ["parceiro_id"]
+isOneToOne: false
+      referencedRelation: "parceiros"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_transferencia_id_fkey"
+      columns: ["transferencia_id"]
+isOneToOne: false
+      referencedRelation: "transferencias"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_usuario_id_fkey"
+      columns: ["usuario_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"parceiros": {
                   Row: {
                     "ativo": boolean,"atualizado_em": string,"atualizado_por": string | null,"chave_pix": string | null,"cidade": string | null,"criado_em": string,"criado_por": string | null,"documento": string | null,"email": string | null,"id": string,"nome": string,"observacoes": string | null,"telefone": string | null,"tipo": Database["public"]['Enums']["tipo_parceiro"],"whatsapp": string | null
@@ -358,6 +484,44 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"transferencias": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"conta_destino_id": string,"conta_origem_id": string,"criado_em": string,"criado_por": string | null,"data": string,"descricao": string | null,"id": string,"valor": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"conta_destino_id": string,"conta_origem_id": string,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"id"?: string,"valor": number
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"conta_destino_id"?: string,"conta_origem_id"?: string,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"id"?: string,"valor"?: number
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "transferencias_conta_destino_id_fkey"
+      columns: ["conta_destino_id"]
+isOneToOne: false
+      referencedRelation: "contas_financeiras"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "transferencias_conta_destino_id_fkey"
+      columns: ["conta_destino_id"]
+isOneToOne: false
+      referencedRelation: "v_saldos_contas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "transferencias_conta_origem_id_fkey"
+      columns: ["conta_origem_id"]
+isOneToOne: false
+      referencedRelation: "contas_financeiras"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "transferencias_conta_origem_id_fkey"
+      columns: ["conta_origem_id"]
+isOneToOne: false
+      referencedRelation: "v_saldos_contas"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"usuarios": {
                   Row: {
@@ -542,6 +706,106 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"v_lancamentos": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"categoria_grupo": string,"categoria_id": string,"categoria_nome": string,"cliente_id": string | null,"comissao_id": string | null,"conciliado": boolean,"consignante_id": string | null,"conta_id": string | null,"conta_nome": string | null,"criado_em": string,"criado_por": string | null,"custo_veiculo_id": string | null,"data_competencia": string,"data_pagamento": string | null,"data_vencimento": string,"descricao": string,"extrato_transacao_id": string | null,"forma_pagamento": Database["public"]['Enums']["forma_pagamento"] | null,"fornecedor_id": string | null,"garantia_acionamento_id": string | null,"grupo_parcelas": string | null,"id": string,"natureza": Database["public"]['Enums']["natureza_categoria"],"nota_fiscal_id": string | null,"observacoes": string | null,"parceiro_id": string | null,"parcela_numero": number | null,"parcela_total": number | null,"pessoa": string | null,"status": Database["public"]['Enums']["status_lancamento"],"tipo": Database["public"]['Enums']["tipo_lancamento"],"transferencia_id": string | null,"usuario_id": string | null,"valor": number,"valor_sinal": number | null,"veiculo_id": string | null,"veiculo_nome": string | null,"vencido": boolean | null,"venda_id": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "lancamentos_categoria_id_fkey"
+      columns: ["categoria_id"]
+isOneToOne: false
+      referencedRelation: "categorias_financeiras"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_consignante_id_fkey"
+      columns: ["consignante_id"]
+isOneToOne: false
+      referencedRelation: "consignantes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_conta_id_fkey"
+      columns: ["conta_id"]
+isOneToOne: false
+      referencedRelation: "contas_financeiras"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_conta_id_fkey"
+      columns: ["conta_id"]
+isOneToOne: false
+      referencedRelation: "v_saldos_contas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_custo_veiculo_id_fkey"
+      columns: ["custo_veiculo_id"]
+isOneToOne: false
+      referencedRelation: "custos_veiculo"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_fornecedor_id_fkey"
+      columns: ["fornecedor_id"]
+isOneToOne: false
+      referencedRelation: "fornecedores"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_parceiro_id_fkey"
+      columns: ["parceiro_id"]
+isOneToOne: false
+      referencedRelation: "parceiros"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_transferencia_id_fkey"
+      columns: ["transferencia_id"]
+isOneToOne: false
+      referencedRelation: "transferencias"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_usuario_id_fkey"
+      columns: ["usuario_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"v_saldos_contas": {
+                  Row: {
+                    "a_pagar": number | null,"a_receber": number | null,"ativa": boolean,"banco": string | null,"data_saldo_inicial": string,"id": string,"nome": string,"saldo_atual": number | null,"saldo_inicial": number,"tipo": Database["public"]['Enums']["tipo_conta"]
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    
+                  ]
                 },"v_veiculos": {
                   Row: {
                     "ano_fabricacao": number | null,"ano_modelo": number | null,"atualizado_em": string,"atualizado_por": string | null,"cambio": Database["public"]['Enums']["cambio"] | null,"chassi": string | null,"codigo_fipe": string | null,"combustivel": Database["public"]['Enums']["combustivel"] | null,"cor": string | null,"criado_em": string,"criado_por": string | null,"data_entrada": string,"data_saida": string | null,"descricao": string | null,"dias_em_estoque": number | null,"fipe_referencia": string | null,"foto_capa": string | null,"id": string,"km": number | null,"laudo_cautelar": boolean,"laudo_resultado": Database["public"]['Enums']["resultado_laudo"] | null,"marca": string,"modelo": string,"motor": string | null,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_veiculo"],"placa": string | null,"portas": number | null,"preco_anunciado": number | null,"preco_negociavel": number | null,"qtd_fotos": number | null,"renavam": string | null,"reservado_ate": string | null,"reservado_para_cliente_id": string | null,"status": Database["public"]['Enums']["status_veiculo"],"tipo": Database["public"]['Enums']["tipo_veiculo"],"valor_fipe": number | null,"versao": string | null
@@ -618,13 +882,25 @@ isOneToOne: false
 "atualizar_meu_perfil":
 { Args: { "p_nome": string,"p_telefone": string }; Returns: undefined
                            },
+"baixar_lancamento":
+{ Args: { "p_conta": string,"p_data": string,"p_forma"?: Database["public"]['Enums']["forma_pagamento"],"p_id": string,"p_valor"?: number }; Returns: undefined
+                           },
+"categoria_sistema":
+{ Args: { "p_codigo": string }; Returns: string
+                           },
 "cliente_existe":
 { Args: { "p_telefone": string }; Returns: {
               "cliente_id": string,"e_meu": boolean,"primeiro_nome": string,"vendedor": string
             }[]
                            },
+"criar_lancamento":
+{ Args: { "p_dados": Json,"p_parcelas"?: number }; Returns: string
+                           },
 "documento_valido":
 { Args: { "p": string }; Returns: boolean
+                           },
+"estornar_baixa":
+{ Args: { "p_id": string }; Returns: undefined
                            },
 "hoje":
 { Args: Record<PropertyKey, never>; Returns: string
@@ -674,10 +950,13 @@ isOneToOne: false
                            },
 "salvar_veiculo":
 { Args: { "p_consignacao"?: Json,"p_id": string,"p_sigilo"?: Json,"p_veiculo": Json }; Returns: string
+                           },
+"transferir":
+{ Args: { "p_data"?: string,"p_descricao"?: string,"p_destino": string,"p_origem": string,"p_valor": number }; Returns: string
                            }
           }
           Enums: {
-            "cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_consignacao": "vigente"|"vendido"|"devolvido","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
+            "cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","forma_pagamento": "dinheiro"|"pix"|"ted"|"boleto"|"cartao_credito"|"cartao_debito"|"financiamento"|"cheque"|"permuta"|"outro","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","natureza_categoria": "operacional"|"terceiros"|"transferencia"|"estoque","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_consignacao": "vigente"|"vendido"|"devolvido","status_lancamento": "pendente"|"pago"|"cancelado","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","tipo_conta": "caixa"|"banco"|"carteira_digital","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_lancamento": "receita"|"despesa"|"transferencia_saida"|"transferencia_entrada","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -797,7 +1076,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
+            "cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"forma_pagamento": ["dinheiro", "pix", "ted", "boleto", "cartao_credito", "cartao_debito", "financiamento", "cheque", "permuta", "outro"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"natureza_categoria": ["operacional", "terceiros", "transferencia", "estoque"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_lancamento": ["pendente", "pago", "cancelado"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"tipo_conta": ["caixa", "banco", "carteira_digital"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_lancamento": ["receita", "despesa", "transferencia_saida", "transferencia_entrada"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
           }
         }
 } as const

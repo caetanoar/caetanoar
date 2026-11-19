@@ -9,7 +9,7 @@ const ITENS = [
   { href: "/configuracoes/usuarios", titulo: "Usuários", desc: "Convidar, definir perfil e desativar acessos", icone: Users },
   { href: "/configuracoes/comissoes", titulo: "Regras de comissão", desc: "Consignado, vendedores e parceiros", icone: Percent },
   { href: "/configuracoes/metas", titulo: "Metas", desc: "Metas mensais da loja e de cada vendedor", icone: Target },
-  { href: "/configuracoes/categorias", titulo: "Categorias financeiras", desc: "Receitas e despesas", icone: Tags },
+  { href: "/financeiro/categorias", titulo: "Categorias financeiras", desc: "Receitas e despesas", icone: Tags },
   { href: "/configuracoes/fiscal", titulo: "Fiscal", desc: "CNPJ, regime, CFOPs e provedor de NF-e", icone: FileText },
   { href: "/configuracoes/integracoes", titulo: "Integrações", desc: "Chaves de API, webhooks, Open Finance e IA", icone: Plug },
   { href: "/configuracoes/auditoria", titulo: "Auditoria", desc: "Quem criou, alterou ou excluiu cada registro", icone: History },

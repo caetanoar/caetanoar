@@ -1,40 +1,45 @@
 "use client";
 
-import { startTransition, useActionState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { ESTADO_INICIAL, type EstadoAcao } from "@/lib/acoes";
 
 /**
- * useActionState + toast de sucesso/erro + callback de sucesso.
- * Retorna um handler para `onSubmit` (em vez de `action`), assim o React
- * não limpa o formulário quando a validação falha.
+ * Executa uma Server Action a partir do `onSubmit` de um formulário:
+ * - não limpa o formulário quando a validação falha;
+ * - mostra o aviso assim que o servidor responde (mesmo que o componente
+ *   saia da tela com a atualização, como um item que deixa uma lista).
  */
 export function useAcao<T = unknown>(
   acao: (estado: EstadoAcao<T>, fd: FormData) => Promise<EstadoAcao<T>>,
   opcoes: { onSucesso?: (estado: EstadoAcao<T>) => void; toastErro?: boolean; toastSucesso?: boolean } = {},
 ) {
-  const [estado, despachar, pendente] = useActionState(acao, ESTADO_INICIAL as EstadoAcao<T>);
-  const ultimo = useRef(estado);
-  const { onSucesso, toastErro = true, toastSucesso = true } = opcoes;
-
+  const [estado, setEstado] = useState<EstadoAcao<T>>(ESTADO_INICIAL as EstadoAcao<T>);
+  const [pendente, iniciar] = useTransition();
+  const atual = useRef(estado);
+  const opcoesRef = useRef(opcoes);
   useEffect(() => {
-    if (ultimo.current === estado) return;
-    ultimo.current = estado;
-    if (estado.ok) {
-      if (estado.mensagem && toastSucesso) toast.success(estado.mensagem);
-      onSucesso?.(estado);
-    } else if (estado.erro && toastErro) {
-      toast.error(estado.erro);
-    }
-  }, [estado, onSucesso, toastErro, toastSucesso]);
+    opcoesRef.current = opcoes;
+  });
 
   const aoEnviar = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const fd = new FormData(e.currentTarget, (e.nativeEvent as SubmitEvent).submitter);
-      startTransition(() => despachar(fd));
+      iniciar(async () => {
+        const r = await acao(atual.current, fd);
+        atual.current = r;
+        setEstado(r);
+        const { onSucesso, toastErro = true, toastSucesso = true } = opcoesRef.current;
+        if (r.ok) {
+          if (r.mensagem && toastSucesso) toast.success(r.mensagem);
+          onSucesso?.(r);
+        } else if (r.erro && toastErro) {
+          toast.error(r.erro);
+        }
+      });
     },
-    [despachar],
+    [acao],
   );
 
   return [estado, aoEnviar, pendente] as const;

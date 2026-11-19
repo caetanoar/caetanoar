@@ -125,6 +125,7 @@ export const esquemaCusto = z.object({
   data: dataOpc,
   fornecedor_id: uuidOpc,
   cobrar_do_consignante: z.preprocess((v) => v === "true" || v === "on", z.boolean()),
+  lancar_financeiro: z.preprocess((v) => v === "true" || v === "on", z.boolean()),
 });
 
 export const esquemaHistorico = z.object({

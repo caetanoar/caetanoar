@@ -99,7 +99,7 @@ export function CustosVeiculo({
           {consignado && (
             <Label className="font-normal"><Checkbox name="cobrar_do_consignante" value="true" /> Descontar do repasse ao dono do carro</Label>
           )}
-          <p className="text-xs text-muted-foreground">O lançamento no financeiro (conta a pagar) entra junto quando o módulo financeiro estiver ativo.</p>
+          <Label className="font-normal"><Checkbox name="lancar_financeiro" value="true" defaultChecked /> Gerar conta a pagar no financeiro</Label>
           <div className="flex gap-2">
             <Button type="button" variant="outline" className="flex-1" onClick={() => setAberto(false)}>Cancelar</Button>
             <Button type="submit" className="flex-1" disabled={pendente}>{pendente && <Loader2 className="animate-spin" />} Lançar</Button>

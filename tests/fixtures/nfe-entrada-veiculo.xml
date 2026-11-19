@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+  <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe Id="NFe31261116670085000155550010000123451000123456" versao="4.00">
+      <ide>
+        <cUF>31</cUF><cNF>00012345</cNF><natOp>VENDA DE ATIVO IMOBILIZADO</natOp><mod>55</mod><serie>1</serie><nNF>12345</nNF>
+        <dhEmi>2026-11-10T10:30:00-03:00</dhEmi><tpNF>1</tpNF><idDest>1</idDest><cMunFG>3106200</cMunFG><tpAmb>1</tpAmb>
+      </ide>
+      <emit>
+        <CNPJ>16670085000155</CNPJ><xNome>LOCALIZA RENT A CAR SA</xNome><xFant>LOCALIZA</xFant>
+        <enderEmit><xLgr>AV BERNARDO DE VASCONCELOS</xLgr><nro>377</nro><xBairro>CACHOEIRINHA</xBairro><cMun>3106200</cMun><xMun>BELO HORIZONTE</xMun><UF>MG</UF><CEP>31150000</CEP></enderEmit>
+        <IE>0623079040081</IE><CRT>3</CRT>
+      </emit>
+      <dest>
+        <CNPJ>11222333000181</CNPJ><xNome>CAETANO AUTO LTDA</xNome>
+        <enderDest><xLgr>RUA GOIAS</xLgr><nro>100</nro><xBairro>CENTRO</xBairro><cMun>3122306</cMun><xMun>DIVINOPOLIS</xMun><UF>MG</UF></enderDest>
+      </dest>
+      <det nItem="1">
+        <prod>
+          <cProd>ONIX-RQH2B45</cProd><cEAN>SEM GTIN</cEAN><xProd>CHEVROLET ONIX 1.0 TURBO LT AT 2023/2024 PRATA PLACA RQH2B45</xProd>
+          <NCM>87032100</NCM><CFOP>5551</CFOP><uCom>UN</uCom><qCom>1.0000</qCom><vUnCom>72500.0000000000</vUnCom><vProd>72500.00</vProd>
+          <veicProd>
+            <tpOp>2</tpOp><chassi>9BGEB69H0RG123456</chassi><cCor>02</cCor><xCor>PRATA</xCor><pot>116</pot><cilin>999</cilin>
+            <tpComb>16</tpComb><nMotor>B10XFT123456</nMotor><anoMod>2024</anoMod><anoFab>2023</anoFab><tpPint>M</tpPint><tpVeic>06</tpVeic>
+            <espVeic>1</espVeic><VIN>R</VIN><condVeic>1</condVeic><cMod>123456</cMod><lota>5</lota><tpRest>0</tpRest>
+          </veicProd>
+        </prod>
+        <imposto><vTotTrib>0.00</vTotTrib><ICMS><ICMS40><orig>0</orig><CST>41</CST></ICMS40></ICMS></imposto>
+      </det>
+      <total><ICMSTot><vBC>0.00</vBC><vICMS>0.00</vICMS><vProd>72500.00</vProd><vNF>72500.00</vNF></ICMSTot></total>
+      <infAdic><infCpl>RENAVAM 01234567890</infCpl></infAdic>
+    </infNFe>
+  </NFe>
+  <protNFe versao="4.00"><infProt><tpAmb>1</tpAmb><chNFe>31261116670085000155550010000123451000123456</chNFe><dhRecbto>2026-11-10T10:31:00-03:00</dhRecbto><nProt>131260000123456</nProt><cStat>100</cStat><xMotivo>Autorizado o uso da NF-e</xMotivo></infProt></protNFe>
+</nfeProc>

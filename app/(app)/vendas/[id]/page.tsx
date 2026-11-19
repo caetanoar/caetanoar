@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Pencil, ShieldCheck, Car, Lock, Coins, Receipt, Paperclip } from "lucide-react";
+import { Pencil, ShieldCheck, Car, Lock, Coins, Receipt, Paperclip, FileText } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { carregarAnexos } from "@/lib/arquivos/consultas";
@@ -206,6 +206,7 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
                 ))}
               </CardContent>
             </Card>
+            <NotaDaVenda vendaId={id} />
             {garantia && (
               <Link href={`/garantias/${garantia.id}`} className="flex items-center gap-2 rounded-xl border bg-card p-4 hover:bg-secondary/60">
                 <ShieldCheck className="size-5 text-success" />
@@ -240,5 +241,22 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
         </div>
       </Conteudo>
     </>
+  );
+}
+
+async function NotaDaVenda({ vendaId }: { vendaId: string }) {
+  const supabase = await criarClienteServidor();
+  const { data } = await supabase.from("notas_fiscais").select("id, numero, status, simulada").eq("venda_id", vendaId).eq("direcao", "saida").order("criado_em", { ascending: false }).limit(1).maybeSingle();
+  if (data && data.status !== "rejeitada" && data.status !== "cancelada") {
+    return (
+      <Link href={`/fiscal/${data.id}`} className="flex items-center gap-2 rounded-xl border bg-card p-4 hover:bg-secondary/60">
+        <FileText className="size-5 text-primary" />
+        <span className="flex-1 text-sm">NF-e {data.numero ?? ""} {data.simulada ? "(simulada)" : ""}</span>
+        <Badge variant={data.status === "autorizada" ? "success" : "warning"}>{data.status}</Badge>
+      </Link>
+    );
+  }
+  return (
+    <Button asChild variant="outline"><Link href={`/fiscal/emitir?venda=${vendaId}`}><FileText /> Emitir NF-e de venda</Link></Button>
   );
 }

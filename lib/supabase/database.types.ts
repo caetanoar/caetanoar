@@ -277,6 +277,12 @@ isOneToOne: false
       foreignKeyName: "comissoes_venda_id_fkey"
       columns: ["venda_id"]
 isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "comissoes_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
       referencedRelation: "vendas"
       referencedColumns: ["id"]
     }
@@ -291,6 +297,20 @@ isOneToOne: false
                   }
                   Update: {
                     "alerta_contas_dias"?: number,"alerta_garantia_dias"?: number,"assinatura"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string,"criado_em"?: string,"criado_por"?: string | null,"estoque_parado_dias"?: number,"garantia_cobertura_padrao"?: string | null,"garantia_dias_padrao"?: number,"id"?: boolean,"nome_loja"?: string,"recebimento_consignado_padrao"?: string,"regiao_anuncio"?: string,"telefones_assinatura"?: string,"uf"?: string,"whatsapp_numero"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"configuracoes_fiscais": {
+                  Row: {
+                    "ambiente": string,"atualizado_em": string,"atualizado_por": string | null,"bairro": string | null,"cep": string | null,"cfop_devolucao_consignacao": string | null,"cfop_entrada_compra": string | null,"cfop_entrada_consignacao": string | null,"cfop_venda_consignado": string | null,"cfop_venda_proprio": string | null,"cfop_venda_proprio_fora_uf": string | null,"cnpj": string | null,"codigo_municipio": string,"complemento": string | null,"criado_em": string,"criado_por": string | null,"csosn_cst_padrao": string | null,"email": string | null,"id": boolean,"informacoes_complementares": string | null,"inscricao_estadual": string | null,"inscricao_municipal": string | null,"logradouro": string | null,"municipio": string,"natureza_venda": string,"ncm_veiculos": string | null,"nome_fantasia": string | null,"numero": string | null,"razao_social": string | null,"regime_tributario": string | null,"serie_nfe": number,"telefone": string | null,"uf": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ambiente"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"bairro"?: string | null,"cep"?: string | null,"cfop_devolucao_consignacao"?: string | null,"cfop_entrada_compra"?: string | null,"cfop_entrada_consignacao"?: string | null,"cfop_venda_consignado"?: string | null,"cfop_venda_proprio"?: string | null,"cfop_venda_proprio_fora_uf"?: string | null,"cnpj"?: string | null,"codigo_municipio"?: string,"complemento"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"csosn_cst_padrao"?: string | null,"email"?: string | null,"id"?: boolean,"informacoes_complementares"?: string | null,"inscricao_estadual"?: string | null,"inscricao_municipal"?: string | null,"logradouro"?: string | null,"municipio"?: string,"natureza_venda"?: string,"ncm_veiculos"?: string | null,"nome_fantasia"?: string | null,"numero"?: string | null,"razao_social"?: string | null,"regime_tributario"?: string | null,"serie_nfe"?: number,"telefone"?: string | null,"uf"?: string
+                  }
+                  Update: {
+                    "ambiente"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"bairro"?: string | null,"cep"?: string | null,"cfop_devolucao_consignacao"?: string | null,"cfop_entrada_compra"?: string | null,"cfop_entrada_consignacao"?: string | null,"cfop_venda_consignado"?: string | null,"cfop_venda_proprio"?: string | null,"cfop_venda_proprio_fora_uf"?: string | null,"cnpj"?: string | null,"codigo_municipio"?: string,"complemento"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"csosn_cst_padrao"?: string | null,"email"?: string | null,"id"?: boolean,"informacoes_complementares"?: string | null,"inscricao_estadual"?: string | null,"inscricao_municipal"?: string | null,"logradouro"?: string | null,"municipio"?: string,"natureza_venda"?: string,"ncm_veiculos"?: string | null,"nome_fantasia"?: string | null,"numero"?: string | null,"razao_social"?: string | null,"regime_tributario"?: string | null,"serie_nfe"?: number,"telefone"?: string | null,"uf"?: string
                   }
                   Relationships: [
                     
@@ -517,6 +537,12 @@ isOneToOne: true
       foreignKeyName: "garantias_venda_id_fkey"
       columns: ["venda_id"]
 isOneToOne: true
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "garantias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: true
       referencedRelation: "vendas"
       referencedColumns: ["id"]
     }
@@ -652,6 +678,18 @@ isOneToOne: false
       referencedRelation: "garantias_acionamentos"
       referencedColumns: ["id"]
     },{
+      foreignKeyName: "lancamentos_nota_fk"
+      columns: ["nota_fiscal_id"]
+isOneToOne: false
+      referencedRelation: "notas_fiscais"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_nota_fk"
+      columns: ["nota_fiscal_id"]
+isOneToOne: false
+      referencedRelation: "v_notas_fiscais"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "lancamentos_parceiro_id_fkey"
       columns: ["parceiro_id"]
 isOneToOne: false
@@ -709,7 +747,163 @@ isOneToOne: false
       foreignKeyName: "lancamentos_venda_fk"
       columns: ["venda_id"]
 isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_venda_fk"
+      columns: ["venda_id"]
+isOneToOne: false
       referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"notas_fiscais": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"cfop": string | null,"chave_acesso": string | null,"cliente_id": string | null,"consignante_id": string | null,"criado_em": string,"criado_por": string | null,"dados": Json | null,"data_emissao": string | null,"destinatario_documento": string | null,"destinatario_nome": string | null,"direcao": Database["public"]['Enums']["direcao_nota"],"emitente_documento": string | null,"emitente_nome": string | null,"fornecedor_id": string | null,"id": string,"modelo": string | null,"motivo_status": string | null,"natureza_operacao": string | null,"numero": string | null,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_nota"],"pdf_arquivo_id": string | null,"pdf_url_externa": string | null,"protocolo": string | null,"provedor": string | null,"provedor_ref": string | null,"serie": string | null,"simulada": boolean,"status": Database["public"]['Enums']["status_nota"],"tipo_documento": Database["public"]['Enums']["tipo_documento_fiscal"],"valor_icms": number | null,"valor_produtos": number | null,"valor_total": number,"veiculo_id": string | null,"venda_id": string | null,"xml_arquivo_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cfop"?: string | null,"chave_acesso"?: string | null,"cliente_id"?: string | null,"consignante_id"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados"?: Json | null,"data_emissao"?: string | null,"destinatario_documento"?: string | null,"destinatario_nome"?: string | null,"direcao": Database["public"]['Enums']["direcao_nota"],"emitente_documento"?: string | null,"emitente_nome"?: string | null,"fornecedor_id"?: string | null,"id"?: string,"modelo"?: string | null,"motivo_status"?: string | null,"natureza_operacao"?: string | null,"numero"?: string | null,"observacoes"?: string | null,"origem": Database["public"]['Enums']["origem_nota"],"pdf_arquivo_id"?: string | null,"pdf_url_externa"?: string | null,"protocolo"?: string | null,"provedor"?: string | null,"provedor_ref"?: string | null,"serie"?: string | null,"simulada"?: boolean,"status": Database["public"]['Enums']["status_nota"],"tipo_documento"?: Database["public"]['Enums']["tipo_documento_fiscal"],"valor_icms"?: number | null,"valor_produtos"?: number | null,"valor_total"?: number,"veiculo_id"?: string | null,"venda_id"?: string | null,"xml_arquivo_id"?: string | null
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cfop"?: string | null,"chave_acesso"?: string | null,"cliente_id"?: string | null,"consignante_id"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados"?: Json | null,"data_emissao"?: string | null,"destinatario_documento"?: string | null,"destinatario_nome"?: string | null,"direcao"?: Database["public"]['Enums']["direcao_nota"],"emitente_documento"?: string | null,"emitente_nome"?: string | null,"fornecedor_id"?: string | null,"id"?: string,"modelo"?: string | null,"motivo_status"?: string | null,"natureza_operacao"?: string | null,"numero"?: string | null,"observacoes"?: string | null,"origem"?: Database["public"]['Enums']["origem_nota"],"pdf_arquivo_id"?: string | null,"pdf_url_externa"?: string | null,"protocolo"?: string | null,"provedor"?: string | null,"provedor_ref"?: string | null,"serie"?: string | null,"simulada"?: boolean,"status"?: Database["public"]['Enums']["status_nota"],"tipo_documento"?: Database["public"]['Enums']["tipo_documento_fiscal"],"valor_icms"?: number | null,"valor_produtos"?: number | null,"valor_total"?: number,"veiculo_id"?: string | null,"venda_id"?: string | null,"xml_arquivo_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notas_fiscais_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_consignante_id_fkey"
+      columns: ["consignante_id"]
+isOneToOne: false
+      referencedRelation: "consignantes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_fornecedor_id_fkey"
+      columns: ["fornecedor_id"]
+isOneToOne: false
+      referencedRelation: "fornecedores"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_pdf_arquivo_id_fkey"
+      columns: ["pdf_arquivo_id"]
+isOneToOne: false
+      referencedRelation: "arquivos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas_calc"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_xml_arquivo_id_fkey"
+      columns: ["xml_arquivo_id"]
+isOneToOne: false
+      referencedRelation: "arquivos"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"notas_fiscais_eventos": {
+                  Row: {
+                    "criado_em": string,"id": number,"mensagem": string | null,"nota_id": string,"payload": Json | null,"protocolo": string | null,"tipo": string,"usuario_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "criado_em"?: string,"id"?: never,"mensagem"?: string | null,"nota_id": string,"payload"?: Json | null,"protocolo"?: string | null,"tipo": string,"usuario_id"?: string | null
+                  }
+                  Update: {
+                    "criado_em"?: string,"id"?: never,"mensagem"?: string | null,"nota_id"?: string,"payload"?: Json | null,"protocolo"?: string | null,"tipo"?: string,"usuario_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notas_fiscais_eventos_nota_id_fkey"
+      columns: ["nota_id"]
+isOneToOne: false
+      referencedRelation: "notas_fiscais"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_eventos_nota_id_fkey"
+      columns: ["nota_id"]
+isOneToOne: false
+      referencedRelation: "v_notas_fiscais"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"notas_fiscais_itens": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"cfop": string | null,"chassi": string | null,"codigo": string | null,"criado_em": string,"criado_por": string | null,"dados_veiculo": Json | null,"descricao": string,"id": string,"ncm": string | null,"nota_id": string,"numero_item": number,"quantidade": number | null,"unidade": string | null,"valor_total": number | null,"valor_unitario": number | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cfop"?: string | null,"chassi"?: string | null,"codigo"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados_veiculo"?: Json | null,"descricao": string,"id"?: string,"ncm"?: string | null,"nota_id": string,"numero_item": number,"quantidade"?: number | null,"unidade"?: string | null,"valor_total"?: number | null,"valor_unitario"?: number | null
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"cfop"?: string | null,"chassi"?: string | null,"codigo"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"dados_veiculo"?: Json | null,"descricao"?: string,"id"?: string,"ncm"?: string | null,"nota_id"?: string,"numero_item"?: number,"quantidade"?: number | null,"unidade"?: string | null,"valor_total"?: number | null,"valor_unitario"?: number | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notas_fiscais_itens_nota_id_fkey"
+      columns: ["nota_id"]
+isOneToOne: false
+      referencedRelation: "notas_fiscais"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_itens_nota_id_fkey"
+      columns: ["nota_id"]
+isOneToOne: false
+      referencedRelation: "v_notas_fiscais"
       referencedColumns: ["id"]
     }
                   ]
@@ -977,6 +1171,12 @@ isOneToOne: false
       foreignKeyName: "veiculos_sigilo_venda_origem_fk"
       columns: ["venda_origem_id"]
 isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "veiculos_sigilo_venda_origem_fk"
+      columns: ["venda_origem_id"]
+isOneToOne: false
       referencedRelation: "vendas"
       referencedColumns: ["id"]
     }
@@ -1107,6 +1307,12 @@ isOneToOne: false
       foreignKeyName: "vendas_pagamentos_venda_id_fkey"
       columns: ["venda_id"]
 isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_pagamentos_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
       referencedRelation: "vendas"
       referencedColumns: ["id"]
     }
@@ -1158,6 +1364,12 @@ isOneToOne: false
       columns: ["venda_id"]
 isOneToOne: false
       referencedRelation: "v_vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_trocas_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
       referencedColumns: ["id"]
     },{
       foreignKeyName: "vendas_trocas_venda_id_fkey"
@@ -1248,6 +1460,12 @@ isOneToOne: true
       foreignKeyName: "garantias_venda_id_fkey"
       columns: ["venda_id"]
 isOneToOne: true
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "garantias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: true
       referencedRelation: "vendas"
       referencedColumns: ["id"]
     }
@@ -1319,6 +1537,18 @@ isOneToOne: false
       referencedRelation: "garantias_acionamentos"
       referencedColumns: ["id"]
     },{
+      foreignKeyName: "lancamentos_nota_fk"
+      columns: ["nota_fiscal_id"]
+isOneToOne: false
+      referencedRelation: "notas_fiscais"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_nota_fk"
+      columns: ["nota_fiscal_id"]
+isOneToOne: false
+      referencedRelation: "v_notas_fiscais"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "lancamentos_parceiro_id_fkey"
       columns: ["parceiro_id"]
 isOneToOne: false
@@ -1376,6 +1606,12 @@ isOneToOne: false
       foreignKeyName: "lancamentos_venda_fk"
       columns: ["venda_id"]
 isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lancamentos_venda_fk"
+      columns: ["venda_id"]
+isOneToOne: false
       referencedRelation: "vendas"
       referencedColumns: ["id"]
     }
@@ -1405,6 +1641,98 @@ isOneToOne: false
       columns: ["vendedor_id"]
 isOneToOne: false
       referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"v_notas_fiscais": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"cfop": string | null,"chave_acesso": string | null,"cliente_id": string | null,"cliente_nome": string | null,"consignante_id": string | null,"criado_em": string,"criado_por": string | null,"dados": Json | null,"data_emissao": string | null,"destinatario_documento": string | null,"destinatario_nome": string | null,"direcao": Database["public"]['Enums']["direcao_nota"],"emitente_documento": string | null,"emitente_nome": string | null,"fornecedor_id": string | null,"fornecedor_nome": string | null,"id": string,"modelo": string | null,"motivo_status": string | null,"natureza_operacao": string | null,"numero": string | null,"observacoes": string | null,"origem": Database["public"]['Enums']["origem_nota"],"pdf_arquivo_id": string | null,"pdf_url_externa": string | null,"protocolo": string | null,"provedor": string | null,"provedor_ref": string | null,"qtd_itens": number | null,"serie": string | null,"simulada": boolean,"status": Database["public"]['Enums']["status_nota"],"tipo_documento": Database["public"]['Enums']["tipo_documento_fiscal"],"valor_icms": number | null,"valor_produtos": number | null,"valor_total": number,"veiculo_id": string | null,"veiculo_nome": string | null,"venda_id": string | null,"venda_numero": string | null,"xml_arquivo_id": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "notas_fiscais_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_consignante_id_fkey"
+      columns: ["consignante_id"]
+isOneToOne: false
+      referencedRelation: "consignantes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_fornecedor_id_fkey"
+      columns: ["fornecedor_id"]
+isOneToOne: false
+      referencedRelation: "fornecedores"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_pdf_arquivo_id_fkey"
+      columns: ["pdf_arquivo_id"]
+isOneToOne: false
+      referencedRelation: "arquivos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas_calc"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notas_fiscais_xml_arquivo_id_fkey"
+      columns: ["xml_arquivo_id"]
+isOneToOne: false
+      referencedRelation: "arquivos"
       referencedColumns: ["id"]
     }
                   ]
@@ -1545,6 +1873,50 @@ isOneToOne: false
       columns: ["vendedor_id"]
 isOneToOne: false
       referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"v_vendas_sem_nota": {
+                  Row: {
+                    "cliente_id": string,"data_venda": string,"id": string,"numero": string,"tipo_veiculo": Database["public"]['Enums']["tipo_veiculo"] | null,"valor_venda": number,"veiculo_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                           "cliente_id"?: string | null,"data_venda"?: string | null,"id"?: string | null,"numero"?: string | null,"tipo_veiculo"?: Database["public"]['Enums']["tipo_veiculo"] | null,"valor_venda"?: number | null,"veiculo_id"?: string | null
+                         }
+                        Update: {
+                           "cliente_id"?: string | null,"data_venda"?: string | null,"id"?: string | null,"numero"?: string | null,"tipo_veiculo"?: Database["public"]['Enums']["tipo_veiculo"] | null,"valor_venda"?: number | null,"veiculo_id"?: string | null
+                         }
+                        Relationships: [
+                    {
+      foreignKeyName: "vendas_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "v_clientes"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
       referencedColumns: ["id"]
     }
                   ]
@@ -1694,7 +2066,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "base_comissao": "valor_venda"|"comissao_loja"|"lucro","cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","forma_pagamento": "dinheiro"|"pix"|"ted"|"boleto"|"cartao_credito"|"cartao_debito"|"financiamento"|"cheque"|"permuta"|"outro","forma_pagamento_venda": "dinheiro"|"pix"|"ted"|"cartao_credito"|"cartao_debito"|"financiamento"|"boleto"|"cheque","modo_comissao": "percentual"|"fixo","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","natureza_categoria": "operacional"|"terceiros"|"transferencia"|"estoque","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_acionamento": "aberto"|"em_andamento"|"resolvido"|"negado","status_comissao": "pendente"|"quitada"|"cancelada","status_consignacao": "vigente"|"vendido"|"devolvido","status_lancamento": "pendente"|"pago"|"cancelado","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","status_venda": "rascunho"|"aguardando_aprovacao"|"fechada"|"cancelada","tipo_comissao": "loja_consignado"|"vendedor"|"parceiro","tipo_conta": "caixa"|"banco"|"carteira_digital","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_lancamento": "receita"|"despesa"|"transferencia_saida"|"transferencia_entrada","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
+            "base_comissao": "valor_venda"|"comissao_loja"|"lucro","cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","direcao_nota": "entrada"|"saida","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","forma_pagamento": "dinheiro"|"pix"|"ted"|"boleto"|"cartao_credito"|"cartao_debito"|"financiamento"|"cheque"|"permuta"|"outro","forma_pagamento_venda": "dinheiro"|"pix"|"ted"|"cartao_credito"|"cartao_debito"|"financiamento"|"boleto"|"cheque","modo_comissao": "percentual"|"fixo","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","natureza_categoria": "operacional"|"terceiros"|"transferencia"|"estoque","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_nota": "xml_importado"|"emitida"|"manual","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_acionamento": "aberto"|"em_andamento"|"resolvido"|"negado","status_comissao": "pendente"|"quitada"|"cancelada","status_consignacao": "vigente"|"vendido"|"devolvido","status_lancamento": "pendente"|"pago"|"cancelado","status_nota": "importada"|"rascunho"|"processando"|"autorizada"|"rejeitada"|"cancelada"|"denegada","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","status_venda": "rascunho"|"aguardando_aprovacao"|"fechada"|"cancelada","tipo_comissao": "loja_consignado"|"vendedor"|"parceiro","tipo_conta": "caixa"|"banco"|"carteira_digital","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_documento_fiscal": "nfe"|"nfse","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_lancamento": "receita"|"despesa"|"transferencia_saida"|"transferencia_entrada","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1814,7 +2186,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "base_comissao": ["valor_venda", "comissao_loja", "lucro"],"cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"forma_pagamento": ["dinheiro", "pix", "ted", "boleto", "cartao_credito", "cartao_debito", "financiamento", "cheque", "permuta", "outro"],"forma_pagamento_venda": ["dinheiro", "pix", "ted", "cartao_credito", "cartao_debito", "financiamento", "boleto", "cheque"],"modo_comissao": ["percentual", "fixo"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"natureza_categoria": ["operacional", "terceiros", "transferencia", "estoque"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_acionamento": ["aberto", "em_andamento", "resolvido", "negado"],"status_comissao": ["pendente", "quitada", "cancelada"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_lancamento": ["pendente", "pago", "cancelado"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"status_venda": ["rascunho", "aguardando_aprovacao", "fechada", "cancelada"],"tipo_comissao": ["loja_consignado", "vendedor", "parceiro"],"tipo_conta": ["caixa", "banco", "carteira_digital"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_lancamento": ["receita", "despesa", "transferencia_saida", "transferencia_entrada"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
+            "base_comissao": ["valor_venda", "comissao_loja", "lucro"],"cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"direcao_nota": ["entrada", "saida"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"forma_pagamento": ["dinheiro", "pix", "ted", "boleto", "cartao_credito", "cartao_debito", "financiamento", "cheque", "permuta", "outro"],"forma_pagamento_venda": ["dinheiro", "pix", "ted", "cartao_credito", "cartao_debito", "financiamento", "boleto", "cheque"],"modo_comissao": ["percentual", "fixo"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"natureza_categoria": ["operacional", "terceiros", "transferencia", "estoque"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_nota": ["xml_importado", "emitida", "manual"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_acionamento": ["aberto", "em_andamento", "resolvido", "negado"],"status_comissao": ["pendente", "quitada", "cancelada"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_lancamento": ["pendente", "pago", "cancelado"],"status_nota": ["importada", "rascunho", "processando", "autorizada", "rejeitada", "cancelada", "denegada"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"status_venda": ["rascunho", "aguardando_aprovacao", "fechada", "cancelada"],"tipo_comissao": ["loja_consignado", "vendedor", "parceiro"],"tipo_conta": ["caixa", "banco", "carteira_digital"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_documento_fiscal": ["nfe", "nfse"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_lancamento": ["receita", "despesa", "transferencia_saida", "transferencia_entrada"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
           }
         }
 } as const

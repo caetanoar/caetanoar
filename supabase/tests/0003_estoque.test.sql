@@ -7,7 +7,9 @@ select pg_temp.criar_usuario('gerente@t.com', 'gerente') as gerente \gset
 select pg_temp.criar_usuario('vend@t.com', 'vendedor') as vend \gset
 
 -- Dados iniciais: 4 consignados
-select is((select count(*)::int from veiculos where tipo = 'consignado'), 4, 'carga inicial tem 4 consignados');
+select is((select count(*)::int from veiculos where tipo = 'consignado' and criado_por is null and modelo in ('T-Cross','Ka','Uno','HB20S')), 4, 'carga inicial tem 4 consignados');
+delete from veiculos where placa = 'ABC1D23';
+select count(*) + 1 as total_veiculos from veiculos \gset
 select is((select count(*)::int from veiculo_historico where descricao ilike '%para-choques%'), 1, 'histórico do Ka cadastrado');
 
 -- Gerente cria carro próprio com dados sigilosos (atômico)
@@ -28,13 +30,13 @@ select pg_temp.sair();
 
 -- Vendedor vê o veículo, mas não o sigilo, custos, consignação nem a visão de gestão
 select pg_temp.logar(:'vend');
-select is((select count(*)::int from veiculos), 5, 'vendedor vê os veículos');
+select is((select count(*)::int from veiculos), :'total_veiculos'::int, 'vendedor vê os veículos');
 select is((select preco_negociavel from veiculos where id = :'onix'), 76000.00, 'vendedor vê o valor negociável');
 select is((select count(*)::int from veiculos_sigilo), 0, 'vendedor não vê dados sigilosos');
 select is((select count(*)::int from custos_veiculo), 0, 'vendedor não vê custos');
 select is((select count(*)::int from consignacoes), 0, 'vendedor não vê consignações');
 select is((select count(*)::int from v_veiculos_gestao), 0, 'vendedor não vê a visão de gestão');
-select is((select count(*)::int from v_veiculos), 5, 'vendedor usa a visão pública');
+select is((select count(*)::int from v_veiculos), :'total_veiculos'::int, 'vendedor usa a visão pública');
 select throws_ok($$ select salvar_veiculo(null, '{"tipo":"proprio","marca":"Fiat","modelo":"Mobi"}'::jsonb) $$, '42501', null, 'vendedor não cadastra veículo');
 update veiculos set preco_anunciado = 1 where id = :'onix';
 select throws_ok(format($$ select alterar_status_veiculo(%L, 'disponivel') $$, :'onix'), '42501', null, 'vendedor não altera status');

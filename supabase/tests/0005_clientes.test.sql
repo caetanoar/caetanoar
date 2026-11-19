@@ -2,6 +2,8 @@ begin;
 \ir _helpers.psql
 select plan(21);
 
+-- Isola dos dados deixados pelos testes E2E no banco de desenvolvimento
+delete from clientes_dados_pessoais where cpf = '52998224725';
 select pg_temp.criar_usuario('dono@t.com', 'dono') as dono \gset
 select pg_temp.criar_usuario('gerente@t.com', 'gerente') as gerente \gset
 select pg_temp.criar_usuario('v1@t.com', 'vendedor') as v1 \gset

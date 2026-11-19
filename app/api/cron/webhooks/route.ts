@@ -2,7 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { processarEntregas } from "@/lib/webhooks/entregar";
 
 /**
- * Reenvio dos webhooks pendentes. Chamado por agendador (Vercel Cron ou
+ * Reenvio dos webhooks pendentes. Chamado por agendador (cron da hospedagem ou
  * pg_cron + pg_net no Supabase) com Authorization: Bearer <CRON_SECRET>.
  */
 export async function GET(req: Request) {

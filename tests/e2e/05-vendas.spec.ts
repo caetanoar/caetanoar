@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { entrar, tela } from "./helpers";
+import { entrar, tela, PASTA_TELAS } from "./helpers";
 
 const s = String(Date.now()).slice(-4);
 const letras = "ABCDEFGHJKLMNPRSTUVWXYZ";
@@ -99,11 +99,16 @@ test("gerente confere comissões e fecha a venda", async ({ page }) => {
   await page.goto(urlVenda);
   await expect(page.getByText("R$ 7.000,00", { exact: false }).first()).toBeVisible(); // comissão da loja (10% de 70 mil)
   await expect(page.getByText(/R\$ 700,00/).first()).toBeVisible(); // vendedor: 10% da comissão da loja
-  await expect(page.getByText("R$ 63.000,00")).toBeVisible(); // repasse ao dono
+  // Padrão da loja: o comprador paga o dono; a loja fica com o carro da troca e recebe a comissão separada
+  await expect(page.getByRole("term").filter({ hasText: "Comprador paga direto ao dono" })).toBeVisible();
+  await expect(page.getByText(/a loja, que fica com o carro, deve o valor da troca ao dono/)).toBeVisible();
+  await expect(page.getByText("R$ 60.000,00")).toBeVisible(); // pix + financiamento, pagos ao dono
+  await expect(page.getByText("Carro da troca (loja paga ao dono)")).toBeVisible();
+  await expect(page.getByText("A receber do dono (comissão + custos)")).toBeVisible();
   await tela(page, "53-venda-conferencia");
   await page.getByRole("button", { name: "Fechar venda" }).click();
   await expect(page.getByText("Fechada", { exact: true })).toBeVisible();
-  await expect(page.getByText(/Garantia de 90 dias/)).toBeVisible();
+  await expect(page.getByRole("link", { name: /Garantia de 90 dias, até/ })).toBeVisible();
   await expect(page.getByText("Comissão do vendedor").first()).toBeVisible();
   await tela(page, "54-venda-fechada");
 
@@ -118,11 +123,17 @@ test("gerente confere comissões e fecha a venda", async ({ page }) => {
   await page.goto(urlCarro);
   await expect(page.getByText("Vendido").first()).toBeVisible();
 
-  // Garantia ativa e repasse a pagar
+  // Garantia ativa; a loja deve ao dono o carro da troca e tem a comissão a receber
   await page.goto("/garantias");
   await expect(page.getByText(cliente).first()).toBeVisible();
+  await page.getByText(cliente).first().click();
+  const [termo] = await Promise.all([page.waitForEvent("download"), page.getByRole("link", { name: /Baixar termo de garantia/ }).click()]);
+  expect(termo.suggestedFilename()).toMatch(/^termo-garantia-V-\d{4}-\d{4}\.pdf$/);
+  await termo.saveAs(`${PASTA_TELAS}/termo-garantia.pdf`);
   await page.goto("/financeiro/pagar");
-  await expect(page.getByText(/Repasse ao dono — venda/).first()).toBeVisible();
+  await expect(page.getByText(/Repasse ao dono — carro da troca/).first()).toBeVisible();
+  await page.goto("/financeiro/receber");
+  await expect(page.getByText(/Comissão de consignação — venda/).first()).toBeVisible();
 });
 
 test("vendedor vê a própria comissão", async ({ page }) => {

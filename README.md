@@ -4,7 +4,7 @@ CRM da Caetano Auto (seminovos, Divinópolis/MG): estoque próprio e consignado,
 garantias, financeiro, comissões, fiscal (NF-e), relatórios, IA para anúncios e integrações.
 
 **Stack:** Next.js 16 (App Router) · TypeScript · Tailwind 4 · componentes no padrão shadcn/ui (Radix) ·
-Supabase (Postgres, Auth, Storage, RLS) · Vercel.
+Supabase (Postgres, Auth, Storage, RLS) · hospedagem gratuita na Netlify (ver `docs/DEPLOY.md`).
 
 ## Rodando localmente
 

@@ -65,7 +65,7 @@ export function FormLoja({ config }: { config: Config }) {
           </Campo>
           <Campo id="garantia_cobertura_padrao" rotulo="Cobertura padrão da garantia" erro={e.garantia_cobertura_padrao} className="sm:col-span-2"
             dica="A definir pelo dono. Ex.: motor e câmbio, por 90 dias ou 3.000 km.">
-            <Textarea name="garantia_cobertura_padrao" defaultValue={config.garantia_cobertura_padrao ?? ""} rows={3} />
+            <Textarea name="garantia_cobertura_padrao" defaultValue={config.garantia_cobertura_padrao ?? ""} rows={10} />
           </Campo>
           <Campo id="estoque_parado_dias" rotulo="Carro parado após (dias)" erro={e.estoque_parado_dias}>
             <Input name="estoque_parado_dias" type="number" inputMode="numeric" defaultValue={config.estoque_parado_dias} />

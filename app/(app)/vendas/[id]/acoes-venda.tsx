@@ -38,8 +38,8 @@ export function FecharVenda({
       <input type="hidden" name="id" value={id} />
       {errosBloqueantes.map((e) => <Alerta key={e} variante="erro">{e}</Alerta>)}
       {consignado && (
-        <Campo id="recebimento_consignado" rotulo="Como o dinheiro circula" dica="Confirme com o contador o modo que gera menos imposto">
-          <Select name="recebimento_consignado" defaultValue={recebimento ?? "loja_repassa"}>
+        <Campo id="recebimento_consignado" rotulo="Como o dinheiro circula" dica="Padrão da loja: o comprador paga o dono e a loja recebe a comissão separada">
+          <Select name="recebimento_consignado" defaultValue={recebimento ?? "direto_dono"}>
             {Object.entries(RECEBIMENTO_CONSIGNADO).map(([k, r]) => <option key={k} value={k}>{r}</option>)}
           </Select>
         </Campo>

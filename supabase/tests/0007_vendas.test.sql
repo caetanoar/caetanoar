@@ -35,7 +35,7 @@ select pg_temp.sair();
 select pg_temp.logar(:'v1');
 insert into clientes (nome, telefone, vendedor_id) values ('Cliente Venda', '37988880000', :'v1') returning id as cli \gset
 select salvar_venda(null,
-  jsonb_build_object('veiculo_id', :'ka', 'cliente_id', :'cli', 'vendedor_id', :'v1', 'valor_venda', 42000, 'valor_entrada', 17000),
+  jsonb_build_object('veiculo_id', :'ka', 'cliente_id', :'cli', 'vendedor_id', :'v1', 'valor_venda', 42000, 'valor_entrada', 17000, 'recebimento_consignado', 'loja_repassa'),
   jsonb_build_array(
     jsonb_build_object('forma', 'pix', 'valor', 12000),
     jsonb_build_object('forma', 'financiamento', 'valor', 25000, 'banco_financiamento', 'BV', 'parcelas', 48)),

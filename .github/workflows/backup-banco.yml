@@ -1,0 +1,63 @@
+# Backup diário do banco (o plano gratuito do Supabase não tem backup automático).
+# Só roda depois que os segredos SUPABASE_DB_URL e BACKUP_PASSPHRASE forem cadastrados
+# no GitHub (Settings → Secrets and variables → Actions). O arquivo sai criptografado
+# (AES-256) porque contém dados pessoais de clientes (LGPD).
+name: Backup do banco
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # 03h17 em Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Conferir segredos
+        id: segredos
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          SENHA: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          if [ -z "$DB_URL" ] || [ -z "$SENHA" ]; then
+            echo "Segredos não cadastrados: backup ignorado."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: supabase/setup-cli@v1
+        if: steps.segredos.outputs.ok == 'true'
+        with:
+          version: latest
+
+      - name: Exportar papéis, estrutura e dados
+        if: steps.segredos.outputs.ok == 'true'
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          mkdir backup
+          supabase db dump --db-url "$DB_URL" -f backup/roles.sql --role-only
+          supabase db dump --db-url "$DB_URL" -f backup/schema.sql
+          supabase db dump --db-url "$DB_URL" -f backup/data.sql --use-copy --data-only
+
+      - name: Compactar e criptografar
+        if: steps.segredos.outputs.ok == 'true'
+        env:
+          SENHA: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          arquivo="backup-$(date -u +%Y-%m-%d).tar.gz.gpg"
+          tar -czf - backup | gpg --batch --yes --pinentry-mode loopback --passphrase "$SENHA" --symmetric --cipher-algo AES256 -o "$arquivo"
+          rm -rf backup
+          echo "ARQUIVO=$arquivo" >> "$GITHUB_ENV"
+
+      - uses: actions/upload-artifact@v4
+        if: steps.segredos.outputs.ok == 'true'
+        with:
+          name: ${{ env.ARQUIVO }}
+          path: ${{ env.ARQUIVO }}
+          retention-days: 30

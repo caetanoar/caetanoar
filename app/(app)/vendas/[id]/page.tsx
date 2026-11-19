@@ -31,6 +31,8 @@ type Calculo = {
   comissao_vendedor: { valor: number; regra_nome?: string; manual: boolean; base?: number; base_calculo?: string } | null;
   comissao_parceiro: { valor: number; regra_nome?: string; manual: boolean } | null;
   repasse_consignante: number | null;
+  pagamentos: number;
+  trocas: number;
   lucro: number;
   lucro_apos_indicacao: number;
   erros: string[];
@@ -158,7 +160,13 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
                           ]
                         : [
                             { rotulo: "Comissão da loja", valor: calculo.comissao_loja ? `${formatarMoeda(calculo.comissao_loja.valor)} · ${calculo.comissao_loja.regra_nome ?? "manual"}` : "sem regra" },
-                            { rotulo: "Repasse ao dono", valor: formatarMoeda(calculo.repasse_consignante) },
+                            ...(calculo.recebimento === "direto_dono"
+                              ? [
+                                  { rotulo: "Comprador paga direto ao dono", valor: formatarMoeda(calculo.pagamentos) },
+                                  ...(calculo.trocas > 0 ? [{ rotulo: "Carro da troca (loja paga ao dono)", valor: formatarMoeda(calculo.trocas) }] : []),
+                                  { rotulo: "A receber do dono (comissão + custos)", valor: formatarMoeda((calculo.comissao_loja?.valor ?? 0) + calculo.custos_cobrados_consignante) },
+                                ]
+                              : [{ rotulo: "Repasse ao dono", valor: formatarMoeda(calculo.repasse_consignante) }]),
                             { rotulo: "Custos absorvidos pela loja", valor: formatarMoeda(calculo.custos - calculo.custos_cobrados_consignante) },
                           ]),
                       { rotulo: "Comissão do vendedor", valor: calculo.comissao_vendedor ? `${formatarMoeda(calculo.comissao_vendedor.valor)} · ${calculo.comissao_vendedor.regra_nome ?? "manual"}${calculo.comissao_vendedor.base_calculo ? ` (sobre ${BASE_COMISSAO[calculo.comissao_vendedor.base_calculo as keyof typeof BASE_COMISSAO]?.toLowerCase()})` : ""}` : "sem regra" },

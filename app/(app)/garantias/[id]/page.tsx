@@ -9,6 +9,8 @@ import { ContatoRapido } from "@/components/cadastros/contato-rapido";
 import { Anexos } from "@/components/arquivos/anexos";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { FileSignature } from "lucide-react";
 import { STATUS_GARANTIA, STATUS_ACIONAMENTO } from "@/lib/vendas/rotulos";
 import { formatarData } from "@/lib/format/data";
 import { formatarMoeda } from "@/lib/format/moeda";
@@ -35,6 +37,11 @@ export default async function DetalheGarantia({ params }: { params: Promise<{ id
           {g.status === "ativa" && <Badge variant={g.vence_em_breve ? "warning" : "muted"}>{g.dias_restantes} dias restantes</Badge>}
         </div>
         <ContatoRapido telefone={g.cliente_telefone} whatsapp={g.cliente_whatsapp} />
+        {g.status !== "cancelada" && (
+          <Button asChild variant="outline">
+            <a href={`/garantias/${id}/termo`} download><FileSignature /> Baixar termo de garantia (PDF) para o cliente assinar</a>
+          </Button>
+        )}
         <Card>
           <CardContent className="p-4">
             <ListaDados

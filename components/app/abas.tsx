@@ -8,7 +8,7 @@ export function AbasLink({ abas, atual, base }: { abas: { id: string; rotulo: st
       {abas.map((a) => (
         <Link
           key={a.id}
-          href={`${base}?aba=${a.id}`}
+          href={`${base}${base.includes("?") ? "&" : "?"}aba=${a.id}`}
           scroll={false}
           aria-current={a.id === atual ? "page" : undefined}
           className={cn(

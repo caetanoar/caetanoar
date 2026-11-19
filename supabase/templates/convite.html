@@ -1,0 +1,11 @@
+<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; color: #1f2937">
+  <h2 style="color: #1f3a5f">Caetano Auto</h2>
+  <p>Olá{{ if .Data.nome }}, {{ .Data.nome }}{{ end }}!</p>
+  <p>Você foi convidado para acessar o CRM da Caetano Auto. Toque no botão abaixo para criar sua senha:</p>
+  <p style="margin: 28px 0">
+    <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite&next=/definir-senha"
+       style="background: #1f3a5f; color: #fff; padding: 12px 20px; border-radius: 8px; text-decoration: none">Criar minha senha</a>
+  </p>
+  <p style="font-size: 13px; color: #6b7280">Se você não esperava este convite, ignore este e-mail.</p>
+  <p style="font-size: 13px; color: #6b7280">Caetano Auto, carros com procedência e história.</p>
+</div>

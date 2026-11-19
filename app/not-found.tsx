@@ -1,0 +1,13 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
+export default function NaoEncontrado() {
+  return (
+    <main className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
+      <p className="text-5xl font-bold text-muted-foreground">404</p>
+      <h1 className="text-lg font-semibold">Página não encontrada</h1>
+      <p className="text-sm text-muted-foreground">O endereço pode ter mudado ou o registro não existe mais.</p>
+      <Button asChild variant="outline"><Link href="/">Ir para o início</Link></Button>
+    </main>
+  );
+}

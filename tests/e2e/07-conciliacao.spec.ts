@@ -42,7 +42,7 @@ test("importa extrato OFX e concilia com os lançamentos", async ({ page }) => {
   await page.getByLabel("Conta bancária").selectOption({ label: `Sicoob ${s}` });
   await page.getByRole("button", { name: "Trocar" }).click();
   await page.locator('input[type="file"]').setInputFiles({ name: "extrato.ofx", mimeType: "application/x-ofx", buffer: Buffer.from(ofx(recebido, energia), "latin1") });
-  await expect(page.getByText(/3 transação\(ões\) nova\(s\); 2 conciliada\(s\) automaticamente/)).toBeVisible();
+  await expect(page.getByText(/3 transação\(ões\) nova\(s\); 2 conciliada\(s\) automaticamente/)).toBeVisible({ timeout: 30_000 }); // 1ª importação compila a ação no servidor de desenvolvimento
 
   // A tarifa não tinha lançamento: cria a despesa a partir do extrato
   await expect(page.getByText(`TARIFA ${s}`)).toBeVisible();

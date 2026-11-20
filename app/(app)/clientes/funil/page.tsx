@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pode } from "@/lib/auth/permissoes";
 import { BellRing, Plus } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -32,7 +33,7 @@ export default async function Funil({ searchParams }: { searchParams: Promise<{ 
         titulo="Funil de vendas"
         subtitulo={`${total} cliente(s) · conversão ${fechados ? Math.round((ganhos / fechados) * 100) : 0}% dos fechados`}
         voltar="/clientes"
-        acoes={<Button asChild size="sm"><Link href="/clientes/novo"><Plus /> Novo</Link></Button>}
+        acoes={pode(usuario.papel, "clientes.criar") ? <Button asChild size="sm"><Link href="/clientes/novo"><Plus /> Novo</Link></Button> : undefined}
       />
       <Conteudo>
         <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:px-0">

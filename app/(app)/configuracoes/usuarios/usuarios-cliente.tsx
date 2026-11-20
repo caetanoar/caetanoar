@@ -20,6 +20,9 @@ const DESC_PAPEL: Record<Papel, string> = {
   dono: "Acesso total, incluindo configurações e regras de comissão",
   gerente: "Estoque, vendas, financeiro, fiscal e relatórios",
   vendedor: "Estoque, seus clientes, suas vendas, meta e comissão",
+  atendimento: "Clientes, garantias, acionamentos e contatos (sem CPF)",
+  preparador: "Carros em preparação, checklist, fotos e os custos que lançar",
+  administrativo: "Documentação e transferência das vendas fechadas",
 };
 
 export function ConvidarUsuario() {

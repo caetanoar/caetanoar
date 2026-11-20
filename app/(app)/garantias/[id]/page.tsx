@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pode } from "@/lib/auth/permissoes";
 import { notFound } from "next/navigation";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -17,7 +18,7 @@ import { formatarMoeda } from "@/lib/format/moeda";
 import { FormAcionamento, AjustarGarantia } from "./garantia-cliente";
 
 export default async function DetalheGarantia({ params }: { params: Promise<{ id: string }> }) {
-  await exigirPermissao("garantias");
+  const usuario = await exigirPermissao("garantias");
   const { id } = await params;
   const supabase = await criarClienteServidor();
   const [{ data: g }, { data: acionamentos }, { data: fornecedores }, anexos] = await Promise.all([
@@ -30,7 +31,7 @@ export default async function DetalheGarantia({ params }: { params: Promise<{ id
   const st = STATUS_GARANTIA[g.status!] ?? STATUS_GARANTIA.ativa;
   return (
     <>
-      <Cabecalho titulo={`Garantia · ${g.veiculo_nome}`} subtitulo={g.cliente_nome ?? undefined} voltar="/garantias" acoes={<AjustarGarantia garantia={{ id, dias: g.dias!, cobertura: g.cobertura, observacoes: g.observacoes }} />} />
+      <Cabecalho titulo={`Garantia · ${g.veiculo_nome}`} subtitulo={g.cliente_nome ?? undefined} voltar="/garantias" acoes={pode(usuario.papel, "garantias.ajustar") ? <AjustarGarantia garantia={{ id, dias: g.dias!, cobertura: g.cobertura, observacoes: g.observacoes }} /> : undefined} />
       <Conteudo className="flex max-w-3xl flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant={st.variante}>{st.rotulo}</Badge>

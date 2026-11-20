@@ -29,3 +29,6 @@ select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000001', 'arthur
 select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000002', 'gerente@caetanoauto.local', 'Gerente Teste', 'gerente');
 select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000003', 'vendedor1@caetanoauto.local', 'Vendedor Um', 'vendedor');
 select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000004', 'vendedor2@caetanoauto.local', 'Vendedor Dois', 'vendedor');
+select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000005', 'atendimento@caetanoauto.local', 'Atendimento Teste', 'atendimento');
+select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000006', 'preparador@caetanoauto.local', 'Preparador Teste', 'preparador');
+select pg_temp.criar_usuario_dev('a0000000-0000-4000-8000-000000000007', 'administrativo@caetanoauto.local', 'Administrativo Teste', 'administrativo');

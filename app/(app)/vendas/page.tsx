@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pode } from "@/lib/auth/permissoes";
 import { Plus, Handshake, ChevronRight } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -22,7 +23,7 @@ export default async function Vendas({
   searchParams: Promise<{ de?: string; ate?: string; vendedor?: string; tipo?: string; status?: string }>;
 }) {
   const usuario = await exigirPermissao("vendas");
-  const gestor = usuario.papel !== "vendedor";
+  const gestor = pode(usuario.papel, "vendas.fechar");
   const f = await searchParams;
   const de = f.de ?? inicioDoMes();
   const ate = f.ate ?? fimDoMes();

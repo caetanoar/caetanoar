@@ -5,6 +5,9 @@ export const USUARIOS = {
   gerente: { email: "gerente@caetanoauto.local", nome: "Gerente Teste" },
   vendedor1: { email: "vendedor1@caetanoauto.local", nome: "Vendedor Um" },
   vendedor2: { email: "vendedor2@caetanoauto.local", nome: "Vendedor Dois" },
+  atendimento: { email: "atendimento@caetanoauto.local", nome: "Atendimento Teste" },
+  preparador: { email: "preparador@caetanoauto.local", nome: "Preparador Teste" },
+  administrativo: { email: "administrativo@caetanoauto.local", nome: "Administrativo Teste" },
 } as const;
 
 export const SENHA = "caetano123";

@@ -1,4 +1,5 @@
 import "server-only";
+import { pode } from "@/lib/auth/permissoes";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { nomeVeiculo } from "@/lib/estoque/rotulos";
 import type { UsuarioAtual } from "@/lib/auth/sessao";
@@ -6,7 +7,7 @@ import type { VeiculoOpcao } from "@/app/(app)/vendas/form-venda";
 
 export async function opcoesVenda(usuario: UsuarioAtual, incluirVeiculo?: string) {
   const supabase = await criarClienteServidor();
-  const gestor = usuario.papel !== "vendedor";
+  const gestor = pode(usuario.papel, "vendas.fechar");
   const [{ data: veiculos }, { data: clientes }, { data: parceiros }, { data: vendedores }, contas, { data: config }] = await Promise.all([
     supabase
       .from("veiculos")

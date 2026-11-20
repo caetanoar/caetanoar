@@ -35,7 +35,7 @@ export async function salvarAcionamento(_: EstadoAcao, fd: FormData): Promise<Es
 }
 
 export async function ajustarGarantia(_: EstadoAcao, fd: FormData): Promise<EstadoAcao> {
-  await exigirPermissao("garantias");
+  await exigirPermissao("garantias.ajustar");
   const dados = z
     .object({ id: z.uuid(), dias: z.coerce.number().int().min(0).max(3650), cobertura: textoOpc, observacoes: textoOpc })
     .safeParse(Object.fromEntries(fd));

@@ -41,7 +41,7 @@ export async function salvarLoja(_: EstadoAcao, fd: FormData): Promise<EstadoAca
 const esquemaConvite = z.object({
   nome: z.string().trim().min(2, "Informe o nome."),
   email: z.email("E-mail inválido.").transform((v) => v.toLowerCase()),
-  papel: z.enum(["dono", "gerente", "vendedor"]),
+  papel: z.enum(["dono", "gerente", "vendedor", "atendimento", "preparador", "administrativo"]),
 });
 
 export async function convidarUsuario(_: EstadoAcao, fd: FormData): Promise<EstadoAcao> {
@@ -72,7 +72,7 @@ export async function convidarUsuario(_: EstadoAcao, fd: FormData): Promise<Esta
 
 const esquemaAlterar = z.object({
   id: z.uuid(),
-  papel: z.enum(["dono", "gerente", "vendedor"]),
+  papel: z.enum(["dono", "gerente", "vendedor", "atendimento", "preparador", "administrativo"]),
   ativo: z.enum(["true", "false"]).transform((v) => v === "true"),
 });
 

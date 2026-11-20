@@ -2,13 +2,13 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /** Abas como links (?aba=...), renderizadas no servidor. */
-export function AbasLink({ abas, atual, base }: { abas: { id: string; rotulo: string }[]; atual: string; base: string }) {
+export function AbasLink({ abas, atual, base, parametro = "aba" }: { abas: { id: string; rotulo: string }[]; atual: string; base: string; parametro?: string }) {
   return (
     <nav className="-mx-4 flex gap-1 overflow-x-auto border-b px-4 [scrollbar-width:none] lg:mx-0 lg:px-0" aria-label="Seções">
       {abas.map((a) => (
         <Link
           key={a.id}
-          href={`${base}${base.includes("?") ? "&" : "?"}aba=${a.id}`}
+          href={`${base}${base.includes("?") ? "&" : "?"}${parametro}=${a.id}`}
           scroll={false}
           aria-current={a.id === atual ? "page" : undefined}
           className={cn(

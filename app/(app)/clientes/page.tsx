@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pode } from "@/lib/auth/permissoes";
 import { Plus, Users, ChevronRight, KanbanSquare, BellRing } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -49,7 +50,7 @@ export default async function Clientes({
         acoes={
           <>
             <Button asChild size="sm" variant="outline"><Link href="/clientes/funil"><KanbanSquare /> Funil</Link></Button>
-            <Button asChild size="sm"><Link href="/clientes/novo"><Plus /> Novo</Link></Button>
+            {pode(usuario.papel, "clientes.criar") && <Button asChild size="sm"><Link href="/clientes/novo"><Plus /> Novo</Link></Button>}
           </>
         }
       />
@@ -64,7 +65,7 @@ export default async function Clientes({
         {f.followup && <Link href="?" className="text-sm text-primary hover:underline">Ver todos os clientes</Link>}
         {lista.length === 0 ? (
           <Vazio icone={Users} titulo={f.q ? "Nenhum cliente encontrado" : "Nenhum cliente ainda"}>
-            <Link href="/clientes/novo" className="text-primary hover:underline">Cadastrar cliente</Link>
+            {pode(usuario.papel, "clientes.criar") && <Link href="/clientes/novo" className="text-primary hover:underline">Cadastrar cliente</Link>}
           </Vazio>
         ) : (
           <Card className="divide-y overflow-hidden p-0">

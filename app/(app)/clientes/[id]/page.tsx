@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pode } from "@/lib/auth/permissoes";
 import { notFound } from "next/navigation";
 import { Pencil, Lock, ShoppingBag, Sparkles, History } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
@@ -37,7 +38,7 @@ export default async function DetalheCliente({ params }: { params: Promise<{ id:
   ]);
   if (!c || !c.id) notFound();
   const contatoCliente = c.whatsapp || c.telefone;
-  const gestor = usuario.papel !== "vendedor";
+  const gestor = pode(usuario.papel, "clientes.gestao");
   const endereco = p && [p.logradouro, p.numero, p.complemento, p.bairro, p.cidade && `${p.cidade}${p.uf ? `/${p.uf}` : ""}`, p.cep && `CEP ${p.cep}`].filter(Boolean).join(", ");
 
   return (
@@ -127,7 +128,7 @@ export default async function DetalheCliente({ params }: { params: Promise<{ id:
           <CardContent>
             <ListaDados
               itens={[
-                { rotulo: "CPF", valor: <CpfProtegido clienteId={id} mascarado={p?.cpf_mascarado ?? null} /> },
+                { rotulo: "CPF", valor: <CpfProtegido clienteId={id} mascarado={p?.cpf_mascarado ?? null} podeRevelar={pode(usuario.papel, "clientes.revelar")} /> },
                 { rotulo: "Nascimento", valor: p?.data_nascimento && formatarData(p.data_nascimento) },
                 { rotulo: "Endereço", valor: endereco, largo: true },
               ]}

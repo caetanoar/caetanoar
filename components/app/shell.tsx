@@ -11,19 +11,31 @@ import { NOME_PAPEL, type Papel } from "@/lib/auth/permissoes";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { sair } from "@/app/(auth)/acoes";
 
-type Props = { usuario: { nome: string; papel: Papel; email: string }; children: React.ReactNode };
+type Props = { usuario: { nome: string; papel: Papel; email: string }; tarefasAtrasadas?: number; children: React.ReactNode };
+
+/** Contador de tarefas de hoje ou atrasadas, ao lado do item "Tarefas". */
+function Contador({ n, className }: { n: number; className?: string }) {
+  if (!n) return null;
+  return (
+    <span className={cn("inline-flex min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] leading-4 font-semibold text-white", className)}
+      aria-label={`${n} tarefa(s) para hoje ou atrasada(s)`}>
+      {n > 99 ? "99+" : n}
+    </span>
+  );
+}
 
 function ativo(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function Shell({ usuario, children }: Props) {
+export function Shell({ usuario, tarefasAtrasadas = 0, children }: Props) {
   const pathname = usePathname();
   const [maisAberto, setMaisAberto] = useState(false);
   const barra = itensBarra(usuario.papel);
   const menu = menuDoPapel(usuario.papel);
   const grupos = [...new Set(menu.map((m) => m.grupo))];
+  const tarefasNaBarra = barra.some((b) => b.href === "/tarefas");
 
   return (
     <div className="flex min-h-dvh">
@@ -50,7 +62,8 @@ export function Shell({ usuario, children }: Props) {
                   )}
                 >
                   <m.icone className="size-4" />
-                  {m.rotulo}
+                  <span className="flex-1">{m.rotulo}</span>
+                  {m.href === "/tarefas" && <Contador n={tarefasAtrasadas} />}
                 </Link>
               ))}
             </div>
@@ -73,13 +86,17 @@ export function Shell({ usuario, children }: Props) {
 
       {/* Barra inferior (celular) */}
       <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 backdrop-blur lg:hidden" aria-label="Navegação principal">
-        <ul className="mx-auto grid max-w-lg grid-cols-5">
+        <ul className="mx-auto grid max-w-lg" style={{ gridTemplateColumns: `repeat(${barra.length}, minmax(0, 1fr))` }}>
           {barra.map((item) => {
             const eMais = item.href === "#mais";
             const sel = eMais ? maisAberto : ativo(pathname, item.href);
+            const n = item.href === "/tarefas" || (eMais && !tarefasNaBarra) ? tarefasAtrasadas : 0;
             const conteudo = (
               <>
-                <item.icone className={cn("size-6", sel && "stroke-[2.4]")} />
+                <span className="relative">
+                  <item.icone className={cn("size-6", sel && "stroke-[2.4]")} />
+                  <Contador n={n} className="absolute -top-1.5 -right-2.5" />
+                </span>
                 <span className="text-[11px] leading-none">{item.rotulo}</span>
               </>
             );
@@ -123,7 +140,10 @@ export function Shell({ usuario, children }: Props) {
                       ativo(pathname, m.href) && "border-primary/40 bg-primary/5 text-primary",
                     )}
                   >
-                    <m.icone className="size-5" />
+                    <span className="relative">
+                      <m.icone className="size-5" />
+                      {m.href === "/tarefas" && <Contador n={tarefasAtrasadas} className="absolute -top-1.5 -right-2.5" />}
+                    </span>
                     {m.rotulo}
                   </Link>
                 ))}

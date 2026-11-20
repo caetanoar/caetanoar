@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { pode } from "@/lib/auth/permissoes";
 import { z } from "zod";
 import { exigirPermissao, exigirUsuario } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -29,6 +30,10 @@ export async function salvarCliente(_: EstadoAcao<{ id: string }>, fd: FormData)
   if (usuario.papel === "vendedor") {
     if (id) delete (dados as Partial<typeof dados>).vendedor_id;
     else dados.vendedor_id = usuario.id;
+  } else if (!pode(usuario.papel, "clientes.gestao")) {
+    // Atendimento atualiza contato e acompanhamento, mas não cria cliente nem troca o vendedor.
+    if (!id) return { ok: false, erro: "Seu perfil não cadastra clientes novos." };
+    delete (dados as Partial<typeof dados>).vendedor_id;
   }
 
   const p = pessoais.data;
@@ -73,7 +78,7 @@ export async function verificarTelefone(telefone: string) {
 }
 
 export async function revelarCPF(clienteId: string): Promise<EstadoAcao<{ valor: string | null }>> {
-  await exigirPermissao("clientes");
+  await exigirPermissao("clientes.revelar");
   const supabase = await criarClienteServidor();
   const { data, error } = await supabase.rpc("revelar_dado_pessoal", {
     p_cliente: clienteId,

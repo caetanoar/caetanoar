@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { pode } from "@/lib/auth/permissoes";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { opcoesCliente } from "@/lib/clientes/consultas";
@@ -34,7 +35,7 @@ export default async function EditarCliente({ params }: { params: Promise<{ id: 
     <>
       <Cabecalho titulo="Editar cliente" subtitulo={c.nome} voltar={`/clientes/${id}`} />
       <Conteudo className="max-w-3xl">
-        <FormCliente valores={valores} {...opcoes} podeAtribuir={usuario.papel !== "vendedor"} cpfMascarado={p?.cpf_mascarado} />
+        <FormCliente valores={valores} {...opcoes} podeAtribuir={pode(usuario.papel, "clientes.gestao")} cpfMascarado={p?.cpf_mascarado} />
       </Conteudo>
     </>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pode } from "@/lib/auth/permissoes";
 import { notFound } from "next/navigation";
 import { Pencil, ShieldCheck, Car, Lock, Coins, Receipt, Paperclip, FileText } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
@@ -20,6 +21,7 @@ import { formatarData, formatarDataHora } from "@/lib/format/data";
 import { formatarPlaca } from "@/lib/format/veiculo";
 import { FecharVenda, CancelarVenda } from "./acoes-venda";
 import { excluirVenda } from "../acoes";
+import { TarefasDaEntidade, ChecklistCard } from "@/components/tarefas/blocos";
 
 type Calculo = {
   tipo: "proprio" | "consignado";
@@ -41,7 +43,7 @@ type Calculo = {
 
 export default async function DetalheVenda({ params }: { params: Promise<{ id: string }> }) {
   const usuario = await exigirPermissao("vendas");
-  const gestor = usuario.papel !== "vendedor";
+  const gestor = pode(usuario.papel, "vendas.fechar");
   const { id } = await params;
   const supabase = await criarClienteServidor();
   const [{ data: v }, { data: pagamentos }, { data: trocas }] = await Promise.all([
@@ -233,6 +235,10 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
             </CardContent>
           </Card>
         )}
+
+        {gestor && v.status === "fechada" && <ChecklistCard tipo="documentacao" vendaId={id} podeMarcar voltar={`/vendas/${id}`} />}
+
+        <TarefasDaEntidade entidade="venda" entidadeId={id} usuario={{ id: usuario.id, papel: usuario.papel }} voltar={`/vendas/${id}`} />
 
         <Card>
           <CardHeader><CardTitle className="flex items-center gap-1.5"><Paperclip className="size-4" /> Documentos da venda</CardTitle></CardHeader>

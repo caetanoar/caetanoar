@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Gauge, Car, Users, Handshake, Wallet, MoreHorizontal, ShieldCheck, Percent,
-  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins,
+  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks,
   type LucideIcon,
 } from "lucide-react";
 import type { Papel, Recurso } from "@/lib/auth/permissoes";
@@ -12,6 +12,7 @@ export type ItemMenu = { href: string; rotulo: string; icone: LucideIcon; recurs
 export const MENU: ItemMenu[] = [
   { href: "/painel", rotulo: "Painel gerencial", icone: LayoutDashboard, recurso: "painel", grupo: "Visão geral" },
   { href: "/dashboard", rotulo: "Metas e resultados", icone: Gauge, recurso: "dashboard", grupo: "Visão geral" },
+  { href: "/tarefas", rotulo: "Minhas tarefas", icone: ListChecks, recurso: "tarefas", grupo: "Visão geral" },
   { href: "/estoque", rotulo: "Estoque", icone: Car, recurso: "estoque", grupo: "Vendas" },
   { href: "/clientes", rotulo: "Clientes", icone: Users, recurso: "clientes", grupo: "Vendas" },
   { href: "/vendas", rotulo: "Vendas", icone: Handshake, recurso: "vendas", grupo: "Vendas" },
@@ -49,6 +50,21 @@ export function itensBarra(papel: Papel): ItemBarra[] {
       { href: "/estoque", rotulo: "Estoque", icone: Car },
       { href: "/vendas", rotulo: "Vendas", icone: Handshake },
       { href: "/clientes", rotulo: "Clientes", icone: Users },
+      mais,
+    ];
+  }
+  if (papel === "atendimento") {
+    return [
+      { href: "/tarefas", rotulo: "Tarefas", icone: ListChecks },
+      { href: "/clientes", rotulo: "Clientes", icone: Users },
+      { href: "/garantias", rotulo: "Garantias", icone: ShieldCheck },
+      mais,
+    ];
+  }
+  if (papel === "preparador" || papel === "administrativo") {
+    return [
+      { href: "/tarefas", rotulo: "Tarefas", icone: ListChecks },
+      { href: "/estoque", rotulo: "Estoque", icone: Car },
       mais,
     ];
   }

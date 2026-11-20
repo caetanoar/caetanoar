@@ -26,10 +26,11 @@ import { EnviarContrato } from "@/components/estoque/contrato-consignacao";
 import { BotaoExcluir } from "@/components/cadastros/botao-excluir";
 import { excluirVeiculo } from "../acoes";
 import { AnunciosVeiculo } from "@/components/ia/anuncios";
+import { TarefasDaEntidade, ChecklistCard } from "@/components/tarefas/blocos";
 import { ultimoAnuncio } from "@/lib/ia/consultas";
 import { situacaoIA } from "@/lib/ia/claude";
 
-type Aba = "dados" | "fotos" | "itens" | "documentos" | "anuncios" | "custos" | "consignacao";
+type Aba = "dados" | "fotos" | "itens" | "documentos" | "anuncios" | "preparacao" | "custos" | "consignacao";
 
 export default async function DetalheVeiculo({
   params,
@@ -50,12 +51,17 @@ export default async function DetalheVeiculo({
   if (!v || !v.id) notFound();
   const consignacao = gestao?.consignacao ?? null;
 
+  const temChecklist = pode(usuario.papel, "preparacao")
+    ? ((await supabase.from("checklist_itens").select("id", { count: "exact", head: true }).eq("veiculo_id", id).eq("tipo", "preparacao")).count ?? 0) > 0
+    : false;
+
   const abas: { id: Aba; rotulo: string }[] = [
     { id: "dados", rotulo: "Dados" },
     { id: "fotos", rotulo: `Fotos (${v.qtd_fotos ?? 0})` },
     { id: "itens", rotulo: "Itens e histórico" },
     { id: "documentos", rotulo: "Documentos" },
     { id: "anuncios", rotulo: "Anúncios" },
+    ...(pode(usuario.papel, "preparacao") && (v.status === "em_preparacao" || temChecklist) ? [{ id: "preparacao" as const, rotulo: "Preparação" }] : []),
     ...(gestor ? [{ id: "custos" as const, rotulo: "Custos" }] : []),
     ...(gestor && v.tipo === "consignado" ? [{ id: "consignacao" as const, rotulo: "Consignação" }] : []),
   ];
@@ -133,7 +139,7 @@ export default async function DetalheVeiculo({
           </CardContent>
         </Card>
 
-        {v.status !== "vendido" && v.status !== "devolvido" && (
+        {v.status !== "vendido" && v.status !== "devolvido" && pode(usuario.papel, "vendas") && (
           <div className="grid gap-2 sm:grid-cols-2">
             {wa && (
               <Button asChild variant="whatsapp" size="lg">
@@ -196,6 +202,12 @@ export default async function DetalheVeiculo({
             </CardContent>
           </Card>
         )}
+
+        {aba === "preparacao" && (
+          <ChecklistCard tipo="preparacao" veiculoId={id} podeMarcar={v.status === "em_preparacao"} voltar={`/estoque/${id}?aba=preparacao`} />
+        )}
+
+        {aba === "dados" && <TarefasDaEntidade entidade="veiculo" entidadeId={id} usuario={{ id: usuario.id, papel: usuario.papel }} voltar={`/estoque/${id}`} />}
 
         {aba === "fotos" && <FotosVeiculo veiculoId={id} fotos={fotos} podeEditar={podeEditar} />}
 

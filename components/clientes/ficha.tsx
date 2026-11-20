@@ -74,14 +74,14 @@ export function SeletorEtapa({ id, etapa }: { id: string; etapa: Etapa }) {
   );
 }
 
-export function CpfProtegido({ clienteId, mascarado }: { clienteId: string; mascarado: string | null }) {
+export function CpfProtegido({ clienteId, mascarado, podeRevelar = true }: { clienteId: string; mascarado: string | null; podeRevelar?: boolean }) {
   const [valor, setValor] = useState<string | null>(null);
   const [pendente, iniciar] = useTransition();
   if (!mascarado) return <span>—</span>;
   return (
     <span className="inline-flex items-center gap-2">
       <span className="numero">{valor ? formatarCPF(valor) : mascarado}</span>
-      {!valor && (
+      {!valor && podeRevelar && (
         <button
           type="button"
           className="inline-flex items-center gap-1 text-xs text-primary hover:underline"

@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Gauge, Car, Users, Handshake, Wallet, MoreHorizontal, ShieldCheck, Percent,
-  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks, ScanSearch, Activity,
+  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks, ScanSearch, Activity, Receipt,
   type LucideIcon,
 } from "lucide-react";
 import type { Papel, Recurso } from "@/lib/auth/permissoes";
@@ -15,6 +15,7 @@ export const MENU: ItemMenu[] = [
   { href: "/tarefas", rotulo: "Minhas tarefas", icone: ListChecks, recurso: "tarefas", grupo: "Visão geral" },
   { href: "/placa", rotulo: "Consulta por placa", icone: ScanSearch, recurso: "placa", grupo: "Vendas" },
   { href: "/estoque", rotulo: "Estoque", icone: Car, recurso: "estoque", grupo: "Vendas" },
+  { href: "/orcamentos", rotulo: "Orçamentos", icone: Receipt, recurso: "orcamentos", grupo: "Vendas" },
   { href: "/clientes", rotulo: "Clientes", icone: Users, recurso: "clientes", grupo: "Vendas" },
   { href: "/vendas", rotulo: "Vendas", icone: Handshake, recurso: "vendas", grupo: "Vendas" },
   { href: "/garantias", rotulo: "Garantias", icone: ShieldCheck, recurso: "garantias", grupo: "Vendas" },
@@ -72,9 +73,9 @@ export function itensBarra(papel: Papel): ItemBarra[] {
   }
   return [
     { href: "/estoque", rotulo: "Estoque", icone: Car },
+    { href: "/orcamentos", rotulo: "Orçamentos", icone: Receipt },
     { href: "/clientes", rotulo: "Clientes", icone: Users },
     { href: "/vendas", rotulo: "Vendas", icone: Handshake },
-    { href: "/dashboard", rotulo: "Minha meta", icone: Target },
     mais,
   ];
 }

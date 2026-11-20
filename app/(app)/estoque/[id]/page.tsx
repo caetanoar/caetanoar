@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Pencil, MessageCircle, AlertTriangle, Lock, CalendarClock, History, Handshake, ScanSearch } from "lucide-react";
+import { Pencil, MessageCircle, AlertTriangle, Lock, CalendarClock, History, Handshake, ScanSearch, Receipt } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { pode } from "@/lib/auth/permissoes";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -149,6 +149,9 @@ export default async function DetalheVeiculo({
               </Button>
             )}
             <VendaDoCarro veiculoId={id} />
+            {pode(usuario.papel, "orcamentos") && v.status !== "reservado" && (
+              <Button asChild variant="outline" size="lg" className="sm:col-span-2"><Link href={`/orcamentos/novo?veiculo=${id}`}><Receipt /> Criar orçamento</Link></Button>
+            )}
           </div>
         )}
 

@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const ROTAS_PUBLICAS = ["/login", "/recuperar-senha", "/auth", "/api/v1", "/api/cron", "/manifest.webmanifest"];
+const ROTAS_PUBLICAS = ["/login", "/recuperar-senha", "/auth", "/api/v1", "/api/cron", "/manifest.webmanifest", "/o"];
 
 /** Renova a sessão a cada navegação e manda para o login quem não estiver autenticado. */
 export async function atualizarSessao(request: NextRequest) {

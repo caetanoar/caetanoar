@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Car, PlusCircle } from "lucide-react";
+import { Car, PlusCircle, Receipt, Repeat } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { pode } from "@/lib/auth/permissoes";
 import { carroDaPlaca, historicoPlaca, ultimaConsulta, usoMes } from "@/lib/consulta-veicular/consultas";
@@ -32,6 +32,7 @@ export default async function ResultadoPlaca({ params, searchParams }: PageProps
   const custo = Number(uso.custo_unitario ?? 0) > 0 ? formatarMoeda(Number(uso.custo_unitario)) : null;
   const gestao = pode(usuario.papel, "estoque.gerenciar");
   const naLoja = carro && carro.status !== "vendido" && carro.status !== "devolvido";
+  const orcar = pode(usuario.papel, "orcamentos");
 
   return (
     <>
@@ -67,6 +68,12 @@ export default async function ResultadoPlaca({ params, searchParams }: PageProps
           </CardContent>
         </Card>
 
+        {orcar && naLoja && carro.status !== "reservado" && (
+          <Button asChild><Link href={`/orcamentos/novo?veiculo=${carro.id}`}><Receipt /> Criar orçamento com este carro</Link></Button>
+        )}
+        {orcar && consulta?.status === "encontrado" && !naLoja && (
+          <Button asChild variant="outline"><Link href={`/orcamentos/novo?troca=${consulta.id}`}><Repeat /> Usar como carro de troca num orçamento</Link></Button>
+        )}
         {consulta?.status === "encontrado" && !naLoja && gestao && (
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Button asChild variant="outline"><Link href={`/estoque/novo?tipo=proprio&consulta=${consulta.id}`}><PlusCircle /> Cadastrar como próprio</Link></Button>

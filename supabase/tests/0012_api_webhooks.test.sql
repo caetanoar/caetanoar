@@ -7,6 +7,7 @@ select pg_temp.criar_usuario('gerente@t.com', 'gerente') as gerente \gset
 select pg_temp.criar_usuario('v1@t.com', 'vendedor') as v1 \gset
 select id as uno from veiculos where modelo = 'Uno' and criado_por is null \gset
 delete from clientes where telefone = '37988887777' or whatsapp = '37988887777';
+delete from webhook_entregas; -- entregas antigas de outros testes não interferem
 
 -- Chaves de API: só o dono, e o hash nunca é legível
 select pg_temp.logar(:'dono');

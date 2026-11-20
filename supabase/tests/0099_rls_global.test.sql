@@ -2,7 +2,7 @@
 -- inclusive as que forem criadas no futuro.
 begin;
 \ir _helpers.psql
-select plan(15);
+select plan(17);
 
 select is(
   (select coalesce(string_agg(tablename, ', '), '') from pg_tables where schemaname = 'public' and not rowsecurity),
@@ -29,6 +29,19 @@ select is(
     where p.pronamespace = 'public'::regnamespace and p.proname in ('webhooks_reservar', 'webhooks_registrar', 'api_registrar_lead')
       and (has_function_privilege('anon', p.oid, 'execute') or has_function_privilege('authenticated', p.oid, 'execute'))),
   '', 'funções internas do servidor não são executáveis por usuários');
+
+select is(
+  (select coalesce(string_agg(p.proname, ', ' order by p.proname), '') from pg_proc p
+    where p.pronamespace = 'public'::regnamespace and p.proname <> 'orcamento_publico'
+      and has_function_privilege('anon', p.oid, 'execute')),
+  '', 'sem login, só o link público do orçamento executa função do banco');
+
+select is(
+  (select coalesce(string_agg(distinct p.proname, ', ' order by p.proname), '') from pg_proc p
+    where p.pronamespace = 'public'::regnamespace
+      and (p.prorettype = 'trigger'::regtype or p.proname in ('registrar_evento', 'gerar_checklist', 'registrar_verificacao', 'cancelar_lembretes_orcamento'))
+      and has_function_privilege('authenticated', p.oid, 'execute')),
+  '', 'gatilhos e funções internas (eventos de webhook, checklist) não são chamáveis por usuários');
 
 -- Vendedor: nenhuma linha nas tabelas sigilosas, mesmo com dados existentes
 select pg_temp.criar_usuario('v_global@t.com', 'vendedor') as v \gset

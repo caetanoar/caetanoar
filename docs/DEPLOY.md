@@ -1,6 +1,15 @@
 # Checklist de publicação (produção)
 
-> Nada disto foi executado. Cada passo que cria conta, contrata plano ou publica o sistema depende da autorização do dono.
+> Publicação autorizada pelo dono em 20/11/2026. Situação:
+>
+> - [x] Supabase: projeto `caetano-auto-crm` criado no plano gratuito, região **us-east-2 (Ohio)**, a mesma do
+>   servidor gratuito da Netlify (as telas ficam mais rápidas). Migrations 0001 a 0019 aplicadas, sem o `seed.sql`.
+>   Conferido: todas as tabelas com RLS, nenhum acesso anônimo, views com `security_invoker`, funções sem login
+>   fechadas (exceto o link público do orçamento).
+> - [ ] Netlify: site importado do GitHub (branch `main`) com as variáveis de ambiente.
+> - [ ] Supabase Auth: Site URL, Redirect URLs, cadastro público desligado, modelos de e-mail e SMTP do Gmail.
+> - [ ] Reenvio de webhooks (pg_cron) com o domínio final.
+> - [ ] Conta do dono e conferência final (seção 6).
 
 ## 1. Caminho escolhido: gratuito
 
@@ -57,8 +66,10 @@ O dono pediu para usar o que for gratuito. O que isso significa na prática:
 
 ## 4. App (Netlify)
 
-1. Na Netlify: "Add new site" → importar o repositório do GitHub (a Netlify detecta o Next.js) e definir as variáveis de `.env.example`: Supabase, `NEXT_PUBLIC_SITE_URL`,
-   `API_KEY_PEPPER` e `CRON_SECRET` (`openssl rand -hex 32`), `FIPE_PROVIDER`, e as opcionais de IA, fiscal e Open Finance.
+1. Na Netlify: "Add new site" → importar o repositório do GitHub, branch `main` (o `netlify.toml` já define o build)
+   e definir as variáveis de `.env.example`: Supabase, `NEXT_PUBLIC_SITE_URL`, `API_KEY_PEPPER` e `CRON_SECRET`
+   (`openssl rand -hex 32`), `FIPE_PROVIDER`, `CONSULTA_VEICULAR_PROVIDER=mock`, e as opcionais de IA, fiscal e Open Finance.
+   As variáveis `NEXT_PUBLIC_*` entram no build: depois de mudá-las, faça um novo deploy.
 2. Primeiro deploy e domínio (opcional, ex.: crm.caetanoauto.com.br).
 3. Criar o dono: `OWNER_EMAIL=... OWNER_NOME="Arthur" NEXT_PUBLIC_SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... NEXT_PUBLIC_SITE_URL=https://<domínio> pnpm criar-dono`.
 4. O dono entra, confere Configurações → Dados da loja, cadastra as regras de comissão, as contas financeiras, as metas

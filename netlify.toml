@@ -1,0 +1,9 @@
+# Publicação na Netlify (plano gratuito). A Netlify detecta o Next.js e aplica o
+# adaptador oficial automaticamente; as variáveis de ambiente ficam no painel da
+# Netlify (Site configuration → Environment variables), nunca neste arquivo.
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"

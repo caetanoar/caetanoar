@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Gauge, Car, Users, Handshake, Wallet, MoreHorizontal, ShieldCheck, Percent,
-  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks, ScanSearch, Activity, Receipt,
+  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks, ScanSearch, Activity, Receipt, Wrench, FileCheck2,
   type LucideIcon,
 } from "lucide-react";
 import type { Papel, Recurso } from "@/lib/auth/permissoes";
@@ -13,6 +13,8 @@ export const MENU: ItemMenu[] = [
   { href: "/painel", rotulo: "Painel gerencial", icone: LayoutDashboard, recurso: "painel", grupo: "Visão geral" },
   { href: "/dashboard", rotulo: "Metas e resultados", icone: Gauge, recurso: "dashboard", grupo: "Visão geral" },
   { href: "/tarefas", rotulo: "Minhas tarefas", icone: ListChecks, recurso: "tarefas", grupo: "Visão geral" },
+  { href: "/preparacao", rotulo: "Preparação", icone: Wrench, recurso: "preparacao", grupo: "Operação" },
+  { href: "/documentacao", rotulo: "Documentação", icone: FileCheck2, recurso: "documentacao", grupo: "Operação" },
   { href: "/placa", rotulo: "Consulta por placa", icone: ScanSearch, recurso: "placa", grupo: "Vendas" },
   { href: "/estoque", rotulo: "Estoque", icone: Car, recurso: "estoque", grupo: "Vendas" },
   { href: "/orcamentos", rotulo: "Orçamentos", icone: Receipt, recurso: "orcamentos", grupo: "Vendas" },
@@ -64,8 +66,17 @@ export function itensBarra(papel: Papel): ItemBarra[] {
       mais,
     ];
   }
-  if (papel === "preparador" || papel === "administrativo") {
+  if (papel === "preparador") {
     return [
+      { href: "/preparacao", rotulo: "Preparação", icone: Wrench },
+      { href: "/tarefas", rotulo: "Tarefas", icone: ListChecks },
+      { href: "/estoque", rotulo: "Estoque", icone: Car },
+      mais,
+    ];
+  }
+  if (papel === "administrativo") {
+    return [
+      { href: "/documentacao", rotulo: "Documentação", icone: FileCheck2 },
       { href: "/tarefas", rotulo: "Tarefas", icone: ListChecks },
       { href: "/estoque", rotulo: "Estoque", icone: Car },
       mais,

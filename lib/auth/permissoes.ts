@@ -99,5 +99,7 @@ export function paginaInicial(papel: Papel): string {
   if (papel === "dono") return "/painel";
   if (papel === "gerente") return "/dashboard";
   if (papel === "vendedor") return "/estoque";
+  if (papel === "preparador") return "/preparacao";
+  if (papel === "administrativo") return "/documentacao";
   return "/tarefas";
 }

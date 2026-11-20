@@ -135,6 +135,9 @@ test("vendedor envia, abre WhatsApp, PDF e link público; cliente aceita e vira 
   await page.getByRole("button", { name: "Converter em venda" }).click();
   await expect(page).toHaveURL(/\/vendas\/[0-9a-f-]{36}/);
   await expect(page.getByText(/R\$\s?48\.000,00/).first()).toBeVisible();
+  // Carro com alerta amarelo: a venda gerada fica em rascunho até a ciência do cliente
+  await expect(page.getByText("Rascunho", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Atenção: informar o cliente")).toBeVisible();
   await tela(page, "e5-venda-do-orcamento");
 });
 

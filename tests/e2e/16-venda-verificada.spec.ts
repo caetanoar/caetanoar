@@ -132,3 +132,27 @@ test("alerta vermelho: bloqueia; gerente não fecha; só o dono libera com justi
   await expect(page.getByText("Fechada", { exact: true })).toBeVisible();
   await tela(page, "f5-venda-vermelha-fechada");
 });
+
+test("orçamento aceito de carro com impeditivo vira venda bloqueada (só o dono libera)", async ({ page }) => {
+  await entrar(page, "gerente");
+  const carro = await cadastrarPelaConsulta(page, placa(7), "3600000");
+
+  await entrar(page, "vendedor1");
+  await page.goto(`/orcamentos/novo?veiculo=${carro}`);
+  await page.locator('select[name="cliente_id"]').selectOption({ label: cliente });
+  await page.getByRole("button", { name: "Forma", exact: true }).click();
+  const validade = new Date(Date.now() + 5 * 86_400_000).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  await page.getByLabel("Válido até").fill(validade);
+  await page.getByRole("button", { name: "Salvar orçamento" }).click();
+  await expect(page).toHaveURL(/\/orcamentos\/[0-9a-f-]{36}$/);
+  await expect(page.getByText(/Roubo ou furto/).first()).toBeVisible();
+  await page.getByRole("button", { name: "Enviar ao cliente" }).click();
+  await expect(page.getByRole("link", { name: "Enviar ao cliente pelo WhatsApp" })).toBeVisible();
+  await page.getByRole("button", { name: "Cliente aceitou" }).click();
+  await page.getByRole("button", { name: "Converter em venda" }).click();
+  await expect(page).toHaveURL(/\/vendas\/[0-9a-f-]{36}/);
+  await expect(page.getByText("Rascunho", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Impeditivo", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Alerta impeditivo: a venda só segue se o dono liberar, com justificativa.")).toBeVisible();
+  await tela(page, "f6-orcamento-vermelho-convertido");
+});

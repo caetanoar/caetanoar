@@ -25,6 +25,9 @@ Usuários de desenvolvimento (senha `caetano123`):
 | Dono | arthur@caetanoauto.local |
 | Gerente | gerente@caetanoauto.local |
 | Vendedor | vendedor1@caetanoauto.local, vendedor2@caetanoauto.local |
+| Atendimento/pós-venda | atendimento@caetanoauto.local |
+| Preparador | preparador@caetanoauto.local |
+| Administrativo/despachante | administrativo@caetanoauto.local |
 
 E-mails enviados localmente (convites, recuperação de senha) aparecem no Mailpit: http://127.0.0.1:54324
 
@@ -45,6 +48,23 @@ vendas com troca (vendedor registra, gerente fecha; o fechamento gera comissões
 financeiro (contas, a pagar/receber, transferências, conciliação OFX/CSV) · comissões · NF-e (importação de XML e
 emissão por provedor) · metas, dashboard e painel do dono · relatórios com CSV e PDF · IA para anúncios e follow-up ·
 API REST e webhooks.
+
+**Área de trabalho** (celular): tarefas por perfil com prazos e checklists · consulta por placa (estoque primeiro,
+depois o provedor; selos verde/amarelo/vermelho, cache, limite mensal e painel de uso) · orçamentos (troca consultada
+pela placa, desconto com aprovação, simulação de financiamento, alertas fixos do carro, PDF, link público e WhatsApp,
+lembretes de 2 e 5 dias, conversão em venda) · venda verificada (impeditivo só o dono libera, com justificativa;
+demais alertas exigem a ciência do cliente e o Termo de Ciência assinado) · preparação (checklist, fotos e custos do
+preparador) · documentação da transferência (checklist, dados para a ATPV-e e anexos).
+
+## Consulta veicular
+
+- O provedor fica atrás de um adapter (`lib/integracoes/consulta-veicular/`), escolhido por `CONSULTA_VEICULAR_PROVIDER`.
+  Hoje só existe o **simulado** (`mock`, padrão), sempre marcado como "SIMULADO" na tela e no PDF. Cenário pelo último
+  dígito da placa: 3 = nada encontrado, 5 = leilão e IPVA, 7 = roubo/furto, 9 = placa não encontrada.
+- O adapter real só será escrito depois que o dono escolher e contratar o provedor; a chave vai em variável de ambiente.
+- Textos de consulta nunca dizem "carro limpo", "garantido" ou "sem problemas": sem registros, a frase é
+  "Nenhum registro encontrado na consulta de [data] ([provedor])" (um teste varre o código para garantir).
+- A resposta bruta do provedor fica só com dono e gerente, sem nome/CPF do proprietário.
 
 ## API e webhooks
 

@@ -2,7 +2,7 @@
 -- inclusive as que forem criadas no futuro.
 begin;
 \ir _helpers.psql
-select plan(12);
+select plan(15);
 
 select is(
   (select coalesce(string_agg(tablename, ', '), '') from pg_tables where schemaname = 'public' and not rowsecurity),
@@ -46,6 +46,9 @@ select is(
         + (select count(*) from auditoria) + (select count(*) from api_chaves) + (select count(*) from webhooks) + (select count(*) from webhook_entregas)),
   0::bigint, 'vendedor não vê fiscal, garantias, auditoria nem integrações');
 select is((select count(*) from clientes where vendedor_id is distinct from :'v'), 0::bigint, 'vendedor novo não vê clientes de outros');
+select is((select (select count(*) from consultas_veiculares_brutos) + (select count(*) from orcamentos) + (select count(*) from liberacoes_bloqueio)
+  + (select count(*) from vendas_ciencias) + (select count(*) from verificacoes_veiculo)), 0::bigint,
+  'vendedor novo não vê resposta bruta da consulta nem orçamentos, liberações ou ciências de outros');
 select pg_temp.sair();
 
 -- Perfis novos: nada de custo, compra, financeiro, fiscal, comissões, auditoria ou integrações
@@ -58,11 +61,16 @@ select pg_temp.logar(:'a');
 select is((select (select count(*) from veiculos_sigilo) + (select count(*) from custos_veiculo) + (select count(*) from consignacoes) + (select count(*) from lancamentos)
   + (select count(*) from comissoes) + (select count(*) from notas_fiscais) + (select count(*) from auditoria) + (select count(*) from api_chaves) + (select count(*) from vendas)), 0::bigint,
   'atendimento não vê sigilo, financeiro, fiscal, comissões, auditoria, integrações nem vendas');
+select is((select (select count(*) from consultas_veiculares_brutos) + (select count(*) from orcamentos) + (select count(*) from liberacoes_bloqueio)
+  + (select count(*) from vendas_ciencias)), 0::bigint, 'atendimento não vê resposta bruta da consulta, orçamentos, liberações nem ciências');
 select pg_temp.sair();
 select pg_temp.logar(:'p');
 select is((select (select count(*) from veiculos_sigilo) + (select count(*) from consignacoes) + (select count(*) from lancamentos) + (select count(*) from clientes)
   + (select count(*) from comissoes) + (select count(*) from notas_fiscais) + (select count(*) from auditoria) + (select count(*) from vendas) + (select count(*) from garantias)), 0::bigint,
   'preparador não vê compra, consignação, financeiro, clientes, comissões, fiscal, auditoria, vendas nem garantias');
+select is((select (select count(*) from consultas_veiculares_brutos) + (select count(*) from orcamentos) + (select count(*) from liberacoes_bloqueio)
+  + (select count(*) from vendas_ciencias) + (select count(*) from custos_veiculo where criado_por is distinct from :'p')), 0::bigint,
+  'preparador não vê resposta bruta, orçamentos, liberações, ciências nem custos lançados por outros');
 select pg_temp.sair();
 select pg_temp.logar(:'d');
 select is((select (select count(*) from veiculos_sigilo) + (select count(*) from custos_veiculo) + (select count(*) from consignacoes) + (select count(*) from lancamentos)

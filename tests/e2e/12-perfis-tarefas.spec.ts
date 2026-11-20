@@ -36,7 +36,8 @@ test("gerente cadastra carro em preparação e passa tarefa ao preparador", asyn
 
 test("preparador vê a tarefa, marca o checklist e não vê custo nem clientes", async ({ page }) => {
   await entrar(page, "preparador");
-  await expect(page).toHaveURL(/\/tarefas/);
+  await expect(page).toHaveURL(/\/preparacao/);
+  await page.goto("/tarefas");
   await expect(page.getByRole("navigation", { name: "Navegação principal" }).getByLabel(/tarefa\(s\) para hoje ou atrasada\(s\)/)).toBeVisible();
   await expect(page.getByText(tituloTarefa)).toBeVisible();
   await tela(page, "c0-tarefas-preparador");
@@ -77,7 +78,7 @@ test("atendimento vê clientes e garantias, sem cadastrar cliente nem revelar CP
 
 test("administrativo não acessa vendas nem financeiro", async ({ page }) => {
   await entrar(page, "administrativo");
-  await expect(page).toHaveURL(/\/tarefas/);
+  await expect(page).toHaveURL(/\/documentacao/);
   for (const rota of ["/vendas", "/financeiro", "/clientes"]) {
     await page.goto(rota);
     await expect(page).toHaveURL(/sem-acesso/);

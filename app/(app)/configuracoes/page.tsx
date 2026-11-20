@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Store, Users, Percent, Target, FileText, Plug, History, ChevronRight, Tags, ScanSearch, Receipt } from "lucide-react";
+import { Store, Users, Percent, Target, FileText, Plug, History, ChevronRight, Tags, ScanSearch, Receipt, ListChecks } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { Cabecalho, Conteudo } from "@/components/app/cabecalho";
 import { Card } from "@/components/ui/card";
@@ -11,6 +11,7 @@ const ITENS = [
   { href: "/configuracoes/metas", titulo: "Metas", desc: "Metas mensais da loja e de cada vendedor", icone: Target },
   { href: "/financeiro/categorias", titulo: "Categorias financeiras", desc: "Receitas e despesas", icone: Tags },
   { href: "/configuracoes/fiscal", titulo: "Fiscal", desc: "CNPJ, regime, CFOPs e provedor de NF-e", icone: FileText },
+  { href: "/configuracoes/checklists", titulo: "Checklists", desc: "Itens e prazos da preparação e da documentação", icone: ListChecks },
   { href: "/configuracoes/orcamentos", titulo: "Orçamentos", desc: "Validade padrão, limite de desconto e taxas da simulação", icone: Receipt },
   { href: "/configuracoes/consulta-veicular", titulo: "Consulta veicular", desc: "Custo por consulta, limite mensal e validade", icone: ScanSearch },
   { href: "/configuracoes/integracoes", titulo: "Integrações", desc: "Chaves de API, webhooks, Open Finance e IA", icone: Plug },

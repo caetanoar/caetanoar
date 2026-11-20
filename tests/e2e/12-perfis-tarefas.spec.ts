@@ -19,7 +19,7 @@ test("gerente cadastra carro em preparação e passa tarefa ao preparador", asyn
 
   // Checklist criado automaticamente ao entrar em preparação
   await page.getByRole("link", { name: "Preparação" }).click();
-  await expect(page.getByText("0 de 7 concluído(s)")).toBeVisible();
+  await expect(page.getByText(/^0 de \d+ concluído\(s\)$/)).toBeVisible();
 
   // Tarefa para o preparador, com prazo hoje
   await page.getByRole("link", { name: "Dados" }).click();
@@ -44,7 +44,7 @@ test("preparador vê a tarefa, marca o checklist e não vê custo nem clientes",
 
   await page.goto(`${urlCarro}?aba=preparacao`);
   await page.getByRole("checkbox", { name: "Lavagem" }).click();
-  await expect(page.getByText("1 de 7 concluído(s)")).toBeVisible();
+  await expect(page.getByText(/^1 de \d+ concluído\(s\)$/)).toBeVisible();
   await page.reload();
   await expect(page.getByText(/Feito por Preparador Teste/)).toBeVisible();
   await tela(page, "c1-checklist-preparacao");

@@ -201,7 +201,7 @@ export function ListaEntregas({ entregas }: { entregas: Entrega[] }) {
 
 export function Situacao({ itens }: { itens: { nome: string; ok: boolean; detalhe: string }[] }) {
   return (
-    <ul className="grid gap-2 sm:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       {itens.map((i) => (
         <li key={i.nome} className="flex items-start gap-2.5 rounded-lg border p-3">
           <ShieldCheck className={i.ok ? "mt-0.5 size-4 shrink-0 text-success" : "mt-0.5 size-4 shrink-0 text-muted-foreground"} />

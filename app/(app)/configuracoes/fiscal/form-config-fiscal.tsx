@@ -25,7 +25,7 @@ export function FormConfigFiscal({ config }: { config: Config }) {
       {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
       <Card>
         <CardHeader><CardTitle>Empresa emitente</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="cnpj" rotulo="CNPJ" erro={e.cnpj}><InputDocumento name="cnpj" defaultValue={v("cnpj")} placeholder="00.000.000/0000-00" /></Campo>
           <Campo id="inscricao_estadual" rotulo="Inscrição estadual" erro={e.inscricao_estadual}><Input name="inscricao_estadual" defaultValue={v("inscricao_estadual")} /></Campo>
           <Campo id="razao_social" rotulo="Razão social" className="sm:col-span-2"><Input name="razao_social" defaultValue={v("razao_social")} /></Campo>
@@ -49,7 +49,7 @@ export function FormConfigFiscal({ config }: { config: Config }) {
       </Card>
       <Card>
         <CardHeader><CardTitle>Endereço</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-3">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Campo id="logradouro" rotulo="Logradouro" className="sm:col-span-2"><Input name="logradouro" defaultValue={v("logradouro")} /></Campo>
           <Campo id="numero" rotulo="Número"><Input name="numero" defaultValue={v("numero")} /></Campo>
           <Campo id="complemento" rotulo="Complemento"><Input name="complemento" defaultValue={v("complemento")} /></Campo>
@@ -62,7 +62,7 @@ export function FormConfigFiscal({ config }: { config: Config }) {
       </Card>
       <Card>
         <CardHeader><CardTitle>Padrões da NF-e (com o contador)</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="natureza_venda" rotulo="Natureza da operação (venda)" className="sm:col-span-2"><Input name="natureza_venda" defaultValue={v("natureza_venda")} /></Campo>
           <Campo id="serie_nfe" rotulo="Série da NF-e"><Input name="serie_nfe" type="number" defaultValue={v("serie_nfe")} /></Campo>
           <Campo id="ncm_veiculos" rotulo="NCM padrão de veículos" erro={e.ncm_veiculos} dica="Ex.: 87032100 (até 1.000 cm³) — confirme"><Input name="ncm_veiculos" inputMode="numeric" defaultValue={v("ncm_veiculos")} /></Campo>

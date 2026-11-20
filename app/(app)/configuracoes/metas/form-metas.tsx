@@ -26,7 +26,7 @@ export function FormMetas({ mes, linhas, podeEditar }: { mes: string; linhas: Li
         return (
           <Card key={k}>
             <CardHeader><CardTitle>{l.nome}</CardTitle></CardHeader>
-            <CardContent className="grid gap-3 sm:grid-cols-3">
+            <CardContent className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor={`fat_${k}`}>Faturamento</Label>
                 <InputMoeda id={`fat_${k}`} name={`fat_${k}`} defaultValue={l.meta?.meta_faturamento ?? null} disabled={!podeEditar} />

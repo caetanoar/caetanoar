@@ -10,6 +10,7 @@ import { itensBarra, menuDoPapel } from "./navegacao";
 import { NOME_PAPEL, type Papel } from "@/lib/auth/permissoes";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { sair } from "@/app/(auth)/acoes";
+import { CampoPlaca } from "@/components/consulta/campo-placa";
 
 type Props = { usuario: { nome: string; papel: Papel; email: string }; tarefasAtrasadas?: number; children: React.ReactNode };
 
@@ -48,6 +49,7 @@ export function Shell({ usuario, tarefasAtrasadas = 0, children }: Props) {
             <p className="text-xs text-muted-foreground">CRM</p>
           </div>
         </Link>
+        <CampoPlaca className="px-3 pb-2" />
         <nav className="flex-1 overflow-y-auto px-2 pb-4">
           {grupos.map((g) => (
             <div key={g} className="mt-3">
@@ -81,6 +83,9 @@ export function Shell({ usuario, tarefasAtrasadas = 0, children }: Props) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
+        <div className="pt-safe border-b bg-card px-4 py-2 lg:hidden">
+          <CampoPlaca />
+        </div>
         <main className="flex-1 pb-[calc(5rem+env(safe-area-inset-bottom))] lg:pb-8">{children}</main>
       </div>
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Pencil, MessageCircle, AlertTriangle, Lock, CalendarClock, History, Handshake } from "lucide-react";
+import { Pencil, MessageCircle, AlertTriangle, Lock, CalendarClock, History, Handshake, ScanSearch } from "lucide-react";
 import { exigirPermissao } from "@/lib/auth/sessao";
 import { pode } from "@/lib/auth/permissoes";
 import { criarClienteServidor } from "@/lib/supabase/server";
@@ -27,6 +27,8 @@ import { BotaoExcluir } from "@/components/cadastros/botao-excluir";
 import { excluirVeiculo } from "../acoes";
 import { AnunciosVeiculo } from "@/components/ia/anuncios";
 import { TarefasDaEntidade, ChecklistCard } from "@/components/tarefas/blocos";
+import { ultimaConsulta } from "@/lib/consulta-veicular/consultas";
+import { SeloConsulta } from "@/components/consulta/selo";
 import { ultimoAnuncio } from "@/lib/ia/consultas";
 import { situacaoIA } from "@/lib/ia/claude";
 
@@ -140,7 +142,7 @@ export default async function DetalheVeiculo({
         </Card>
 
         {v.status !== "vendido" && v.status !== "devolvido" && pode(usuario.papel, "vendas") && (
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {wa && (
               <Button asChild variant="whatsapp" size="lg">
                 <a href={wa} target="_blank" rel="noopener noreferrer"><MessageCircle /> Chamar no WhatsApp</a>
@@ -206,6 +208,8 @@ export default async function DetalheVeiculo({
         {aba === "preparacao" && (
           <ChecklistCard tipo="preparacao" veiculoId={id} podeMarcar={v.status === "em_preparacao"} voltar={`/estoque/${id}?aba=preparacao`} />
         )}
+
+        {aba === "dados" && v.placa && <ConsultaDoCarro placa={v.placa} />}
 
         {aba === "dados" && <TarefasDaEntidade entidade="veiculo" entidadeId={id} usuario={{ id: usuario.id, papel: usuario.papel }} voltar={`/estoque/${id}`} />}
 
@@ -291,7 +295,7 @@ async function AbaItens({ id, podeEditar }: { id: string; podeEditar: boolean })
     supabase.from("itens_catalogo").select("item").order("ordem"),
   ]);
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <Card>
         <CardHeader><CardTitle>Itens e opcionais</CardTitle></CardHeader>
         <CardContent><ItensVeiculo veiculoId={id} itens={itens ?? []} catalogo={(catalogo ?? []).map((c) => c.item)} podeEditar={podeEditar} /></CardContent>
@@ -362,4 +366,17 @@ async function ContratoLink({ arquivoId }: { arquivoId: string | null }) {
 async function AbaAnuncios({ id, disponivel }: { id: string; disponivel: boolean }) {
   const inicial = await ultimoAnuncio(id);
   return <AnunciosVeiculo veiculoId={id} inicial={inicial} iaAtiva={situacaoIA().ativa} disponivel={disponivel} />;
+}
+
+async function ConsultaDoCarro({ placa }: { placa: string }) {
+  const c = await ultimaConsulta(placa);
+  return (
+    <Link href={`/placa/${placa}`} className="flex items-center gap-3 rounded-xl border bg-card p-4 hover:bg-secondary/60">
+      <ScanSearch className="size-5 text-primary" />
+      <span className="min-w-0 flex-1 text-sm">
+        {c ? <>Consulta da placa em {formatarData(c.consultado_em)} ({c.provedor})</> : "Placa ainda não consultada (leilão, sinistro, gravame, débitos)"}
+      </span>
+      {c && <SeloConsulta selo={c.status === "encontrado" ? c.selo : null} compacto />}
+    </Link>
+  );
 }

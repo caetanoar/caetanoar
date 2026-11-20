@@ -70,6 +70,10 @@ export async function salvarVeiculo(_: EstadoAcao<{ id: string }>, fd: FormData)
     p_consignacao: consignacao?.success ? (Object.fromEntries(Object.entries(consignacao.data).filter(([, v]) => v !== null)) as Json) : undefined,
   });
   if (error || !data) return { ok: false, erro: mensagemDeErro(error) };
+  // Cadastro feito a partir de uma consulta de placa: liga a consulta ao carro.
+  if (!id && /^[0-9a-f-]{36}$/i.test(bruto.consulta_id ?? "")) {
+    await supabase.from("consultas_veiculares").update({ veiculo_id: data }).eq("id", bruto.consulta_id);
+  }
   revalidarVeiculo(data);
   dispararWebhooks();
   return { ok: true, mensagem: id ? "Veículo atualizado." : "Veículo cadastrado.", dados: { id: data } };

@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Gauge, Car, Users, Handshake, Wallet, MoreHorizontal, ShieldCheck, Percent,
-  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks,
+  FileText, BarChart3, Settings, Truck, UserRound, Share2, Target, Landmark, Coins, ListChecks, ScanSearch, Activity,
   type LucideIcon,
 } from "lucide-react";
 import type { Papel, Recurso } from "@/lib/auth/permissoes";
@@ -13,6 +13,7 @@ export const MENU: ItemMenu[] = [
   { href: "/painel", rotulo: "Painel gerencial", icone: LayoutDashboard, recurso: "painel", grupo: "Visão geral" },
   { href: "/dashboard", rotulo: "Metas e resultados", icone: Gauge, recurso: "dashboard", grupo: "Visão geral" },
   { href: "/tarefas", rotulo: "Minhas tarefas", icone: ListChecks, recurso: "tarefas", grupo: "Visão geral" },
+  { href: "/placa", rotulo: "Consulta por placa", icone: ScanSearch, recurso: "placa", grupo: "Vendas" },
   { href: "/estoque", rotulo: "Estoque", icone: Car, recurso: "estoque", grupo: "Vendas" },
   { href: "/clientes", rotulo: "Clientes", icone: Users, recurso: "clientes", grupo: "Vendas" },
   { href: "/vendas", rotulo: "Vendas", icone: Handshake, recurso: "vendas", grupo: "Vendas" },
@@ -26,6 +27,7 @@ export const MENU: ItemMenu[] = [
   { href: "/comissoes", rotulo: "Comissões", icone: Percent, recurso: "comissoes", grupo: "Gestão" },
   { href: "/fiscal", rotulo: "Fiscal (NF-e)", icone: FileText, recurso: "fiscal", grupo: "Gestão" },
   { href: "/relatorios", rotulo: "Relatórios", icone: BarChart3, recurso: "relatorios", grupo: "Gestão" },
+  { href: "/consultas", rotulo: "Uso das consultas", icone: Activity, recurso: "consultas.painel", grupo: "Gestão" },
   { href: "/configuracoes/metas", rotulo: "Metas", icone: Target, recurso: "metas.definir", grupo: "Gestão" },
   { href: "/configuracoes", rotulo: "Configurações", icone: Settings, recurso: "configuracoes", grupo: "Sistema" },
 ];

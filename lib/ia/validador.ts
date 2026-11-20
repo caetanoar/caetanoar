@@ -57,3 +57,19 @@ export function removerTrechosProibidos(texto: string, ctx: ContextoValidacao): 
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
+
+/**
+ * Expressões proibidas em qualquer texto sobre consulta de placa, orçamento ou venda:
+ * a base de um provedor pode estar incompleta, então nunca "carro limpo",
+ * "garantido" (promessa) nem "sem problemas".
+ */
+const PROIBIDAS_SEMPRE: { rotulo: string; padrao: RegExp }[] = [
+  { rotulo: "carro limpo", padrao: /\b(carro|veiculo|historico|ficha) (100% )?limp[oa]\b|\bnome limpo\b/ },
+  { rotulo: "garantido", padrao: /\bgarantid[oa]s?\b/ },
+  { rotulo: "sem problemas", padrao: /\bsem (nenhum |qualquer )?problemas?\b/ },
+];
+
+export function validarTextoConsulta(texto: string): string[] {
+  const t = normalizarTexto(texto);
+  return PROIBIDAS_SEMPRE.filter((r) => r.padrao.test(t)).map((r) => r.rotulo);
+}

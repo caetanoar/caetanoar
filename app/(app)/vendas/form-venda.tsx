@@ -143,7 +143,7 @@ export function FormVenda({
 
       <Card>
         <CardHeader><CardTitle>Carro e cliente</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="veiculo_id" rotulo="Carro" erro={e.veiculo_id} obrigatorio className="sm:col-span-2">
             <Select
               name="veiculo_id"
@@ -197,7 +197,7 @@ export function FormVenda({
 
       <Card>
         <CardHeader><CardTitle>Valores</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="valor_venda" rotulo="Valor da venda" erro={e.valor_venda} obrigatorio>
             <InputMoeda key={chaveValor} name="valor_venda" defaultValue={valorVenda} onValorChange={setValorVenda} />
           </Campo>
@@ -335,7 +335,7 @@ export function FormVenda({
 
       <Card>
         <CardHeader><CardTitle>Garantia e observações</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="garantia_dias" rotulo="Garantia (dias)" erro={e.garantia_dias}>
             <Input name="garantia_dias" type="number" inputMode="numeric" defaultValue={valores?.garantia_dias ?? config.garantia_dias} />
           </Campo>

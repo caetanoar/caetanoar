@@ -63,7 +63,7 @@ export function FormCliente({
 
       <Card>
         <CardHeader><CardTitle>Contato</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="nome" rotulo="Nome" erro={e.nome} obrigatorio className="sm:col-span-2">
             <Input name="nome" defaultValue={v("nome")} autoComplete="off" />
           </Campo>
@@ -103,7 +103,7 @@ export function FormCliente({
 
       <Card>
         <CardHeader><CardTitle>Origem e atendimento</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="origem" rotulo="Origem do lead" erro={e.origem}>
             <Select name="origem" value={origem} onChange={(ev) => setOrigem(ev.target.value)}>
               {Object.entries(ORIGEM_LEAD).map(([k, r]) => <option key={k} value={k}>{r}</option>)}
@@ -144,7 +144,7 @@ export function FormCliente({
           <CardTitle className="flex items-center gap-1.5"><Lock className="size-4" /> Dados pessoais</CardTitle>
           <CardDescription>Protegidos (LGPD): o CPF fica mascarado e cada consulta é registrada. Preencha quando for fechar negócio.</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="cpf" rotulo="CPF" erro={e.cpf} dica={cpfMascarado ? `Atual: ${cpfMascarado}. Digite só se for alterar.` : undefined}>
             <Input name="cpf" inputMode="numeric" autoComplete="off" value={cpf} onChange={(ev) => setCpf(formatarCPF(ev.target.value))} placeholder={cpfMascarado ?? "000.000.000-00"} />
           </Campo>

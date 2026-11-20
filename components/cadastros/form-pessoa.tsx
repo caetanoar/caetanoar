@@ -49,7 +49,7 @@ export function FormPessoa({
       {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
       <Card>
         <CardHeader><CardTitle>Identificação</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {config.tipos && (
             <Campo id="tipo" rotulo="Tipo" erro={e.tipo} obrigatorio>
               <Select name="tipo" defaultValue={v("tipo")}>
@@ -80,7 +80,7 @@ export function FormPessoa({
       </Card>
       <Card>
         <CardHeader><CardTitle>Contato</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="telefone" rotulo="Telefone" erro={e.telefone}>
             <InputTelefone name="telefone" defaultValue={v("telefone")} />
           </Campo>
@@ -107,7 +107,7 @@ export function FormPessoa({
       </Card>
       <Card>
         <CardHeader><CardTitle>Pagamento e observações</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="chave_pix" rotulo="Chave Pix" erro={e.chave_pix}>
             <Input name="chave_pix" defaultValue={v("chave_pix")} autoComplete="off" />
           </Campo>

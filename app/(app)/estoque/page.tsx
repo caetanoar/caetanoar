@@ -108,7 +108,7 @@ export default async function Estoque({ searchParams }: { searchParams: Promise<
             {gestor ? <Link href="/estoque/novo" className="text-primary hover:underline">Cadastrar veículo</Link> : "Ajuste os filtros da busca."}
           </Vazio>
         ) : (
-          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {lista.map((v) => {
               const st = STATUS_VEICULO[v.status!];
               const nome = nomeVeiculo({ marca: v.marca!, modelo: v.modelo!, versao: v.versao });

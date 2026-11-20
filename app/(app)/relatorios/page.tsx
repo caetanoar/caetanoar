@@ -21,7 +21,7 @@ export default async function Relatorios() {
     <>
       <Cabecalho titulo="Relatórios" subtitulo="Filtre por período e baixe em CSV (Excel) ou PDF" />
       <Conteudo>
-        <ul className="grid gap-2 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-2 md:grid-cols-2">
           {(Object.keys(TIPOS_RELATORIO) as TipoRelatorio[]).map((t) => {
             const Icone = ICONES[t];
             return (

@@ -38,7 +38,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             <Kpi rotulo="Minhas comissões" valor={formatarMoeda(d.comissoes ?? 0)} destaque apoio={<Link href="/minhas-comissoes" className="text-primary hover:underline">ver detalhes</Link>} />
             <Kpi rotulo="Aguardando aprovação" valor={qtd(Number(d.aguardando ?? 0))} />
           </div>
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Link href="/clientes?followup=1" className="flex items-center gap-3 rounded-xl border bg-card p-4">
               <BellRing className="size-5 text-primary" />
               <span className="flex-1 text-sm">Retornos para hoje ou atrasados</span>
@@ -89,7 +89,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
           <Kpi rotulo={`Parados há mais de ${r.estoque.diasParado} dias`} valor={qtd(r.estoque.parados.length)} />
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <Card>
             <CardHeader><CardTitle>Vendedores</CardTitle></CardHeader>
             <CardContent className="flex flex-col gap-5">

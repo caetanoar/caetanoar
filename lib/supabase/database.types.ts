@@ -397,14 +397,14 @@ isOneToOne: false
                   ]
                 },"configuracoes": {
                   Row: {
-                    "alerta_contas_dias": number,"alerta_garantia_dias": number,"assinatura": string,"atualizado_em": string,"atualizado_por": string | null,"cidade": string,"criado_em": string,"criado_por": string | null,"estoque_parado_dias": number,"garantia_cobertura_padrao": string | null,"garantia_dias_padrao": number,"id": boolean,"nome_loja": string,"recebimento_consignado_padrao": string,"regiao_anuncio": string,"telefones_assinatura": string,"uf": string,"whatsapp_numero": string
+                    "alerta_contas_dias": number,"alerta_garantia_dias": number,"assinatura": string,"atualizado_em": string,"atualizado_por": string | null,"cidade": string,"consulta_cache_dias": number,"consulta_custo_unitario": number,"consulta_limite_mensal_qtd": number | null,"consulta_limite_mensal_valor": number | null,"consulta_validade_venda_dias": number,"criado_em": string,"criado_por": string | null,"estoque_parado_dias": number,"garantia_cobertura_padrao": string | null,"garantia_dias_padrao": number,"id": boolean,"nome_loja": string,"recebimento_consignado_padrao": string,"regiao_anuncio": string,"telefones_assinatura": string,"uf": string,"whatsapp_numero": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "alerta_contas_dias"?: number,"alerta_garantia_dias"?: number,"assinatura"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string,"criado_em"?: string,"criado_por"?: string | null,"estoque_parado_dias"?: number,"garantia_cobertura_padrao"?: string | null,"garantia_dias_padrao"?: number,"id"?: boolean,"nome_loja"?: string,"recebimento_consignado_padrao"?: string,"regiao_anuncio"?: string,"telefones_assinatura"?: string,"uf"?: string,"whatsapp_numero"?: string
+                    "alerta_contas_dias"?: number,"alerta_garantia_dias"?: number,"assinatura"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string,"consulta_cache_dias"?: number,"consulta_custo_unitario"?: number,"consulta_limite_mensal_qtd"?: number | null,"consulta_limite_mensal_valor"?: number | null,"consulta_validade_venda_dias"?: number,"criado_em"?: string,"criado_por"?: string | null,"estoque_parado_dias"?: number,"garantia_cobertura_padrao"?: string | null,"garantia_dias_padrao"?: number,"id"?: boolean,"nome_loja"?: string,"recebimento_consignado_padrao"?: string,"regiao_anuncio"?: string,"telefones_assinatura"?: string,"uf"?: string,"whatsapp_numero"?: string
                   }
                   Update: {
-                    "alerta_contas_dias"?: number,"alerta_garantia_dias"?: number,"assinatura"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string,"criado_em"?: string,"criado_por"?: string | null,"estoque_parado_dias"?: number,"garantia_cobertura_padrao"?: string | null,"garantia_dias_padrao"?: number,"id"?: boolean,"nome_loja"?: string,"recebimento_consignado_padrao"?: string,"regiao_anuncio"?: string,"telefones_assinatura"?: string,"uf"?: string,"whatsapp_numero"?: string
+                    "alerta_contas_dias"?: number,"alerta_garantia_dias"?: number,"assinatura"?: string,"atualizado_em"?: string,"atualizado_por"?: string | null,"cidade"?: string,"consulta_cache_dias"?: number,"consulta_custo_unitario"?: number,"consulta_limite_mensal_qtd"?: number | null,"consulta_limite_mensal_valor"?: number | null,"consulta_validade_venda_dias"?: number,"criado_em"?: string,"criado_por"?: string | null,"estoque_parado_dias"?: number,"garantia_cobertura_padrao"?: string | null,"garantia_dias_padrao"?: number,"id"?: boolean,"nome_loja"?: string,"recebimento_consignado_padrao"?: string,"regiao_anuncio"?: string,"telefones_assinatura"?: string,"uf"?: string,"whatsapp_numero"?: string
                   }
                   Relationships: [
                     
@@ -486,6 +486,64 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"consultas_veiculares": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"consultado_em": string,"criado_em": string,"criado_por": string | null,"custo": number,"dados": NonNullable<Json>,"erro": string | null,"expira_em": string,"id": string,"placa": string,"provedor": string,"selo": Database["public"]['Enums']["selo_consulta"] | null,"simulado": boolean,"status": Database["public"]['Enums']["status_consulta"],"usuario_id": string,"veiculo_id": string | null,"verificacoes": NonNullable<Json>
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"consultado_em"?: string,"criado_em"?: string,"criado_por"?: string | null,"custo"?: number,"dados"?: NonNullable<Json>,"erro"?: string | null,"expira_em": string,"id"?: string,"placa": string,"provedor": string,"selo"?: Database["public"]['Enums']["selo_consulta"] | null,"simulado"?: boolean,"status": Database["public"]['Enums']["status_consulta"],"usuario_id": string,"veiculo_id"?: string | null,"verificacoes"?: NonNullable<Json>
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"consultado_em"?: string,"criado_em"?: string,"criado_por"?: string | null,"custo"?: number,"dados"?: NonNullable<Json>,"erro"?: string | null,"expira_em"?: string,"id"?: string,"placa"?: string,"provedor"?: string,"selo"?: Database["public"]['Enums']["selo_consulta"] | null,"simulado"?: boolean,"status"?: Database["public"]['Enums']["status_consulta"],"usuario_id"?: string,"veiculo_id"?: string | null,"verificacoes"?: NonNullable<Json>
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "consultas_veiculares_usuario_id_fkey"
+      columns: ["usuario_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consultas_veiculares_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consultas_veiculares_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consultas_veiculares_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"consultas_veiculares_brutos": {
+                  Row: {
+                    "atualizado_em": string,"atualizado_por": string | null,"consulta_id": string,"criado_em": string,"criado_por": string | null,"resposta": NonNullable<Json>
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"consulta_id": string,"criado_em"?: string,"criado_por"?: string | null,"resposta": NonNullable<Json>
+                  }
+                  Update: {
+                    "atualizado_em"?: string,"atualizado_por"?: string | null,"consulta_id"?: string,"criado_em"?: string,"criado_por"?: string | null,"resposta"?: NonNullable<Json>
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "consultas_veiculares_brutos_consulta_id_fkey"
+      columns: ["consulta_id"]
+isOneToOne: true
+      referencedRelation: "consultas_veiculares"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"contas_financeiras": {
                   Row: {
@@ -1774,6 +1832,20 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"v_consultas_uso": {
+                  Row: {
+                    "custo": number | null,"erros": number | null,"mes": string | null,"qtd": number | null,"usuario_id": string,"usuario_nome": string
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "consultas_veiculares_usuario_id_fkey"
+      columns: ["usuario_id"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"v_extrato": {
                   Row: {
                     "atualizado_em": string,"atualizado_por": string | null,"conciliado_em": string | null,"conta_id": string,"conta_nome": string,"criado_em": string,"criado_por": string | null,"data": string,"descricao": string,"documento": string | null,"fitid": string | null,"hash": string,"id": string,"importacao_id": string | null,"lancamento_descricao": string | null,"lancamento_id": string | null,"status": Database["public"]['Enums']["status_transacao"],"valor": number
@@ -2386,6 +2458,9 @@ isOneToOne: false
 "conciliar_transacao":
 { Args: { "p_lancamento": string,"p_transacao": string }; Returns: undefined
                            },
+"consulta_disponivel":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
 "criar_lancamento":
 { Args: { "p_dados": Json,"p_parcelas"?: number }; Returns: string
                            },
@@ -2485,6 +2560,9 @@ isOneToOne: false
 "reenviar_entrega":
 { Args: { "p_entrega": number }; Returns: undefined
                            },
+"registrar_consulta":
+{ Args: { "p_bruto"?: Json,"p_consulta": Json }; Returns: string
+                           },
 "registrar_evento":
 { Args: { "p_payload": Json,"p_tipo": string }; Returns: undefined
                            },
@@ -2545,6 +2623,11 @@ isOneToOne: false
 "transferir":
 { Args: { "p_data"?: string,"p_descricao"?: string,"p_destino": string,"p_origem": string,"p_valor": number }; Returns: string
                            },
+"uso_consultas_mes":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "custo_unitario": number,"limite_qtd": number,"limite_valor": number,"qtd": number,"valor": number
+            }[]
+                           },
 "venda_fechada":
 { Args: { "p_venda": string }; Returns: boolean
                            },
@@ -2558,7 +2641,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "base_comissao": "valor_venda"|"comissao_loja"|"lucro","cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro"|"termo_ciencia"|"baixa_gravame"|"atpv"|"vistoria"|"comprovante_debitos","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","direcao_nota": "entrada"|"saida","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","entidade_tarefa": "veiculo"|"venda"|"cliente"|"garantia"|"orcamento","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","forma_pagamento": "dinheiro"|"pix"|"ted"|"boleto"|"cartao_credito"|"cartao_debito"|"financiamento"|"cheque"|"permuta"|"outro","forma_pagamento_venda": "dinheiro"|"pix"|"ted"|"cartao_credito"|"cartao_debito"|"financiamento"|"boleto"|"cheque","modo_comissao": "percentual"|"fixo","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","natureza_categoria": "operacional"|"terceiros"|"transferencia"|"estoque","origem_extrato": "ofx"|"csv"|"open_finance","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_nota": "xml_importado"|"emitida"|"manual","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor"|"atendimento"|"preparador"|"administrativo","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","status_acionamento": "aberto"|"em_andamento"|"resolvido"|"negado","status_comissao": "pendente"|"quitada"|"cancelada","status_consignacao": "vigente"|"vendido"|"devolvido","status_entrega": "pendente"|"entregue"|"falhou"|"desistiu","status_lancamento": "pendente"|"pago"|"cancelado","status_nota": "importada"|"rascunho"|"processando"|"autorizada"|"rejeitada"|"cancelada"|"denegada","status_tarefa": "pendente"|"em_andamento"|"concluida"|"cancelada","status_transacao": "pendente"|"conciliada"|"ignorada","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","status_venda": "rascunho"|"aguardando_aprovacao"|"fechada"|"cancelada","tipo_checklist": "preparacao"|"documentacao","tipo_comissao": "loja_consignado"|"vendedor"|"parceiro","tipo_conta": "caixa"|"banco"|"carteira_digital","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_documento_fiscal": "nfe"|"nfse","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_geracao_ia": "anuncio"|"cliente","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_lancamento": "receita"|"despesa"|"transferencia_saida"|"transferencia_entrada","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
+            "base_comissao": "valor_venda"|"comissao_loja"|"lucro","cambio": "manual"|"automatico"|"cvt"|"automatizado","canal_contato": "whatsapp"|"ligacao"|"loja"|"instagram"|"email"|"outro","categoria_arquivo": "foto"|"crlv"|"laudo"|"contrato"|"nf_xml"|"nf_pdf"|"comprovante"|"documento"|"outro"|"termo_ciencia"|"baixa_gravame"|"atpv"|"vistoria"|"comprovante_debitos","combustivel": "flex"|"gasolina"|"etanol"|"diesel"|"gnv"|"hibrido"|"eletrico","direcao_nota": "entrada"|"saida","entidade_arquivo": "veiculo"|"consignacao"|"cliente"|"venda"|"nota"|"extrato"|"garantia"|"lancamento"|"fornecedor"|"consignante","entidade_tarefa": "veiculo"|"venda"|"cliente"|"garantia"|"orcamento","etapa_funil": "lead"|"negociacao"|"ganho"|"perdido","forma_pagamento": "dinheiro"|"pix"|"ted"|"boleto"|"cartao_credito"|"cartao_debito"|"financiamento"|"cheque"|"permuta"|"outro","forma_pagamento_venda": "dinheiro"|"pix"|"ted"|"cartao_credito"|"cartao_debito"|"financiamento"|"boleto"|"cheque","modo_comissao": "percentual"|"fixo","motivo_perda": "preco"|"financiamento_negado"|"comprou_outro_lugar"|"desistiu"|"sem_contato"|"carro_vendido"|"outro","natureza_categoria": "operacional"|"terceiros"|"transferencia"|"estoque","origem_extrato": "ofx"|"csv"|"open_finance","origem_lead": "instagram"|"marketplace"|"olx"|"indicacao"|"loja"|"site"|"whatsapp"|"outro","origem_nota": "xml_importado"|"emitida"|"manual","origem_veiculo": "compra"|"troca"|"consignacao","papel_usuario": "dono"|"gerente"|"vendedor"|"atendimento"|"preparador"|"administrativo","recebimento_consignado": "loja_repassa"|"direto_dono","resultado_laudo": "aprovado"|"aprovado_apontamentos"|"reprovado","selo_consulta": "verde"|"amarelo"|"vermelho","status_acionamento": "aberto"|"em_andamento"|"resolvido"|"negado","status_comissao": "pendente"|"quitada"|"cancelada","status_consignacao": "vigente"|"vendido"|"devolvido","status_consulta": "encontrado"|"nao_encontrado"|"erro","status_entrega": "pendente"|"entregue"|"falhou"|"desistiu","status_lancamento": "pendente"|"pago"|"cancelado","status_nota": "importada"|"rascunho"|"processando"|"autorizada"|"rejeitada"|"cancelada"|"denegada","status_tarefa": "pendente"|"em_andamento"|"concluida"|"cancelada","status_transacao": "pendente"|"conciliada"|"ignorada","status_veiculo": "em_preparacao"|"disponivel"|"reservado"|"vendido"|"devolvido","status_venda": "rascunho"|"aguardando_aprovacao"|"fechada"|"cancelada","tipo_checklist": "preparacao"|"documentacao","tipo_comissao": "loja_consignado"|"vendedor"|"parceiro","tipo_conta": "caixa"|"banco"|"carteira_digital","tipo_custo": "funilaria"|"mecanica"|"pintura"|"documentacao"|"lavagem"|"estetica"|"pneus"|"eletrica"|"laudo"|"transporte"|"outros","tipo_documento_fiscal": "nfe"|"nfse","tipo_fornecedor": "locadora"|"lojista"|"particular"|"oficina"|"despachante"|"outro","tipo_geracao_ia": "anuncio"|"cliente","tipo_historico": "pintura"|"reparo"|"sinistro"|"revisao"|"manutencao"|"observacao","tipo_lancamento": "receita"|"despesa"|"transferencia_saida"|"transferencia_entrada","tipo_parceiro": "indicacao"|"corretor"|"outro","tipo_veiculo": "proprio"|"consignado"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -2678,7 +2761,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "base_comissao": ["valor_venda", "comissao_loja", "lucro"],"cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro", "termo_ciencia", "baixa_gravame", "atpv", "vistoria", "comprovante_debitos"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"direcao_nota": ["entrada", "saida"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"entidade_tarefa": ["veiculo", "venda", "cliente", "garantia", "orcamento"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"forma_pagamento": ["dinheiro", "pix", "ted", "boleto", "cartao_credito", "cartao_debito", "financiamento", "cheque", "permuta", "outro"],"forma_pagamento_venda": ["dinheiro", "pix", "ted", "cartao_credito", "cartao_debito", "financiamento", "boleto", "cheque"],"modo_comissao": ["percentual", "fixo"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"natureza_categoria": ["operacional", "terceiros", "transferencia", "estoque"],"origem_extrato": ["ofx", "csv", "open_finance"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_nota": ["xml_importado", "emitida", "manual"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor", "atendimento", "preparador", "administrativo"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"status_acionamento": ["aberto", "em_andamento", "resolvido", "negado"],"status_comissao": ["pendente", "quitada", "cancelada"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_entrega": ["pendente", "entregue", "falhou", "desistiu"],"status_lancamento": ["pendente", "pago", "cancelado"],"status_nota": ["importada", "rascunho", "processando", "autorizada", "rejeitada", "cancelada", "denegada"],"status_tarefa": ["pendente", "em_andamento", "concluida", "cancelada"],"status_transacao": ["pendente", "conciliada", "ignorada"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"status_venda": ["rascunho", "aguardando_aprovacao", "fechada", "cancelada"],"tipo_checklist": ["preparacao", "documentacao"],"tipo_comissao": ["loja_consignado", "vendedor", "parceiro"],"tipo_conta": ["caixa", "banco", "carteira_digital"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_documento_fiscal": ["nfe", "nfse"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_geracao_ia": ["anuncio", "cliente"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_lancamento": ["receita", "despesa", "transferencia_saida", "transferencia_entrada"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
+            "base_comissao": ["valor_venda", "comissao_loja", "lucro"],"cambio": ["manual", "automatico", "cvt", "automatizado"],"canal_contato": ["whatsapp", "ligacao", "loja", "instagram", "email", "outro"],"categoria_arquivo": ["foto", "crlv", "laudo", "contrato", "nf_xml", "nf_pdf", "comprovante", "documento", "outro", "termo_ciencia", "baixa_gravame", "atpv", "vistoria", "comprovante_debitos"],"combustivel": ["flex", "gasolina", "etanol", "diesel", "gnv", "hibrido", "eletrico"],"direcao_nota": ["entrada", "saida"],"entidade_arquivo": ["veiculo", "consignacao", "cliente", "venda", "nota", "extrato", "garantia", "lancamento", "fornecedor", "consignante"],"entidade_tarefa": ["veiculo", "venda", "cliente", "garantia", "orcamento"],"etapa_funil": ["lead", "negociacao", "ganho", "perdido"],"forma_pagamento": ["dinheiro", "pix", "ted", "boleto", "cartao_credito", "cartao_debito", "financiamento", "cheque", "permuta", "outro"],"forma_pagamento_venda": ["dinheiro", "pix", "ted", "cartao_credito", "cartao_debito", "financiamento", "boleto", "cheque"],"modo_comissao": ["percentual", "fixo"],"motivo_perda": ["preco", "financiamento_negado", "comprou_outro_lugar", "desistiu", "sem_contato", "carro_vendido", "outro"],"natureza_categoria": ["operacional", "terceiros", "transferencia", "estoque"],"origem_extrato": ["ofx", "csv", "open_finance"],"origem_lead": ["instagram", "marketplace", "olx", "indicacao", "loja", "site", "whatsapp", "outro"],"origem_nota": ["xml_importado", "emitida", "manual"],"origem_veiculo": ["compra", "troca", "consignacao"],"papel_usuario": ["dono", "gerente", "vendedor", "atendimento", "preparador", "administrativo"],"recebimento_consignado": ["loja_repassa", "direto_dono"],"resultado_laudo": ["aprovado", "aprovado_apontamentos", "reprovado"],"selo_consulta": ["verde", "amarelo", "vermelho"],"status_acionamento": ["aberto", "em_andamento", "resolvido", "negado"],"status_comissao": ["pendente", "quitada", "cancelada"],"status_consignacao": ["vigente", "vendido", "devolvido"],"status_consulta": ["encontrado", "nao_encontrado", "erro"],"status_entrega": ["pendente", "entregue", "falhou", "desistiu"],"status_lancamento": ["pendente", "pago", "cancelado"],"status_nota": ["importada", "rascunho", "processando", "autorizada", "rejeitada", "cancelada", "denegada"],"status_tarefa": ["pendente", "em_andamento", "concluida", "cancelada"],"status_transacao": ["pendente", "conciliada", "ignorada"],"status_veiculo": ["em_preparacao", "disponivel", "reservado", "vendido", "devolvido"],"status_venda": ["rascunho", "aguardando_aprovacao", "fechada", "cancelada"],"tipo_checklist": ["preparacao", "documentacao"],"tipo_comissao": ["loja_consignado", "vendedor", "parceiro"],"tipo_conta": ["caixa", "banco", "carteira_digital"],"tipo_custo": ["funilaria", "mecanica", "pintura", "documentacao", "lavagem", "estetica", "pneus", "eletrica", "laudo", "transporte", "outros"],"tipo_documento_fiscal": ["nfe", "nfse"],"tipo_fornecedor": ["locadora", "lojista", "particular", "oficina", "despachante", "outro"],"tipo_geracao_ia": ["anuncio", "cliente"],"tipo_historico": ["pintura", "reparo", "sinistro", "revisao", "manutencao", "observacao"],"tipo_lancamento": ["receita", "despesa", "transferencia_saida", "transferencia_entrada"],"tipo_parceiro": ["indicacao", "corretor", "outro"],"tipo_veiculo": ["proprio", "consignado"]
           }
         }
 } as const

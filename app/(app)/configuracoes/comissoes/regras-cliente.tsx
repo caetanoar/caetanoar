@@ -161,7 +161,7 @@ export function Simulador({ regras }: { regras: Regra[] }) {
         <CardTitle className="flex items-center gap-1.5"><Calculator className="size-4" /> Simulador</CardTitle>
         <CardDescription>Teste uma regra com um valor de base (venda, comissão da loja ou lucro).</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-3 sm:grid-cols-3">
+      <CardContent className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <Select value={regraId} onChange={(e) => setRegraId(e.target.value)} aria-label="Regra">
           {regras.length === 0 && <option value="">Nenhuma regra ativa</option>}
           {regras.map((r) => <option key={r.id} value={r.id}>{r.nome}</option>)}

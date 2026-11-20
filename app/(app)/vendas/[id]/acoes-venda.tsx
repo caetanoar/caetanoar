@@ -47,7 +47,7 @@ export function FecharVenda({
       {(pedirLoja || pedirVendedor || pedirParceiro) && (
         <Alerta variante="aviso">Sem regra de comissão para este caso. Informe o valor (pode ser 0); o dono pode criar a regra depois.</Alerta>
       )}
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {pedirLoja && (
           <Campo id="manual_loja" rotulo="Comissão da loja">
             <InputMoeda name="manual_loja" />

@@ -22,7 +22,7 @@ export function FormLoja({ config }: { config: Config }) {
       {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
       <Card>
         <CardHeader><CardTitle>Loja</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="nome_loja" rotulo="Nome da loja" erro={e.nome_loja} obrigatorio className="sm:col-span-2">
             <Input name="nome_loja" defaultValue={config.nome_loja} />
           </Campo>
@@ -56,7 +56,7 @@ export function FormLoja({ config }: { config: Config }) {
       </Card>
       <Card>
         <CardHeader><CardTitle>Garantia e alertas</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="garantia_dias_padrao" rotulo="Prazo padrão da garantia (dias)" erro={e.garantia_dias_padrao} obrigatorio>
             <Input name="garantia_dias_padrao" type="number" inputMode="numeric" defaultValue={config.garantia_dias_padrao} />
           </Campo>

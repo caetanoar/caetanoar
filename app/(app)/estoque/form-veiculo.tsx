@@ -121,6 +121,7 @@ export function FormVeiculo({
   return (
     <form onSubmit={despachar} className="flex flex-col gap-4">
       {editando && <input type="hidden" name="id" value={v("id")} />}
+      {!editando && v("consulta_id") && <input type="hidden" name="consulta_id" value={v("consulta_id")} />}
       <input type="hidden" name="tipo" value={tipo} />
       {estado.erro && <Alerta variante="erro">{estado.erro}</Alerta>}
 
@@ -128,7 +129,7 @@ export function FormVeiculo({
         <CardHeader><CardTitle>Tipo</CardTitle></CardHeader>
         <CardContent className="grid gap-4">
           <SegTipo valor={tipo} onChange={setTipo} bloqueado={editando} />
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {tipo === "proprio" ? (
               <Campo id="origem" rotulo="Origem" erro={e.origem}>
                 <Select name="origem" defaultValue={v("origem") || "compra"}>
@@ -206,7 +207,7 @@ export function FormVeiculo({
 
       <Card>
         <CardHeader><CardTitle>Documentação</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-3">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Campo id="placa" rotulo="Placa" erro={e.placa}>
             <InputPlaca name="placa" defaultValue={v("placa")} />
           </Campo>
@@ -224,7 +225,7 @@ export function FormVeiculo({
           <CardTitle>Preços</CardTitle>
           <CardDescription>O vendedor vê o anunciado e o negociável. O preço mínimo fica só com dono e gerente.</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-3">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Campo id="preco_anunciado" rotulo="Preço anunciado" erro={e.preco_anunciado}>
             <InputMoeda name="preco_anunciado" defaultValue={valores.preco_anunciado as number | null} />
           </Campo>
@@ -251,7 +252,7 @@ export function FormVeiculo({
             <CardTitle className="flex items-center gap-1.5"><Lock className="size-4" /> Compra</CardTitle>
             <CardDescription>Sigiloso: só dono e gerente veem.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Campo id="valor_compra" rotulo="Valor de compra" erro={e.valor_compra}>
               <InputMoeda name="valor_compra" defaultValue={valores.valor_compra as number | null} />
             </Campo>
@@ -276,7 +277,7 @@ export function FormVeiculo({
             <CardTitle className="flex items-center gap-1.5"><Lock className="size-4" /> Consignação</CardTitle>
             <CardDescription>Sigiloso: só dono e gerente veem. O contrato em PDF é anexado na tela do carro.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Campo id="consignante_id" rotulo="Consignante (dono do carro)" erro={e.consignante_id} obrigatorio className="sm:col-span-2"
               dica={<Link href="/consignantes/novo" className="text-primary hover:underline" target="_blank">Cadastrar novo consignante</Link>}>
               <Select name="consignante_id" defaultValue={v("consignante_id")}>
@@ -309,7 +310,7 @@ export function FormVeiculo({
 
       <Card>
         <CardHeader><CardTitle>Laudo e descrição</CardTitle></CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo id="laudo_cautelar" rotulo="Laudo cautelar" erro={e.laudo_cautelar}>
             <Select name="laudo_cautelar" value={laudo} onChange={(ev) => setLaudo(ev.target.value)}>
               <option value="false">Não tem laudo</option>

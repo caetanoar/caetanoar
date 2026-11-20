@@ -1075,6 +1075,56 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"liberacoes_bloqueio": {
+                  Row: {
+                    "alertas": NonNullable<Json>,"atualizado_em": string,"atualizado_por": string | null,"criado_em": string,"criado_por": string | null,"id": string,"justificativa": string,"liberado_em": string,"liberado_por": string,"venda_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "alertas": NonNullable<Json>,"atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"id"?: string,"justificativa": string,"liberado_em"?: string,"liberado_por"?: string,"venda_id": string
+                  }
+                  Update: {
+                    "alertas"?: NonNullable<Json>,"atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"id"?: string,"justificativa"?: string,"liberado_em"?: string,"liberado_por"?: string,"venda_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "liberacoes_bloqueio_liberado_por_fkey"
+      columns: ["liberado_por"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "liberacoes_bloqueio_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "liberacoes_bloqueio_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas_calc"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "liberacoes_bloqueio_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "liberacoes_bloqueio_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "liberacoes_bloqueio_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"metas": {
                   Row: {
                     "atualizado_em": string,"atualizado_por": string | null,"criado_em": string,"criado_por": string | null,"id": string,"mes": string,"meta_faturamento": number | null,"meta_lucro": number | null,"meta_qtd_vendas": number | null,"observacoes": string | null,"vendedor_id": string | null
@@ -1783,6 +1833,56 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"vendas_ciencias": {
+                  Row: {
+                    "alertas": NonNullable<Json>,"atualizado_em": string,"atualizado_por": string | null,"criado_em": string,"criado_por": string | null,"declaracao": string,"id": string,"informado_em": string,"informado_por": string,"termo_gerado_em": string | null,"venda_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "alertas": NonNullable<Json>,"atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"declaracao": string,"id"?: string,"informado_em"?: string,"informado_por"?: string,"termo_gerado_em"?: string | null,"venda_id": string
+                  }
+                  Update: {
+                    "alertas"?: NonNullable<Json>,"atualizado_em"?: string,"atualizado_por"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"declaracao"?: string,"id"?: string,"informado_em"?: string,"informado_por"?: string,"termo_gerado_em"?: string | null,"venda_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "vendas_ciencias_informado_por_fkey"
+      columns: ["informado_por"]
+isOneToOne: false
+      referencedRelation: "usuarios"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_ciencias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "vendas_ciencias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas_calc"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "vendas_ciencias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_ciencias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "vendas_ciencias_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"vendas_pagamentos": {
                   Row: {
                     "atualizado_em": string,"atualizado_por": string | null,"banco_financiamento": string | null,"conta_id": string | null,"criado_em": string,"criado_por": string | null,"data_prevista": string | null,"forma": Database["public"]['Enums']["forma_pagamento_venda"],"id": string,"lancamento_id": string | null,"observacoes": string | null,"parcelas": number | null,"recebido": boolean,"valor": number,"venda_id": string
@@ -1910,6 +2010,92 @@ isOneToOne: false
       columns: ["venda_id"]
 isOneToOne: false
       referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"verificacoes_veiculo": {
+                  Row: {
+                    "alertas": NonNullable<Json>,"atualizado_em": string,"atualizado_por": string | null,"ciencia_id": string | null,"consulta_id": string | null,"criado_em": string,"criado_por": string | null,"id": string,"liberacao_id": string | null,"momento": string,"nivel": string,"veiculo_id": string,"venda_id": string,"verificado_em": string,"verificado_por": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "alertas": NonNullable<Json>,"atualizado_em"?: string,"atualizado_por"?: string | null,"ciencia_id"?: string | null,"consulta_id"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"id"?: string,"liberacao_id"?: string | null,"momento": string,"nivel": string,"veiculo_id": string,"venda_id": string,"verificado_em"?: string,"verificado_por"?: string | null
+                  }
+                  Update: {
+                    "alertas"?: NonNullable<Json>,"atualizado_em"?: string,"atualizado_por"?: string | null,"ciencia_id"?: string | null,"consulta_id"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"id"?: string,"liberacao_id"?: string | null,"momento"?: string,"nivel"?: string,"veiculo_id"?: string,"venda_id"?: string,"verificado_em"?: string,"verificado_por"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "verificacoes_veiculo_ciencia_id_fkey"
+      columns: ["ciencia_id"]
+isOneToOne: false
+      referencedRelation: "vendas_ciencias"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_consulta_id_fkey"
+      columns: ["consulta_id"]
+isOneToOne: false
+      referencedRelation: "consultas_veiculares"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_liberacao_id_fkey"
+      columns: ["liberacao_id"]
+isOneToOne: false
+      referencedRelation: "liberacoes_bloqueio"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "v_veiculos_gestao"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_veiculo_id_fkey"
+      columns: ["veiculo_id"]
+isOneToOne: false
+      referencedRelation: "veiculos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_lucro_vendas_calc"
+      referencedColumns: ["venda_id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "v_vendas_sem_nota"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_venda_id_fkey"
+      columns: ["venda_id"]
+isOneToOne: false
+      referencedRelation: "vendas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "verificacoes_veiculo_verificado_por_fkey"
+      columns: ["verificado_por"]
+isOneToOne: false
+      referencedRelation: "usuarios"
       referencedColumns: ["id"]
     }
                   ]
@@ -2641,7 +2827,10 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "alertas_veiculo":
+            "alertas_nao_cobertos":
+{ Args: { "a": Json,"b": Json }; Returns: Json
+                           },
+"alertas_veiculo":
 { Args: { "p_veiculo": string }; Returns: Json
                            },
 "alterar_status_veiculo":
@@ -2680,6 +2869,9 @@ isOneToOne: false
 "chassi_confere":
 { Args: { "p_completo": string,"p_parcial": string }; Returns: boolean
                            },
+"chave_alerta":
+{ Args: { "p_alerta": Json }; Returns: string
+                           },
 "cliente_comprador":
 { Args: { "p_cliente": string }; Returns: boolean
                            },
@@ -2714,6 +2906,9 @@ isOneToOne: false
                            },
 "enviar_orcamento":
 { Args: { "p_orcamento": string }; Returns: string
+                           },
+"enviar_venda_para_aprovacao":
+{ Args: { "p_venda": string }; Returns: undefined
                            },
 "estornar_baixa":
 { Args: { "p_id": string }; Returns: undefined
@@ -2760,6 +2955,9 @@ isOneToOne: false
 "lancar_transacao":
 { Args: { "p_categoria": string,"p_descricao"?: string,"p_transacao": string }; Returns: string
                            },
+"liberar_bloqueio":
+{ Args: { "p_justificativa": string,"p_venda": string }; Returns: string
+                           },
 "listar_parceiros_ativos":
 { Args: Record<PropertyKey, never>; Returns: {
               "id": string,"nome": string
@@ -2769,6 +2967,9 @@ isOneToOne: false
 { Args: Record<PropertyKey, never>; Returns: {
               "id": string,"nome": string,"papel": Database["public"]['Enums']["papel_usuario"]
             }[]
+                           },
+"marcar_termo_gerado":
+{ Args: { "p_ciencia": string }; Returns: undefined
                            },
 "meu_dashboard":
 { Args: { "p_mes": string }; Returns: Json
@@ -2823,11 +3024,17 @@ isOneToOne: false
 "reenviar_entrega":
 { Args: { "p_entrega": number }; Returns: undefined
                            },
+"registrar_ciencia":
+{ Args: { "p_declaracao"?: string,"p_venda": string }; Returns: string
+                           },
 "registrar_consulta":
 { Args: { "p_bruto"?: Json,"p_consulta": Json }; Returns: string
                            },
 "registrar_evento":
 { Args: { "p_payload": Json,"p_tipo": string }; Returns: undefined
+                           },
+"registrar_verificacao":
+{ Args: { "p_momento": string,"p_venda": string,"p_verif": Json }; Returns: undefined
                            },
 "resolver_regra":
 { Args: { "p_consignante": string,"p_data": string,"p_parceiro": string,"p_regra_fixa"?: string,"p_tipo": Database["public"]['Enums']["tipo_comissao"],"p_tipo_veiculo": Database["public"]['Enums']["tipo_veiculo"],"p_vendedor": string }; Returns: {
@@ -2899,6 +3106,9 @@ isOneToOne: false
                            },
 "venda_fechada":
 { Args: { "p_venda": string }; Returns: boolean
+                           },
+"verificacao_venda":
+{ Args: { "p_venda": string }; Returns: Json
                            },
 "vincular_venda_orcamento":
 { Args: { "p_orcamento": string,"p_venda": string }; Returns: undefined

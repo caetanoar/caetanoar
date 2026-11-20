@@ -14,7 +14,7 @@ const esquema = z.object({
   tamanho: z.number().int().nonnegative().nullable().optional(),
   entidade: z.enum(["venda", "garantia", "cliente", "lancamento", "nota", "extrato"]),
   entidade_id: z.uuid(),
-  categoria: z.enum(["contrato", "documento", "comprovante", "nf_xml", "nf_pdf", "outro"]),
+  categoria: z.enum(["contrato", "documento", "comprovante", "nf_xml", "nf_pdf", "outro", "termo_ciencia", "baixa_gravame", "atpv", "vistoria", "comprovante_debitos"]),
   sigiloso: z.boolean().default(false),
 });
 

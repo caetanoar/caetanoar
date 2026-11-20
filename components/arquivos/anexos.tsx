@@ -13,7 +13,10 @@ import { formatarData } from "@/lib/format/data";
 type Anexo = { id: string; nome: string; categoria: string; url: string | null; criado_em: string };
 type Entidade = "venda" | "garantia" | "cliente" | "lancamento";
 
-const CATEGORIAS = { contrato: "Contrato", documento: "Documento", comprovante: "Comprovante", outro: "Outro" } as const;
+const CATEGORIAS = {
+  contrato: "Contrato", documento: "Documento", comprovante: "Comprovante", termo_ciencia: "Termo de Ciência assinado",
+  atpv: "ATPV-e", vistoria: "Vistoria", comprovante_debitos: "Comprovante de débitos", baixa_gravame: "Baixa de gravame", outro: "Outro",
+} as const;
 
 /** Anexos genéricos (contratos, recibos, comprovantes) de uma venda, garantia etc. */
 export function Anexos({

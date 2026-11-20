@@ -13,6 +13,7 @@ select ok((select garantia_cobertura_padrao like 'Garantia de 90 dias%' and gara
 
 -- Consignado de teste
 insert into veiculos (tipo, origem, status, marca, modelo, ano_modelo, preco_anunciado) values ('consignado', 'consignacao', 'disponivel', 'Chevrolet', 'Prisma', 2016, 30000) returning id as carro \gset
+select pg_temp.carro_verificado(:'carro');
 insert into consignacoes (veiculo_id, consignante_id) values (:'carro', :'edley');
 
 -- Vendedor registra com pix + carro na troca, sem escolher o modo

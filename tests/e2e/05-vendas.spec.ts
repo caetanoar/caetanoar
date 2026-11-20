@@ -4,7 +4,8 @@ import { entrar, tela, PASTA_TELAS } from "./helpers";
 const s = String(Date.now()).slice(-4);
 const letras = "ABCDEFGHJKLMNPRSTUVWXYZ";
 const l = () => letras[Math.floor(Math.random() * letras.length)];
-const placaCarro = `${l()}${l()}${l()}${s[0]}${l()}${s.slice(2)}`;
+// Final 3: o provedor simulado devolve "nenhum registro encontrado" (a verificação da venda tem teste próprio).
+const placaCarro = `${l()}${l()}${l()}${s[0]}${l()}${s[2]}3`;
 const placaTroca = `${l()}${l()}${l()}${s[1]}${l()}${s.slice(2)}`;
 const telefone = `37997${s}${String(Math.floor(Math.random() * 90) + 10)}`;
 const cliente = `Comprador ${s}`;
@@ -47,9 +48,15 @@ test("gerente cadastra um consignado para a venda", async ({ page }) => {
   await page.getByLabel("Preço anunciado", { exact: true }).fill("7000000");
   await page.getByLabel("Valor negociável", { exact: true }).fill("6800000");
   await page.getByLabel(/^Consignante/).selectOption({ label: "Edley" });
+  await page.locator('select[name="laudo_cautelar"]').selectOption("true");
+  await page.locator('select[name="laudo_resultado"]').selectOption("aprovado");
   await page.getByRole("button", { name: "Cadastrar veículo" }).click();
   await expect(page.getByRole("heading", { name: "Fiat Argo Drive 1.0" })).toBeVisible();
   urlCarro = page.url();
+  // Consulta da placa (vale 7 dias para vender)
+  await page.goto(`/placa/${placaCarro}`);
+  await page.getByRole("button", { name: /Consultar leilão/ }).click();
+  await expect(page.getByText("Nada encontrado nos itens verificados")).toBeVisible();
 });
 
 test("vendedor registra a venda com financiamento e carro na troca", async ({ page }) => {
@@ -87,6 +94,7 @@ test("vendedor registra a venda com financiamento e carro na troca", async ({ pa
   await expect(page.getByText("Aguardando aprovação").first()).toBeVisible();
   urlVenda = page.url();
   await expect(page.getByText("R$ 30.000,00")).toBeVisible(); // entrada = pix + troca
+  await expect(page.getByText(/Nenhum registro encontrado na consulta de \d{2}\/\d{2}\/\d{4} \(Simulado\)/)).toBeVisible();
   await tela(page, "52-venda-aguardando");
 
   // Vendedor não fecha nem vê lucro

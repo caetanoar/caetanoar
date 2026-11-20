@@ -15,6 +15,7 @@ delete from clientes_dados_pessoais where cpf = '11144477735';
 -- Venda fechada de um consignado de teste (fluxo normal) e um carro próprio em preparação
 insert into veiculos (tipo, origem, status, marca, modelo, ano_modelo, preco_anunciado) values ('consignado', 'consignacao', 'disponivel', 'Chevrolet', 'Celta', 2012, 25000) returning id as celta \gset
 insert into consignacoes (veiculo_id, consignante_id) values (:'celta', :'edley');
+select pg_temp.carro_verificado(:'celta');
 insert into veiculos (tipo, origem, status, marca, modelo, ano_modelo) values ('proprio', 'compra', 'em_preparacao', 'Fiat', 'Mobi', 2020) returning id as mobi \gset
 
 select pg_temp.logar(:'v1');

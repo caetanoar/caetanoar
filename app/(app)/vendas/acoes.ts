@@ -80,6 +80,10 @@ export async function salvarVenda(_: EstadoAcao<{ id: string }>, fd: FormData): 
     return { ok: false, erro: mensagemDeErro(error) };
   }
   revalidar(data);
+  const { data: salva } = await supabase.from("vendas").select("status").eq("id", data).maybeSingle();
+  if (salva?.status === "rascunho") {
+    return { ok: true, mensagem: "Venda salva como rascunho: o carro tem alertas. Veja a verificação do veículo para seguir.", dados: { id: data } };
+  }
   return {
     ok: true,
     mensagem: usuario.papel === "vendedor" ? "Venda enviada para aprovação do gerente." : "Venda registrada. Revise e feche.",

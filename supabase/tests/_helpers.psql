@@ -33,3 +33,25 @@ begin
   perform set_config('role', 'postgres', true);
   perform set_config('request.jwt.claims', '', true);
 end $$;
+
+-- Deixa o carro "verificado" para testes que não tratam da verificação da venda:
+-- laudo cautelar aprovado, sem histórico de repintura/reparo e consulta da placa
+-- recente sem registros. Rodar como postgres (antes de logar ou depois de sair).
+create or replace function pg_temp.carro_verificado(p_veiculo uuid) returns void language plpgsql as $$
+declare
+  v_placa text;
+  v_usuario uuid;
+begin
+  select placa into v_placa from public.veiculos where id = p_veiculo;
+  if v_placa is null then
+    v_placa := 'TST' || floor(random() * 10)::int || chr(65 + floor(random() * 26)::int) || lpad(floor(random() * 100)::int::text, 2, '0');
+    update public.veiculos set placa = v_placa where id = p_veiculo;
+  end if;
+  update public.veiculos set laudo_cautelar = true, laudo_resultado = 'aprovado' where id = p_veiculo;
+  delete from public.veiculo_historico where veiculo_id = p_veiculo and tipo in ('pintura', 'reparo', 'sinistro');
+  update public.veiculo_historico set km = null where veiculo_id = p_veiculo;
+  select id into v_usuario from public.usuarios order by criado_em limit 1;
+  insert into public.consultas_veiculares (placa, provedor, simulado, status, expira_em, usuario_id, verificacoes, selo)
+  values (v_placa, 'Teste', true, 'encontrado', now() + interval '7 days', v_usuario,
+          '{"leilao": {"estado": "nada_encontrado"}, "roubo_furto": {"estado": "nada_encontrado"}, "gravame": {"estado": "nada_encontrado"}}', 'verde');
+end $$;

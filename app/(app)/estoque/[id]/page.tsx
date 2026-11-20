@@ -279,7 +279,7 @@ async function VendaDoCarro({ veiculoId }: { veiculoId: string }) {
   if (data) {
     return (
       <Button asChild variant="outline" size="lg">
-        <Link href={`/vendas/${data.id}`}><Handshake /> Venda {data.numero} em aprovação</Link>
+        <Link href={`/vendas/${data.id}`}><Handshake /> Venda {data.numero} {data.status === "rascunho" ? "em rascunho" : "em aprovação"}</Link>
       </Button>
     );
   }

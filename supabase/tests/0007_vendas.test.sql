@@ -9,6 +9,7 @@ select pg_temp.criar_usuario('v2@t.com', 'vendedor') as v2 \gset
 
 select id as ka from veiculos where modelo = 'Ka' and criado_por is null \gset
 select id as hb20 from veiculos where modelo = 'HB20S' and criado_por is null \gset
+select pg_temp.carro_verificado(:'ka'), pg_temp.carro_verificado(:'hb20');
 select id as ellerson from consignantes where nome = 'Ellerson' \gset
 -- Isola de dados de testes anteriores
 delete from regras_comissao;

@@ -6,7 +6,8 @@ select pg_temp.criar_usuario('dono@t.com', 'dono') as dono \gset
 select pg_temp.criar_usuario('gerente@t.com', 'gerente') as gerente \gset
 select pg_temp.criar_usuario('v1@t.com', 'vendedor') as v1 \gset
 select id as uno from veiculos where modelo = 'Uno' and criado_por is null \gset
-delete from clientes where telefone = '37988887777' or whatsapp = '37988887777';
+select pg_temp.carro_verificado(:'uno');
+delete from clientes where telefone = '37900000012' or whatsapp = '37900000012';
 delete from webhook_entregas; -- entregas antigas de outros testes não interferem
 
 -- Chaves de API: só o dono, e o hash nunca é legível
@@ -46,8 +47,8 @@ select webhooks_registrar((select id from webhook_entregas where webhook_id = :'
 select ok((select status = 'entregue' and entregue_em is not null from webhook_entregas where webhook_id = :'hook' limit 1), 'sucesso marca como entregue');
 
 -- Lead pela API: cria o cliente, depois só registra contato (sem duplicar); auditoria com o nome da chave
-select is((api_registrar_lead('Site', '{"nome": "Lead API", "telefone": "+55 (37) 98888-7777", "mensagem": "Quero o Uno"}') ->> 'novo')::boolean, true, 'lead novo vira cliente');
-select is((api_registrar_lead('Site', '{"nome": "Lead API", "telefone": "37988887777"}') ->> 'novo')::boolean, false, 'mesmo telefone não duplica o cliente');
+select is((api_registrar_lead('Site', '{"nome": "Lead API", "telefone": "+55 (37) 90000-0012", "mensagem": "Quero o Uno"}') ->> 'novo')::boolean, true, 'lead novo vira cliente');
+select is((api_registrar_lead('Site', '{"nome": "Lead API", "telefone": "37900000012"}') ->> 'novo')::boolean, false, 'mesmo telefone não duplica o cliente');
 reset role;
 select is((select ator from auditoria where tabela = 'clientes' and acao = 'INSERT' order by criado_em desc limit 1), 'API: Site', 'auditoria registra a chave da API');
 

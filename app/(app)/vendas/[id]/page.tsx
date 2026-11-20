@@ -22,6 +22,8 @@ import { formatarPlaca } from "@/lib/format/veiculo";
 import { FecharVenda, CancelarVenda } from "./acoes-venda";
 import { excluirVenda } from "../acoes";
 import { TarefasDaEntidade, ChecklistCard } from "@/components/tarefas/blocos";
+import { CartaoVerificacao, VerificacaoRegistrada } from "@/components/vendas/verificacao";
+import { carregarVerificacao, verificacaoDoFechamento } from "@/lib/vendas/verificacao";
 
 type Calculo = {
   tipo: "proprio" | "consignado";
@@ -63,6 +65,10 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
     if (error) erroCalculo = error.message;
     else calculo = data as unknown as Calculo;
   }
+  const [verif, fechamento] = await Promise.all([
+    aberta ? carregarVerificacao(id) : Promise.resolve(null),
+    v.status === "fechada" ? verificacaoDoFechamento(id) : Promise.resolve(null),
+  ]);
   const [comissoes, lancamentos, garantia, minhas, anexos] = await Promise.all([
     gestor ? supabase.from("comissoes").select("*").eq("venda_id", id).order("tipo").then((r) => r.data ?? []) : Promise.resolve([]),
     gestor ? supabase.from("v_lancamentos").select("id, descricao, tipo, valor, status, data_vencimento, forma_pagamento, categoria_nome").eq("venda_id", id).order("tipo").then((r) => r.data ?? []) : Promise.resolve([]),
@@ -85,6 +91,9 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
           <Badge variant="outline">{v.tipo_veiculo === "consignado" ? "Consignado" : "Próprio"}</Badge>
           {v.abaixo_negociavel && <Badge variant="warning">Abaixo do negociável</Badge>}
         </div>
+        {v.status === "rascunho" && (
+          <Alerta variante="aviso">Rascunho: o carro tem alertas. Resolva a verificação do veículo abaixo{gestor ? " antes de fechar" : " e envie para aprovação"}. O carro fica reservado.</Alerta>
+        )}
         {v.status === "aguardando_aprovacao" && !gestor && <Alerta variante="info">Venda enviada. O gerente vai conferir e fechar. O carro está reservado para o seu cliente.</Alerta>}
         {v.status === "cancelada" && <Alerta variante="erro" titulo="Venda cancelada">{v.motivo_cancelamento} {v.cancelada_em && `· ${formatarDataHora(v.cancelada_em)}`}</Alerta>}
 
@@ -145,6 +154,12 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
           </CardContent>
         </Card>
 
+        {aberta && verif && (
+          <CartaoVerificacao vendaId={id} verif={verif} placa={v.veiculo_placa} status={v.status as "rascunho" | "aguardando_aprovacao"}
+            usuario={{ id: usuario.id, papel: usuario.papel }} vendedorId={v.vendedor_id!} />
+        )}
+        {fechamento && <VerificacaoRegistrada alertas={fechamento.alertas} em={fechamento.verificado_em} />}
+
         {gestor && aberta && (
           <Card className="border-primary/40">
             <CardHeader><CardTitle className="flex items-center gap-1.5"><Lock className="size-4" /> Conferência e fechamento</CardTitle></CardHeader>
@@ -184,7 +199,7 @@ export default async function DetalheVenda({ params }: { params: Promise<{ id: s
                     pedirLoja={calculo.tipo === "consignado" && !calculo.comissao_loja}
                     pedirVendedor={!calculo.comissao_vendedor}
                     pedirParceiro={calculo.erros.some((e) => e.includes("parceiro"))}
-                    errosBloqueantes={calculo.erros.filter((e) => !e.includes("informe o valor"))}
+                    errosBloqueantes={[...calculo.erros.filter((e) => !e.includes("informe o valor")), ...(verif && !verif.pode_fechar ? verif.pendencias.map((p) => `Verificação do veículo: ${p}`) : [])]}
                   />
                 </>
               )}

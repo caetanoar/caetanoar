@@ -7,10 +7,12 @@
 >   Conferido: todas as tabelas com RLS, nenhum acesso anônimo, views com `security_invoker`, funções sem login
 >   fechadas (exceto o link público do orçamento).
 > - [x] Netlify: projeto `caetanoar` importado do GitHub (branch `main`), publicado em https://caetanoar.netlify.app.
-> - [ ] Netlify: desligar a proteção de visitantes ("Visitor access"), que vem ligada e exige login na Netlify.
+> - [x] Netlify: projeto público (Project configuration → General → Visitor access → Project visibility = Public).
 > - [ ] Supabase Auth: Site URL, Redirect URLs, cadastro público desligado, modelos de e-mail e SMTP do Gmail.
 > - [x] Reenvio de webhooks: pg_cron a cada 5 minutos chamando `/api/cron/webhooks`, com o segredo no Vault.
-> - [ ] Conta do dono e conferência final (seção 6).
+> - [x] Conta do dono criada (Supabase → Authentication → Add user) e promovida a dono.
+> - [x] Conferido em produção: login abre, rotas internas exigem login, `/api/cron/webhooks` recusa sem o segredo e
+>   responde com ele, link de orçamento inválido dá "não encontrado".
 
 ## 1. Caminho escolhido: gratuito
 

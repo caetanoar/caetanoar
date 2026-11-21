@@ -1,9 +1,13 @@
 # Publicação na Netlify (plano gratuito). A Netlify detecta o Next.js e aplica o
 # adaptador oficial automaticamente; as variáveis de ambiente ficam no painel da
-# Netlify (Site configuration → Environment variables), nunca neste arquivo.
+# Netlify (Project configuration → Environment variables), nunca neste arquivo.
 [build]
   command = "pnpm build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
+  # A verificação de segredos da Netlify procura os valores das variáveis no código gerado.
+  # As NEXT_PUBLIC_* são públicas por definição (vão para o navegador), então ficam de fora;
+  # os segredos de verdade (SUPABASE_SERVICE_ROLE_KEY, API_KEY_PEPPER, CRON_SECRET) continuam verificados.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_SITE_URL"

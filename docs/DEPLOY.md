@@ -70,6 +70,10 @@ O dono pediu para usar o que for gratuito. O que isso significa na prática:
    e definir as variáveis de `.env.example`: Supabase, `NEXT_PUBLIC_SITE_URL`, `API_KEY_PEPPER` e `CRON_SECRET`
    (`openssl rand -hex 32`), `FIPE_PROVIDER`, `CONSULTA_VEICULAR_PROVIDER=mock`, e as opcionais de IA, fiscal e Open Finance.
    As variáveis `NEXT_PUBLIC_*` entram no build: depois de mudá-las, faça um novo deploy.
+   Não cadastre `FIPE_PROVIDER`, `CONSULTA_VEICULAR_PROVIDER`, `FISCAL_PROVIDER` nem `OPEN_FINANCE_PROVIDER` com os
+   valores padrão ("brasilapi", "mock", "none"): o sistema já usa esses padrões, e a verificação de segredos da Netlify
+   barra o build porque esses textos aparecem no código. A `SUPABASE_SERVICE_ROLE_KEY` é a chave **secret**
+   (`sb_secret_...`), nunca a publishable.
 2. Primeiro deploy e domínio (opcional, ex.: crm.caetanoauto.com.br).
 3. Criar o dono: `OWNER_EMAIL=... OWNER_NOME="Arthur" NEXT_PUBLIC_SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... NEXT_PUBLIC_SITE_URL=https://<domínio> pnpm criar-dono`.
 4. O dono entra, confere Configurações → Dados da loja, cadastra as regras de comissão, as contas financeiras, as metas

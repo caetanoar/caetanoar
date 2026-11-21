@@ -6,9 +6,10 @@
 >   servidor gratuito da Netlify (as telas ficam mais rápidas). Migrations 0001 a 0019 aplicadas, sem o `seed.sql`.
 >   Conferido: todas as tabelas com RLS, nenhum acesso anônimo, views com `security_invoker`, funções sem login
 >   fechadas (exceto o link público do orçamento).
-> - [ ] Netlify: site importado do GitHub (branch `main`) com as variáveis de ambiente.
+> - [x] Netlify: projeto `caetanoar` importado do GitHub (branch `main`), publicado em https://caetanoar.netlify.app.
+> - [ ] Netlify: desligar a proteção de visitantes ("Visitor access"), que vem ligada e exige login na Netlify.
 > - [ ] Supabase Auth: Site URL, Redirect URLs, cadastro público desligado, modelos de e-mail e SMTP do Gmail.
-> - [ ] Reenvio de webhooks (pg_cron) com o domínio final.
+> - [x] Reenvio de webhooks: pg_cron a cada 5 minutos chamando `/api/cron/webhooks`, com o segredo no Vault.
 > - [ ] Conta do dono e conferência final (seção 6).
 
 ## 1. Caminho escolhido: gratuito
@@ -49,13 +50,14 @@ O dono pediu para usar o que for gratuito. O que isso significa na prática:
    - no Gmail: ativar a verificação em duas etapas e criar uma **senha de app** (Conta Google → Segurança → Senhas de app);
    - no Supabase: host `smtp.gmail.com`, porta `465`, usuário e remetente = o Gmail da loja, senha = a senha de app;
    - a senha de app fica só no painel do Supabase, nunca no código nem em mensagens.
-7. Reenvio de webhooks a cada minuto (pg_cron + pg_net, disponíveis no plano grátis):
+7. Reenvio de webhooks a cada 5 minutos (pg_cron + pg_net, disponíveis no plano grátis; o envio principal já
+   acontece na hora do evento, então 5 minutos bastam e poupam o limite gratuito da Netlify):
 
    ```sql
    create extension if not exists pg_cron;
    create extension if not exists pg_net;
    select vault.create_secret('<CRON_SECRET>', 'cron_secret');
-   select cron.schedule('reenviar-webhooks', '* * * * *', $$
+   select cron.schedule('reenviar-webhooks', '*/5 * * * *', $$
      select net.http_get(
        url := 'https://<domínio>/api/cron/webhooks',
        headers := jsonb_build_object('Authorization', 'Bearer ' ||
